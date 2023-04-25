@@ -1,4 +1,5 @@
 
+
 # Identity Credential
 
 ## Authors
@@ -54,21 +55,112 @@ partial dictionary CredentialRequestOptions {
 };
 ```
 
-`IdentityCredentialRequestOptions` mirrors the pattern of Credential Management and is extended by scheme-specific documents:
+`IdentityCredentialRequestOptions` mirrors the pattern of Credential Management and is extended with a list of identity verification providers:
 
 ```webidl
 dictionary IdentityCredentialRequestOptions {
+  // Common request fields, e.g. the context API.
+
+  sequence<IdentityProviderConfig> providers;
 }
 ```
 
-As an illustrative example, the defintion of an identity scheme would add members to that dictionary:
+`IdentityProviderConfig` represents a scheme-specific source of identity credentials, and it expected to be extended by other specifications (e.g. the federated or mdocs scheme).
+
+```
+dictionary IdentityProviderConfig {
+  // More common fields across all identity provider types:
+  // ...
+};
+```
+
+As an illustrative example, the definition of an identity scheme would add members to that dictionary:
 
 ```webidl
-partial dictionary IdentityCredentialRequestOptions {
-  sequence<IllustrativeIdentitySchemeRequestOptions> illustrativeSchemeProviders;
+partial dictionary IdentityProviderConfig {
+  MDocsSpecificParameters mdoc;
 }
 ```
 
-The member need not be a sequence depending on the structure of the identity scheme in question.
+When [DiscoverFromExternalSource](https://w3c.github.io/webappsec-credential-management/#dom-credential-discoverfromexternalsource-slot) is invoked, the `DiscoverFromExternalSource` function of each of the different identity providers  specified in the `IdentityCredentialRequestOptions.providers` is run in parallel. If any throws an error that that error is the result of `IdentityCredential`'s DiscoverFromExternalSource. If one or more return an `IdentityCredential` then the user agents picks one of the values to the result, as its discretion. Otherwise the result is `null`.
 
-When [DiscoverFromExternalSource](https://w3c.github.io/webappsec-credential-management/#dom-credential-discoverfromexternalsource-slot) is invoked, the `DiscoverFromExternalSource` function of each of the different identity schemes specified in the `IdentityCredentialRequestOptions` is run in parallel. If any throws an error that that error is the result of `IdentityCredential`'s DiscoverFromExternalSource. If one or more return an `IdentityCredential` then the user agents picks one of the values to the result, as its discretion. Otherwise the result is `null`.
+## Examples
+
+### MDocs
+
+The [MDocs API](https://github.com/agl/mobile-document-request-api/tree/identityapi#examples) extends the `IdentityCredential` API to allow mdocs to be requested:
+
+```js
+// I want specific fields out of mobile driver's license as an mdoc
+const cbor = await navigator.credentials.get({
+  identity: {
+    providers: [{
+      mdoc: {
+        nonce: "gf69kepV+m5tGxUIsFtLi6pwg=",
+        readerPublicKey: "ftl+VEHPB17r2 ... Nioc9QZ7X/6w...",
+        retention: {
+          days: 90,
+        },
+        documentType: "org.iso.18013.5.1.mDL",
+        requestedElements: [
+          { namespace: "org.iso.18013.5.1", name: "document_number" },
+          { namespace: "org.iso.18013.5.1", name: "portrait" },
+          { namespace: "org.iso.18013.5.1", name: "driving_privileges" },
+          { namespace: "org.iso.18013.5.1.aamva", name: "organ_donor" },
+        ],
+      }
+    }],
+  }
+});
+```
+
+### Federation
+
+The [FedCM](https://fedidcg.github.io/FedCM/) also extends the `IdentityCredential` API to allow federated assertions to be requested: 
+
+```js
+const jwt = await navigator.credentials.get({
+  identity: {
+    providers: [{
+      federated: {
+        configURL: "https://university.edu/students",
+        clientId: "123",
+        nonce: "m5tGxUIsFtLi6pwg"
+      }
+    }]
+  }
+}
+```
+
+### Reconcilation
+
+User agents can support multiple identity schemes, and they can be requested at the same time:
+
+```js
+const credential = await navigator.credentials.get({
+  identity: {
+    // Requests the user's university affiliation from either 
+    // a VC, an MDoc or a JWT.
+    providers: [{
+      // The university may have a device-bound certificate ...
+      mdoc: {
+        nonce: "1234",
+        retention: { days: 90 },
+        documentType: "org.iso.18013.5.1.UniversityDegree",
+        readerPublicKey: "...ftl+VEHpdNioc9QZ7X/6w...",
+        requestedElements: [
+          { namespace: "org.iso.18013.5.1", name: "affiliation" },
+        ],
+      }
+    }, {
+      // ... or a SAML assertion ...
+      federated: {
+        clientId: "myapp",
+        nonce: "1234",
+        configURL: "https://idp.university.edu",
+      }
+    }]
+  }
+});
+
+```
