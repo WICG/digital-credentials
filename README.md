@@ -1,13 +1,10 @@
 
-
-
 # Identity Credential
 
 ## Authors
 
 - Sam Goto
 - Adam Langley
-
 
 ## Introduction
 
@@ -87,6 +84,12 @@ When [DiscoverFromExternalSource](https://w3c.github.io/webappsec-credential-man
 
 ## Examples
 
+These are examples of extensions to `IdentityCredential` that we would expect, and how / why they'd fit together.
+
+- [MDocs](#mdocs)
+- [FedCM](#fedcm)
+- [Verifiable Credentials](#verifiable-credentials)
+
 ### MDocs
 
 The [MDocs API](https://github.com/agl/mobile-document-request-api/tree/identityapi#examples) extends the `IdentityCredential` API to allow mdocs to be requested:
@@ -115,9 +118,9 @@ const cbor = await navigator.credentials.get({
 });
 ```
 
-### Federation
+### FedCM
 
-The [FedCM](https://fedidcg.github.io/FedCM/) also extends the `IdentityCredential` API to allow federated assertions to be requested: 
+The [FedCM](https://fedidcg.github.io/FedCM/) also extends the `IdentityCredential` API to provide a binding to [OpenID](https://openid.net/specs/openid-connect-core-1_0.html) and [SAML](https://seamlessaccess.org/posts/2023-02-20-fedcm/): 
 
 ```js
 const jwt = await navigator.credentials.get({
@@ -133,11 +136,45 @@ const jwt = await navigator.credentials.get({
 }
 ```
 
+### Verifiable Credentials
+
+We also expect that we'd at some point extend `IdentityCredential` to provide a binding to [CHAPI](https://github.com/fedidcg/FedCM/issues/374) and [OIDC4VP](https://openid.net/specs/openid-connect-4-verifiable-presentations-1_0-07.html).
+
+While this is still something that we are actively exploring with that community ([example](https://w3c-ccg.github.io/meetings/2023-01-24/) and early [proposal](https://github.com/fedidcg/FedCM/issues/374)), here is a possible example of what that could look like:
+
+> It is worth noting how closely related this looks to the [mdocs](#mdocs) extension.
+
+```js
+const sdjwt = await navigator.credentials.get({
+  identity: {
+    providers: [{
+      vc: {
+        format: {"vc+sd-jwt": { alg: ["EdDSA", "ES256"]}},
+        inputDescriptors: [{
+          constraints: {
+            fields: [{
+              path: [                  
+                "$.credentialSubject.dateOfBirth",
+                "$.credentialSubject.dob",
+                "$.vc.credentialSubject.dateOfBirth",
+                "$.vc.credentialSubject.dob",                     
+              ]
+            }]
+          }
+        }]
+      },
+    }]
+  }
+}
+```
+
 ### Reconcilation
 
 User agents can support multiple identity schemes, and they can be requested at the same time:
 
 ```js
+// Requests a verifiable affilitation to a university, accepting mdocs,
+// VCs and SAML assertions.
 const credential = await navigator.credentials.get({
   identity: {
     // Requests the user's university affiliation from either 
@@ -160,6 +197,20 @@ const credential = await navigator.credentials.get({
         nonce: "1234",
         configURL: "https://idp.university.edu",
       }
+    }, {
+      // ... or a Verifiable Credential ...
+      vc: {
+        inputDescriptors: [{
+          constraints: {
+            type: "UniversityDegreeCredential",
+            fields: [{
+              path: [                  
+                "$.credentialSubject.alumniOf",                 
+              ]
+            }]
+          }
+        }]
+      },
     }]
   }
 });
