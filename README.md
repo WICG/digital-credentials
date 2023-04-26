@@ -95,8 +95,8 @@ These are examples of extensions to `IdentityCredential` that we would expect, a
 The [MDocs API](https://github.com/agl/mobile-document-request-api/tree/identityapi#examples) extends the `IdentityCredential` API to allow mdocs to be requested:
 
 ```js
-// I want specific fields out of mobile driver's license as an mdoc
-const cbor = await navigator.credentials.get({
+// Gets a CBOR with specific fields out of mobile driver's license as an mdoc
+const {response} = await navigator.credentials.get({
   identity: {
     providers: [{
       mdoc: {
@@ -123,7 +123,8 @@ const cbor = await navigator.credentials.get({
 The [FedCM](https://fedidcg.github.io/FedCM/) also extends the `IdentityCredential` API to provide a binding to [OpenID](https://openid.net/specs/openid-connect-core-1_0.html) and [SAML](https://seamlessaccess.org/posts/2023-02-20-fedcm/): 
 
 ```js
-const jwt = await navigator.credentials.get({
+// Gets a JWT from a OIDC provider. 
+const {response} = await navigator.credentials.get({
   identity: {
     providers: [{
       federated: {
@@ -145,7 +146,8 @@ While this is still something that we are actively exploring with that community
 > It is worth noting how closely related this looks to the [mdocs](#mdocs) extension.
 
 ```js
-const sdjwt = await navigator.credentials.get({
+// Gets a SD-JWT from a VC holder.
+const {response} = await navigator.credentials.get({
   identity: {
     providers: [{
       vc: {
