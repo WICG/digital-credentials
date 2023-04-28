@@ -149,7 +149,7 @@ While this is still something that we are actively exploring with that community
 const {response} = await navigator.credentials.get({
   identity: {
     providers: [{
-      vc: {
+      w3cvc: {
         format: {"vc+sd-jwt": { alg: ["EdDSA", "ES256"]}},
         inputDescriptors: [{
           constraints: {
