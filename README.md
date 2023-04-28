@@ -12,16 +12,17 @@ This document contains a specification of `IdentityCredential`—a credential ty
 
 <img src="./structure.svg" alt="Diagram of API structure" width="300px">
 
-In this proposal, we lift `IdentityCredential` [out of](https://www.w3.org/2023/04/21-webauthn-minutes.html) the Federated Credential Management (FedCM). FedCM would be one extension of `IdentityCredential` but user agents would not need to implement FedCM in order to support other types of identity credentials. 
+In this proposal, we lift `IdentityCredential` out of [Federated Credential Management](https://fedidcg.github.io/FedCM/) (FedCM). FedCM would be one extension of `IdentityCredential` but user agents would not need to implement FedCM in order to support other types of identity credentials.
 
-This proposal is informed by two design choices:
+This proposal is informed by a few design points:
 
-1. identity credentials are going to come from a plurality of schemes 
+1. identity credentials are going to come in multiple formats, determined in part by legislation and non-web standards
+1. some browsers may choose to be largely agnostic to the credential format, acting mostly as a conduit for the underlying platform or wallet applications
 1. identity verification is not authentication
 
-First, `IdentityCredential` supports multiple identity verification schemes because we envision that sites may want to support multiple identity types in a single identity credential picker. 
+First, `IdentityCredential` supports multiple identity verification schemes because we envision that sites may want to support multiple identity types in a single identity credential picker while retaining some influence over the order in which they are presented to the user.
 
-For example, student university affiliations are often asserted via [SAML](https://www.oasis-open.org/committees/download.php/56776/sstc-saml-core-errata-2.0-wd-07.pdf) today, but student IDs are going to be increasingly made available in wallet apps ([example](https://www.purdue.edu/newsroom/releases/2023/Q2/purdue-launches-purdue-mobile-id-for-students-allowing-them-to-get-around-campus-with-just-a-simple-tap-of-their-mobile-device.html)) and so could be verifiable credentials (e.g. [mdocs](https://www.ul.com/resources/new-isoiec-standard-electronic-credentials) or [VCs](https://www.w3.org/TR/vc-data-model/)) in the future. An online library (e.g. nature.com) that needs users to prove their student affiliations may need to support both mdocs and federation in order to support students from multiple institutions. 
+For example, student university affiliations are often asserted via [SAML](https://www.oasis-open.org/committees/download.php/56776/sstc-saml-core-errata-2.0-wd-07.pdf) today, but student IDs are going to be increasingly made available in wallet apps ([example](https://www.purdue.edu/newsroom/releases/2023/Q2/purdue-launches-purdue-mobile-id-for-students-allowing-them-to-get-around-campus-with-just-a-simple-tap-of-their-mobile-device.html)) and so could be verifiable credentials (e.g. [mdocs](https://www.ul.com/resources/new-isoiec-standard-electronic-credentials) or [W3C VCs](https://www.w3.org/TR/vc-data-model/)) in the future. An online library (e.g. nature.com) that needs users to prove their student affiliations may need to support both mdocs and federation in order to support students from multiple institutions.
 
 Second, we think it is key to make requests for identity verification different from requests for authentication. The former is (potentially) a much more significant operation because it may disclose an irrevocable, cross-site identity. Because of this we considered building a `navigator.identity` namespace but ultimately decided to use [Credential Management](https://www.w3.org/TR/credential-management-1/), and thus `navigator.credentials`. This was because FedCM already uses `navigator.credentials.get({identity: …})` and thus the term `identity` would appear twice in the Web Platform if `navigator.identity` was added. But the use of `identity` for `IdentityCredential` was not a mistake: federation, and thus FedCM, provides identity verification and over time we would like authentication to be handled by [`PublicKeyCredential`](https://www.w3.org/TR/webauthn-2/#iface-pkcredential) (e.g. &ldquo;passkeys&rdquo;). However, today, FedCM is used for authentication too and so it lives in `navigator.credentials`. 
 
@@ -76,7 +77,7 @@ As an illustrative example, the definition of an identity scheme would add membe
 
 ```webidl
 partial dictionary IdentityProviderConfig {
-  MDocsSpecificParameters mdoc;
+  MdocIdentityProviderConfig mdoc;
 }
 ```
 
@@ -86,9 +87,9 @@ When [DiscoverFromExternalSource](https://w3c.github.io/webappsec-credential-man
 
 These are examples of extensions to `IdentityCredential` that we would expect, and how / why they'd fit together.
 
-- [MDocs](#mdocs)
+- [mdocs](#mdocs)
 - [FedCM](#fedcm)
-- [Verifiable Credentials](#verifiable-credentials)
+- [W3C Verifiable Credentials](#w3c-verifiable-credentials)
 
 ### MDocs
 
@@ -135,7 +136,7 @@ const {response} = await navigator.credentials.get({
 }
 ```
 
-### Verifiable Credentials
+### W3C Verifiable Credentials
 
 We also expect that we'd at some point extend `IdentityCredential` to provide a binding to [CHAPI](https://github.com/fedidcg/FedCM/issues/374) and [OIDC4VP](https://openid.net/specs/openid-connect-4-verifiable-presentations-1_0-07.html).
 
@@ -144,7 +145,7 @@ While this is still something that we are actively exploring with that community
 > It is worth noting how closely related this looks to the [mdocs](#mdocs) extension.
 
 ```js
-// Gets a SD-JWT from a VC holder.
+// Gets a SD-JWT from a W3C VC holder.
 const {response} = await navigator.credentials.get({
   identity: {
     providers: [{
@@ -174,11 +175,11 @@ User agents can support multiple identity schemes, and they can be requested at 
 
 ```js
 // Requests a verifiable affilitation to a university, accepting mdocs,
-// VCs and SAML assertions.
+// W3C VCs and SAML assertions.
 const credential = await navigator.credentials.get({
   identity: {
     // Requests the user's university affiliation from either 
-    // a VC, an MDoc or a JWT.
+    // a W3C VC, an MDoc or a JWT.
     providers: [{
       // The university may have a device-bound certificate ...
       mdoc: {
@@ -199,7 +200,7 @@ const credential = await navigator.credentials.get({
       }
     }, {
       // ... or a Verifiable Credential ...
-      vc: {
+      w3cvc: {
         inputDescriptors: [{
           constraints: {
             type: "UniversityDegreeCredential",
