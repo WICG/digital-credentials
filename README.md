@@ -102,9 +102,7 @@ const {response} = await navigator.credentials.get({
       mdoc: {
         nonce: "gf69kepV+m5tGxUIsFtLi6pwg=",
         readerPublicKey: "ftl+VEHPB17r2 ... Nioc9QZ7X/6w...",
-        retention: {
-          days: 90,
-        },
+        retentionDays: 90,
         documentType: "org.iso.18013.5.1.mDL",
         requestedElements: [
           { namespace: "org.iso.18013.5.1", name: "document_number" },
@@ -185,7 +183,7 @@ const credential = await navigator.credentials.get({
       // The university may have a device-bound certificate ...
       mdoc: {
         nonce: "1234",
-        retention: { days: 90 },
+        retentionDays: 90,
         documentType: "org.iso.18013.5.1.UniversityDegree",
         readerPublicKey: "...ftl+VEHpdNioc9QZ7X/6w...",
         requestedElements: [
