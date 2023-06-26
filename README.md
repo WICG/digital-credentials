@@ -1,14 +1,13 @@
 
 # Identity Credential
 
-## Authors
+## Problem
 
-- Sam Goto
-- Adam Langley
+There are multiple ways to present credentials on the web, and more being proposed. It may be that some use cases (like age verification or university affiliation) will be able to be met by multiple different approaches, but existing API designs could mean that users are forced to choose which technology to use without necessarily having the context to easily make that choice. Eg. websites might be forced to present options like "Click here to prove your employer with the identity in your wallet app" and "Click here to login to your company's server to prove your employment". It seems there's an opportunity to create some common groundwork now which could help enable websites to more often simply say "Click here to prove your employer" and let the browser and OS figure out what options are best presented for this specific user.
 
-## Introduction
+## Proposal 
 
-This document contains a specification of `IdentityCredential`—a credential type in the [Credential Management](https://www.w3.org/TR/credential-management-1/) framework for all types of identity verification. Types of identity credentials would extend `IdentityCredential` in the same way that different authentication methods extend [Credential Management](https://www.w3.org/TR/credential-management-1/) today.
+This document contains an explainer for `IdentityCredential`—a credential type in the [Credential Management](https://www.w3.org/TR/credential-management-1/) framework for all types of identity verification. Types of identity credentials would extend `IdentityCredential` in the same way that different authentication methods extend [Credential Management](https://www.w3.org/TR/credential-management-1/) today.
 
 <img src="./structure.svg" alt="Diagram of API structure" width="300px">
 
