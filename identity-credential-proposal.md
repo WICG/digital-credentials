@@ -184,6 +184,7 @@ const {response} = await navigator.credentials.get({
       holder: {
         format: ["vc+sd-jwt"],
         selector: [{
+          doctype: "UniversityDegreeCredential",
           fields: [        
             "credentialSubject.dateOfBirth",
             "credentialSubject.dob",
