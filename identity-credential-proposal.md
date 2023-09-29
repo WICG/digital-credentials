@@ -1,4 +1,5 @@
 
+  
 # Identity Credential
 
 ## Problem
@@ -36,14 +37,9 @@ All identity requests are grouped together, rather than made top-level types in 
 ```webidl
 [Exposed=Window, SecureContext]
 interface IdentityCredential : Credential {
-  readonly attribute USVString scheme;
-  readonly attribute USVString? response;
+  readonly attribute USVString? token;
 };
 ```
-
-The `scheme` specifies the type of identity credential returned and schemes will be defined in other, scheme-specific documents. The `response` is a value with semantics defined by that scheme. If this structure is insufficient, schemes may subclass `IdentityCredential` to add more members.
-
-(This differs from what's specified in FedCM. The intent is that FedCM will adjust to conform.)
 
 [CredentialRequestOptions](https://w3c.github.io/webappsec-credential-management/#dictdef-credentialrequestoptions) is extended with a new member for identity requests:
 
@@ -76,8 +72,41 @@ As an illustrative example, the definition of an identity scheme would add membe
 
 ```webidl
 partial dictionary IdentityProviderConfig {
-  MdocIdentityProviderConfig mdoc;
+  WalletProvider holder;
 }
+
+dictionary WalletProvider {
+  // A query selector that is used by wallets to filter credentials for
+  // selection.
+  WalletSelector selector;
+
+  // An opaque map of parameters sent to wallets upon selection.
+  record<USVString, USVString> params;
+};
+
+dictionary WalletSelector {
+  // A list of desired formats for the credential.
+  sequence<USVString> format;
+  // The top-level type of document (e.g. a passport, driver's license, etc).
+  DOMString doctype;
+  // The amount of time the verifier intends to retain the credential.
+  // Omitting `retention` implies that the identity information will not be stored.
+  // How long the verifier intends to retent the credential.
+  WalletStorageDuration retention;
+  // The requested fields.
+  sequence<(WalletFieldRequirement or DOMString)> fields;
+};
+
+dictionary WalletFieldRequirement {
+  required DOMString name;
+  DOMString equals;
+};
+
+dictionary WalletStorageDuration {
+  // Exactly one of the following must be provided.
+  boolean forever;
+  long days;
+};
 ```
 
 When [DiscoverFromExternalSource](https://w3c.github.io/webappsec-credential-management/#dom-credential-discoverfromexternalsource-slot) is invoked, the `DiscoverFromExternalSource` function of each of the different identity providers  specified in the `IdentityCredentialRequestOptions.providers` is run in parallel. If any throws an error then that error is the result of `IdentityCredential`'s DiscoverFromExternalSource. If one or more return an `IdentityCredential` then the user agent picks one of the values as the result, as its discretion. Otherwise the result is `null`.
@@ -99,17 +128,21 @@ The [MDocs API](https://github.com/agl/mobile-document-request-api/tree/identity
 const {response} = await navigator.credentials.get({
   identity: {
     providers: [{
-      mdoc: {
-        nonce: "gf69kepV+m5tGxUIsFtLi6pwg=",
-        readerPublicKey: "ftl+VEHPB17r2 ... Nioc9QZ7X/6w...",
-        retentionDays: 90,
-        documentType: "org.iso.18013.5.1.mDL",
-        requestedElements: [
-          { namespace: "org.iso.18013.5.1", name: "document_number" },
-          { namespace: "org.iso.18013.5.1", name: "portrait" },
-          { namespace: "org.iso.18013.5.1", name: "driving_privileges" },
-          { namespace: "org.iso.18013.5.1.aamva", name: "organ_donor" },
-        ],
+      holder: {
+        selector: {
+          retention: {days: 90},
+          doctype: "org.iso.18013.5.1.mDL",
+          fields: [
+            "org.iso.18013.5.1.document_number",
+            "org.iso.18013.5.1.portrait",
+            "org.iso.18013.5.1.driving_privileges",
+            "org.iso.18013.5.1.aamva.organ_donor",
+          ],
+        }
+        params: {
+          nonce: "gf69kepV+m5tGxUIsFtLi6pwg=",
+          readerPublicKey: "ftl+VEHPB17r2 ... Nioc9QZ7X/6w...",
+        }
       }
     }],
   }
@@ -148,19 +181,15 @@ While this is still something that we are actively exploring with that community
 const {response} = await navigator.credentials.get({
   identity: {
     providers: [{
-      w3cvc: {
-        format: {"vc+sd-jwt": { alg: ["EdDSA", "ES256"]}},
-        inputDescriptors: [{
-          constraints: {
-            fields: [{
-              path: [                  
-                "$.credentialSubject.dateOfBirth",
-                "$.credentialSubject.dob",
-                "$.vc.credentialSubject.dateOfBirth",
-                "$.vc.credentialSubject.dob",                     
-              ]
-            }]
-          }
+      holder: {
+        format: ["vc+sd-jwt"]
+        selector: [{
+          fields: [        
+            "credentialSubject.dateOfBirth",
+            "credentialSubject.dob",
+            "vc.credentialSubject.dateOfBirth",
+            "vc.credentialSubject.dob",                     
+          ]
         }]
       },
     }]
@@ -181,14 +210,18 @@ const credential = await navigator.credentials.get({
     // a W3C VC, an MDoc or a JWT.
     providers: [{
       // The university may have a device-bound certificate ...
-      mdoc: {
-        nonce: "1234",
-        retentionDays: 90,
-        documentType: "org.iso.18013.5.1.UniversityDegree",
-        readerPublicKey: "...ftl+VEHpdNioc9QZ7X/6w...",
-        requestedElements: [
-          { namespace: "org.iso.18013.5.1", name: "affiliation" },
-        ],
+      holder: {
+        selector: {
+          retention: {days: 90},
+          doctype: "org.iso.18013.5.1.UniversityDegree",
+          fields: [
+            "org.iso.18013.5.1.affiliation",
+          ],
+        }     
+        params: {
+          nonce: "1234",
+          readerPublicKey: "...ftl+VEHpdNioc9QZ7X/6w...",
+        },
       }
     }, {
       // ... or a SAML assertion ...
@@ -199,17 +232,13 @@ const credential = await navigator.credentials.get({
       }
     }, {
       // ... or a Verifiable Credential ...
-      w3cvc: {
-        inputDescriptors: [{
-          constraints: {
-            type: "UniversityDegreeCredential",
-            fields: [{
-              path: [                  
-                "$.credentialSubject.alumniOf",                 
-              ]
-            }]
-          }
-        }]
+      holder: {
+        selector: {
+          doctype: "UniversityDegreeCredential",
+          fields: [
+              "credentialSubject.alumniOf",                 
+          ]
+        }
       },
     }]
   }
