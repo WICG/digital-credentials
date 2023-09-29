@@ -190,7 +190,10 @@ const {response} = await navigator.credentials.get({
             "vc.credentialSubject.dateOfBirth",
             "vc.credentialSubject.dob",                     
           ]
-        }]
+        }],
+        params: {
+          nonce: "m5tGxUIsFtLi6pwg",
+        }
       },
     }]
   }
