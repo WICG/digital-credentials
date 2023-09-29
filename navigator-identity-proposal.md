@@ -6,15 +6,17 @@ authentication-oriented [Credential Manager](https://www.w3.org/TR/credential-ma
 
 ```javascript
 const result = await navigator.identity.get({
-  selector: {
-    format: ["mdoc"],
-    doctype: "org.iso.18013.5.mDL",
-    fields: ["org.iso.18013.5.1.family_name"]
-  },
-  params: {
-    nonce: "1234",
-    readerPublicKey: "567"
-  },
+  wallet: {
+    selector: {
+      format: ["mdoc"],
+      doctype: "org.iso.18013.5.mDL",
+      fields: ["org.iso.18013.5.1.family_name"]
+    },
+    params: {
+      nonce: "1234",
+      readerPublicKey: "567"
+    },
+  }
 });
 ``` 
 
