@@ -138,7 +138,7 @@ const {response} = await navigator.credentials.get({
             "org.iso.18013.5.1.driving_privileges",
             "org.iso.18013.5.1.aamva.organ_donor",
           ],
-        }
+        },
         params: {
           nonce: "gf69kepV+m5tGxUIsFtLi6pwg=",
           readerPublicKey: "ftl+VEHPB17r2 ... Nioc9QZ7X/6w...",
@@ -182,7 +182,7 @@ const {response} = await navigator.credentials.get({
   identity: {
     providers: [{
       holder: {
-        format: ["vc+sd-jwt"]
+        format: ["vc+sd-jwt"],
         selector: [{
           fields: [        
             "credentialSubject.dateOfBirth",
@@ -217,7 +217,7 @@ const credential = await navigator.credentials.get({
           fields: [
             "org.iso.18013.5.1.affiliation",
           ],
-        }     
+        },
         params: {
           nonce: "1234",
           readerPublicKey: "...ftl+VEHpdNioc9QZ7X/6w...",
@@ -245,15 +245,3 @@ const credential = await navigator.credentials.get({
 });
 
 ```
-
-
-# Alternatives Considered
-
-There are many alternatives that we are actively exploring and considering trade-offs. Here are a few:
-
-- Keep the presentment of MDocs/VCs independent from the presentment of OpenID/SAML assertions ([example](https://github.com/WICG/mobile-document-request-api#examples)). This is a plausible alternative, but the early intuition is that there are more use cases where these coincide than not, and it will be useful for the verifier-holder-issuer schemes to piggy back on each other (e.g. requesting either VCs or MDocs at the same time, increasing the chances that one will be available) and/or be able to fallback on the deployment of the rp-idp schemes (e.g. federated flows).
-- Move identity verification into its own namespace `navigator.identity.get()` as opposed to `navigator.credentials.get({identity: ...})`. That's also a plausible alternative, but (a) seemed duplicative of the `identity` namespace and (b) FedCM would have to co-exist in both places.
-- Allow the specialization of identity verification schemes at the `IdentityCredentialRequestOptions` rather than the `IdentityCredentialRequestConfig` level. That's also a plausible alternative, but the intuition is that it would be useful to have a level that would allow us to have common things between identity verification schemes (for example, the [RP context API](https://github.com/fedidcg/FedCM/issues/456)). 
-- Unify the query languages, have all of the identity verification schemes use the same query language (for example, [Presentation Exchange](https://identity.foundation/presentation-exchange/) or a variation of) in the `IdentityCredentialRequestConfig`. That's also plausible and desirable, but it seemed like a good idea to give each identity scheme the autonomy to explore their own design space and to unify once we find more convergence between them.
-
-These are all valid options that we'd love feedback from the community as to what trade-offs to take.
