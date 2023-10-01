@@ -12,7 +12,7 @@ In this proposal, we create a new Credential Manager Credential type, say a Wall
 
 ```javascript
 const result = await navigator.credentials.get({
-  holder: {
+  wallet: {
     selector: {
       format: ["mdoc"],
       doctype: "org.iso.18013.5.mDL",
@@ -30,7 +30,7 @@ Because the API is format agnostic, you'd be able to query VCs equally well:
 
 ```javascript
 const result = await navigator.credentials.get({
-  holder: {
+  wallet: {
     format: ["vc+sd-jwt"],
     selector: [{
       doctype: "UniversityDegreeCredential",
@@ -55,7 +55,7 @@ If, and ever, we wanted to support querying wallets and federated identity provi
 
 ```javascript
 const result = await navigator.credentials.get({
-  holder: {
+  wallet: {
     selector: {
       format: ["mdoc"],
       doctype: "org.iso.18013.5.mDL",
