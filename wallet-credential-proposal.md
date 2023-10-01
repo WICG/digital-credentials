@@ -24,6 +24,28 @@ const result = await navigator.credentials.get({
     },
   }
 });
+```
+
+Because the API is format agnostic, you'd be able to query VCs equally well:
+
+```javascript
+const result = await navigator.credentials.get({
+  holder: {
+    format: ["vc+sd-jwt"],
+    selector: [{
+      doctype: "UniversityDegreeCredential",
+      fields: [
+        "credentialSubject.dateOfBirth",
+        "credentialSubject.dob",
+        "vc.credentialSubject.dateOfBirth",
+        "vc.credentialSubject.dob",
+      ]
+    }],
+    params: {
+      nonce: "m5tGxUIsFtLi6pwg",
+    }
+  }
+});
 ``` 
 
 The user agent can choose to fail this request if more than "wallet" credentials are requested from the credential manager, as it normally would for 
