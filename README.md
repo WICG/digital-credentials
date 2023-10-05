@@ -21,7 +21,7 @@ related to identity credentials on the web:
 
 * Asia\Pacific friendly time meeting B is every two weeks starting on 🔗 [2023-10-05 00:00 GMT](https://www.timeanddate.com/worldclock/converter.html?iso=20231005T000000&p1=240&p2=248&p3=776&p4=136&p5=tz_gmt&p6=43&p7=1203&p8=24&p9=75&p10=1241&p11=234)
 
-* North America friendly time meeting A is every two weeks starting on 🔗 [2023-10-09 19:00 GMT](https://www.timeanddate.com/worldclock/converter.html?iso=20231009T190000&p1=240&p2=248&p3=776&p4=136&p5=tz_gmt&p6=43&p7=1203&p8=24&p9=75&p10=1241&p11=234)
+* ~~North America friendly time meeting A is every two weeks starting on 🔗 2023-10-09 19:00 GMT~~ >> Finding a new time, please see https://github.com/WICG/identity-credential/issues/18#issuecomment-1749195372
 
 ### Additional Sessions
 * W3C TPAC breakout session - [Identity wallets and the web](https://www.w3.org/events/meetings/43317b7e-b0cd-4684-a03d-fdd06d742f43/)
