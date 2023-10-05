@@ -11,6 +11,10 @@ related to identity credentials on the web:
 # Related meetings / resources
 
 ## Meetings
+
+* Slack discussions in `wicg-identity-cred` in W3C Community instance
+* Meeting notes: https://github.com/WICG/identity-credential/wiki/Meeting-Notes
+
 ### Weekly Meetings
 
 📆 [ICS file (calendar items)](https://drive.google.com/file/d/1haMW6sSb9FFRY4p4XrcYeYhQ9cOiTYzm/view?usp=sharing)
