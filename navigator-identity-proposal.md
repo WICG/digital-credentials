@@ -7,7 +7,7 @@ authentication-oriented [Credential Manager](https://www.w3.org/TR/credential-ma
 
 ```javascript
 const result = await navigator.identity.get({
-  wallet: {
+  dc: {
     selector: {
       format: ["mdoc"],
       doctype: "org.iso.18013.5.mDL",
