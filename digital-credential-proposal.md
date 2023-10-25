@@ -12,7 +12,7 @@ const result = await navigator.credentials.get({
   digital: {
     selector: {
       format: ["mdoc"],
-      doctype: "org.iso.18013.5.mDL",
+      document: "org.iso.18013.5.mDL",
       fields: ["org.iso.18013.5.1.family_name"]
     },
     params: {
@@ -28,9 +28,9 @@ Because the API is format agnostic, you'd be able to query VCs equally well:
 ```javascript
 const result = await navigator.credentials.get({
   digital: {
-    format: ["vc+sd-jwt"],
     selector: [{
-      doctype: "UniversityDegreeCredential",
+      format: ["vc+sd-jwt"],
+      document: "UniversityDegreeCredential",
       fields: [
         "credentialSubject.dateOfBirth",
         "credentialSubject.dob",
