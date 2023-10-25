@@ -64,9 +64,11 @@ const result = await navigator.credentials.get({
     },
   },
   identity: {
-    configURL: "https://accounts.google.com/gsi/fedcm.json",
-    clientId: "212342",
-    nonce: "234231",
+    providers: [{
+      configURL: "https://accounts.google.com/gsi/fedcm.json",
+      clientId: "212342",
+      nonce: "234231",
+    }]
   }
 });
 ``` 
