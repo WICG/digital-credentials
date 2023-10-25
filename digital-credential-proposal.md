@@ -12,12 +12,17 @@ const result = await navigator.credentials.get({
   digital: {
     selector: {
       format: ["mdoc"],
-      document: "org.iso.18013.5.mDL",
-      fields: ["org.iso.18013.5.1.family_name"]
+      fields: [{
+        name: "doctype",
+        equals: "org.iso.18013.5.mDL"
+      }, {
+        name: "org.iso.18013.5.1.family_name"
+      }]
     },
     params: {
       nonce: "1234",
-      readerPublicKey: "567"
+      readerPublicKey: "567",
+      anythingCanGoOverWhere: true
     },
   }
 });
