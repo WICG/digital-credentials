@@ -1,12 +1,16 @@
 # Proposals related to identity credentials
 
-This repo is being used to work on, and hopefully converge, proposals
-related to identity credentials on the web:
+This repo is being used to work on, and hopefully converge on, proposals
+related to the innvocation of digital identity wallets from the web:
 
 * [Identity Credential](identity-credential-proposal.md)
 * [Digital Credential](digital-credential-proposal.md)
 * [navigator.identity.get()](navigator-identity-proposal.md)
 * [Mobile Document Request API](mobile-document-request-api-proposal.md)
+
+## Analysis of alternatives being developed elsewhere
+
+* [Custom URL Schemes](custom-schemes.md)
 
 # Related meetings / resources
 
