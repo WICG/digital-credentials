@@ -8,9 +8,10 @@ related to the innvocation of digital identity wallets from the web:
 * [navigator.identity.get()](navigator-identity-proposal.md)
 * [Mobile Document Request API](mobile-document-request-api-proposal.md)
 
-## Analysis of alternatives being developed elsewhere
+## Alternatives being developed elsewhere
 
-* [Custom URL Schemes](custom-schemes.md)
+* Analysis of [custom URL schemes](custom-schemes.md)
+* [CHAPI](https://chapi.io/) - a browser API [spec](https://w3c-ccg.github.io/credential-handler-api/) and polyfill focusing on wallet selection (rather than credential selection) and enabling both storage and presentation of credentials from both native and web wallets.
 
 # Related meetings / resources
 
