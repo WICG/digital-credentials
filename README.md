@@ -1,7 +1,7 @@
 # Proposals related to identity credentials
 
 This repo is being used to work on, and hopefully converge on, proposals
-related to the innvocation of digital identity wallets from the web:
+related to the invocation of digital identity wallets from the web:
 
 * [Identity Credential](identity-credential-proposal.md)
 * [Digital Credential](digital-credential-proposal.md)
