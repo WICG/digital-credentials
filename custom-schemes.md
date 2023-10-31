@@ -15,8 +15,8 @@ Existing specifications like [OpenID4VP](https://openid.net/specs/openid-4-verif
 
 3. What is the user experience when multiple wallet apps are installed?
 
-   - When multiple Android applications register for the same custom URL scheme the operating system presents the user with a picker every time it is invoked. Even if the verifier provided the user with appropriate context, a user may have trouble remembering which application has which credentials and so be more likely to cancel or fail the request.
-   - On iOS when multiple applications are installed that register for the same custom URL scheme, the behavior is [undefined](https://stackoverflow.com/questions/13130442/multiple-apps-with-the-same-url-scheme-ios). One wallet will get invoked without any indication that other wallets were available.
+   - When multiple Android applications register for the same custom URL scheme, the operating system presents the user with a picker every time that scheme is invoked. Even if the verifier provides the user with appropriate context, a user may have trouble remembering which application has which credentials and so be more likely to cancel or fail the request.
+   - On iOS, when multiple applications are installed that register for the same custom URL scheme, the behavior is [undefined](https://stackoverflow.com/questions/13130442/multiple-apps-with-the-same-url-scheme-ios). At present, one indeterminate wallet will be invoked without any indication that other wallets were available.
 
 4. What is the user experience when no wallet app is installed or when the user cancels wallet invocation?
 
