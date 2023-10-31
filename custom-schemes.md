@@ -26,7 +26,7 @@ Existing specifications like [OpenID4VP](https://openid.net/specs/openid-4-verif
 
 5. What is the user experience on a desktop operating system?
 
-   - Most wallet applications exist only as mobile applications, and users are generally reluctant to install native applications on desktop operating systems. What fallback will flows relying on custom URL schemes provide for users of desktop operating systems?
+   - Most wallet applications exist only as mobile applications, and users are generally reluctant if not unable (due to enterprise security settings, for instance) to install native applications on desktop operating systems. What fallback will flows relying on custom URL schemes provide for users of desktop operating systems?
    - A browser-based API can potentially provide low-friction integration between a desktop browser and a wallet application running on a mobile phone.
 
 6. What are the privacy implications of a wallet accepting custom schemes?
