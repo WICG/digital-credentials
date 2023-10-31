@@ -11,7 +11,7 @@ related to the invocation of digital identity wallets from the web:
 ## Alternatives being developed elsewhere
 
 * Analysis of [custom URL schemes](custom-schemes.md)
-* [CHAPI](https://chapi.io/) - a browser API [spec](https://w3c-ccg.github.io/credential-handler-api/) and polyfill focusing on wallet selection (rather than credential selection) and enabling both storage and presentation of credentials from both native and web wallets.
+* [CHAPI](https://chapi.io/) - a browser [API](https://dbpedia.org/resource/API) ([API spec](https://w3c-ccg.github.io/credential-handler-api/)) and [polyfill](https://dbpedia.org/resource/Polyfill_(programming)) ([polyfill spec](https://github.com/credential-handler/credential-handler-polyfill)) focusing on wallet selection (rather than credential selection) and enabling both storage and presentation of credentials from both native and web wallets.
 
 # Related meetings / resources
 
