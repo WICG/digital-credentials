@@ -20,7 +20,7 @@ Existing specifications like [OpenID4VP](https://openid.net/specs/openid-4-verif
 
 4. What is the user experience when no wallet app is installed or when the user cancels wallet invocation?
 
-   - Browsers generally silently ignore navigations to URL schemes with no handlers installed. This likely means a website cannot distinguish between the time it takes for a wallet to process a request and nothing happening due to the lack of any wallet app being installed. 
+   - Browsers generally silently ignore navigation to URL schemes with no handler installed. This likely means a website cannot distinguish between nothing happening while waiting for a wallet to process a request and nothing happening because no wallet app is installed. 
    - Additionally browsers on Android and iOS often offer the user the choice of whether or not to invoke an application for a custom URL scheme navigation (even if there is only one such app). The user canceling at this stage is also indistinguishable from no valid application being installed.
    - A browser-based API could show the user some meaningful error message when no relevant wallets are installed.
 
