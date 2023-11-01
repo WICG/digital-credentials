@@ -31,7 +31,7 @@ Existing specifications like [OpenID4VP](https://openid.net/specs/openid-4-verif
 
 6. What are the privacy implications of a wallet accepting custom schemes?
 
-   - In general, Android works to keep the list of installed applications private from other applications. However, applications registering to handle custom URL schemes effectively make their package name visible to other applications. By registering to support custom URL schemes, a wallet application may be leaking PII (such as the user's likely citizenship status or state of residency) to any other application on the device.
+   - [Android aims](https://developer.android.com/training/package-visibility) to keep the list of installed applications private from other applications, but this capability is reduced for applications which handle arbitrary intents like custom URL schemes. By registering to support custom URL schemes, a wallet application may effectively be leaking PII (such as the user's likely citizenship status or state of residency) to other applications on the device.
    - A purpose-built OS API for wallet invocation (on top of which a browser API would be built) can avoid any such information leakage.
 
 7. How can users be assured that they have control over where their personal information is shared?
