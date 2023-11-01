@@ -10,7 +10,7 @@ Existing specifications like [OpenID4VP](https://openid.net/specs/openid-4-verif
 
 2. Can wallets limit requests to secure contexts?
 
-   - If a user uses a website via http (not https) and it invokes a custom scheme, it's possible that an attacker with access to the network could eavesdrop on or even modify the request (such as by replacing the reader public key with their own). 
+   - If a user uses a website via http (not https) and it invokes a custom scheme, it's possible that an attacker with access to the network could eavesdrop on or even modify the request (such as by replacing the verifier's public key with their own). 
    - A browser API could take the position that it will function only within the context of a secure context (https).
 
 3. What is the user experience when multiple wallet apps are installed?
