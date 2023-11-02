@@ -39,7 +39,7 @@ Existing specifications like [OpenID4VP](https://openid.net/specs/openid-4-verif
 
 ### Friction and app switching
 
-Opening a custom URL scheme will switch apps, which is a high friction user flow. A browser API could present relevant UI (even from third party wallet apps) in a sheet over the webpage, which is a less disruptive flow.
+  - Opening a custom URL scheme will switch apps, which is a high friction user flow. A browser API could present relevant UI (even from third party wallet apps) in a sheet over the webpage, which is a less disruptive flow.
 
 ## What are the privacy implications of a wallet accepting custom schemes?
 
