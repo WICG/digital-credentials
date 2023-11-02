@@ -12,7 +12,7 @@ Existing specifications like [OpenID4VP](https://openid.net/specs/openid-4-verif
 
   - Does the page give the wallet a URL to navigate back to as part of the custom scheme URL it uses to launch the wallet?
 
-If so, that's a problem because it won't go back to the same tab. Apps don't have the ability to return information to the same page that invoked them after a custom scheme invocation; they can just open a new page in a new tab.
+  - If so, that's a problem because it won't go back to the same tab. Apps don't have the ability to return information to the same page that invoked them after a custom scheme invocation; they can just open a new page in a new tab.
 
 ## Can wallets limit requests to secure contexts?
 
