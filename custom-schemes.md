@@ -15,11 +15,6 @@ Existing specifications like [OpenID4VP](https://openid.net/specs/openid-4-verif
 
 ## User experience concerns
 
-### What is the user experience of the wallet operation?
-
-   - Launching an entirely new application can be jarring for users, taking them out of the flow of the journey they were trying to complete on a website. This risks abandonment, and so is a disincentive for verifiers to invoke the flow.
-   - A browser API could integrate with the operating system to provide a less jarring wallet overlay on top of the web page, keeping the user feeling in flow with the site's experience.
-
 ### What is the user experience when the wallet has completed?
 
    - After launching an application via a custom URL scheme, mobile operating systems don't provide a mechanism for switching back to the invoking application / browser tab.
@@ -45,7 +40,8 @@ Existing specifications like [OpenID4VP](https://openid.net/specs/openid-4-verif
 
 ### Friction and app switching
 
-   - Opening a custom URL scheme will switch apps, which is a high friction user flow. A browser API could present relevant UI (even from third party wallet apps) in a sheet over the webpage, which is a less disruptive flow.
+   - Opening a custom URL scheme will launch an entirely new application, which can be jarring for users, taking them out of the flow of the journey they were trying to complete on a website. This risks abandonment, and so is a disincentive for verifiers to invoke the flow.
+   - A browser API could integrate with the operating system to provide a less jarring wallet overlay on top of the web page, keeping the user feeling in flow with the site's experience.
 
 ## What are the privacy implications of a wallet accepting custom schemes?
 
