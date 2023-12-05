@@ -10,6 +10,8 @@ Earlier proposals still being discussed:
 * [navigator.identity.get()](navigator-identity-proposal.md)
 * [Mobile Document Request API](mobile-document-request-api-proposal.md)
 
+Risks and mitigation principals for the larger online real-world-identity space are being worked on as part of the W3C PING's [credential-considerations repository](https://github.com/w3cping/credential-considerations).
+
 ## Alternatives being developed elsewhere
 
 * Analysis of [custom URL schemes](custom-schemes.md)
