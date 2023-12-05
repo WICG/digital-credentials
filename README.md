@@ -24,10 +24,19 @@ Earlier proposals still being discussed:
 
 ### Weekly Meetings
 
+"A" calls are Americas/EMEA-friendly
+
+"B" calls are APAC-friendly
+
 📆 [ICS file (calendar items)](https://drive.google.com/file/d/1u8QK2-9gCo_qKify7VKeHDntU85Rc7Xx/view?usp=sharing) (v2)
 
-* Asia/Pacific-friendly time meeting B is every two weeks starting on 🔗 [2023-10-19 00:00 GMT](https://www.timeanddate.com/worldclock/converter.html?iso=20231019T000000&p1=240&p2=248&p3=776&p4=136&p5=tz_gmt&p6=43&p7=1203&p8=24&p9=75&p10=1241&p11=234)
-* Americas/EMEA-friendly time meeting A is every two weeks starting on 🔗 [2023-10-23 16:00 GMT](https://www.timeanddate.com/worldclock/converter.html?iso=20231023T160000&p1=240&p2=248&p3=776&p4=136&p5=tz_gmt&p6=43&p7=1203&p8=24&p9=75&p10=1241&p11=234)
+**Upcoming Calls**
+- [2023-12-14 00:00Z](https://www.timeanddate.com/worldclock/converter.html?iso=20231214T000000&p1=tz_z) (B)
+- [2023-12-18 16:00Z](https://www.timeanddate.com/worldclock/converter.html?iso=20231218T160000&p1=tz_z) (A)
+- 2023-12-27 NO CALL
+- 2024-01-01 NO CALL
+- [2024-01-11 00:00Z](https://www.timeanddate.com/worldclock/converter.html?iso=20240111T000000&p1=tz_z) (B)
+- [2024-01-15 16:00Z](https://www.timeanddate.com/worldclock/converter.html?iso=20240115T160000&p1=tz_z) (A)
 
 
 ### Additional Sessions
