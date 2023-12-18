@@ -33,8 +33,6 @@ Risks and mitigation principals for the larger online real-world-identity space 
 📆 [ICS file (calendar items)](https://drive.google.com/file/d/1u8QK2-9gCo_qKify7VKeHDntU85Rc7Xx/view?usp=sharing) (v2)
 
 **Upcoming Calls**
-- [2023-12-14 00:00Z](https://www.timeanddate.com/worldclock/converter.html?iso=20231214T000000&p1=tz_z) (B)
-- [2023-12-18 16:00Z](https://www.timeanddate.com/worldclock/converter.html?iso=20231218T160000&p1=tz_z) (A)
 - 2023-12-27 NO CALL
 - 2024-01-01 NO CALL
 - [2024-01-11 00:00Z](https://www.timeanddate.com/worldclock/converter.html?iso=20240111T000000&p1=tz_z) (B)
