@@ -44,14 +44,14 @@ The above expresses as WebIDL would be:
 dictionary IdentityRequestOptions {
  AbortSignal signal; // tears down the UI, if needed.
  required sequence<IdentityRequestProvider> providers;
-}
+};
 
 dictionary IdentityRequestProvider {
  required DOMString protocol; // See "Protocol Registry" below
  required DOMString request;
  required DOMString publicKey;
  // Other members
-}
+};
 ```
 
 What other members would be included in both dictionaries is up for discussion (e.g., nonce, reason for request, etc.).
@@ -61,6 +61,13 @@ What other members would be included in both dictionaries is up for discussion (
 An "digital credential" is the result from the promise resolving as a result of calling the .requestIdentity() method. We envision this interface exposing a read-only `.response` attribute, which would contain the encrypted response for the corresponding request.
 
 Our expectation is that all responses are encrypted by default.
+
+```WebIDL
+[Exposed=Window, SecureContext]
+interface DigitalCredential {
+  [SameObject] readonly attribute ArrayBuffer response;
+};
+```
 
 ## Registry of credential identity protocols
 
