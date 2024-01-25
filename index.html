@@ -44,9 +44,9 @@
   <body data-cite="credential-management-1 WebCryptoAPI">
     <section id="abstract">
       <p>
-        This document specifies an API solution for requesting digital identity
+        This document specifies an API solution for requesting digital
         credentials (e.g. a driver's license) or verifying some aspect of a
-        digital identity credential (e.g., proof of age). The API builds on the
+        digital credential (e.g., proof of age). The API builds on the
         [[[credential-management-1]]] as a means to request a digital
         credential from the user agent or underlying platform.
       </p>
@@ -67,23 +67,22 @@
     </h2>
     <dl class="definitions">
       <dt>
-        <dfn>digital identity credential</dfn>
+        <dfn>digital credential</dfn>
       </dt>
       <dd>
-        A digital identity credential is a digital representation of a physical
-        identity credential (e.g., a driver's license, passport, etc). A
-        digital identity credential represents a set of claims about the
-        subject of the credential (e.g., the holder of the credential). A
-        digital identity credential is issued by an issuer (e.g., a government
-        agency).
+        A digital credential is a digital representation of a physical identity
+        credential (e.g., a driver's license, passport, etc). A digital
+        identity credential represents a set of claims about the subject of the
+        credential (e.g., the holder of the credential). A digital identity
+        credential is issued by an issuer (e.g., a government agency).
       </dd>
       <dt>
-        <dfn>Identity credential provider</dfn>
+        <dfn>Credential provider</dfn>
       </dt>
       <dd>
         <p>
           A credential provider is a an application or OS-level service that
-          presents UI to the user to request a digital identity credentia For
+          presents UI to the user to request a [=digital credential=]. For
           example,s a credential provider could be a mobile wallet application
           that requests a mobile driver's license from the user.
         </p>
@@ -95,13 +94,12 @@
         </p>
       </dd>
       <dt>
-        <dfn for="digital identity">request protocol</dfn>
+        <dfn for="digital credential">request protocol</dfn>
       </dt>
       <dd>
-        The request protocol is a standardized format/structure to [=request
-        digital identity credentials=]. For example, a request protocol could
-        be a <a>"mdoc"</a> for mobile driver's licenses as per
-        [[?ISO-18013-5]].
+        The request protocol is a standardized format/structure to [=request a
+        digital credential=]. For example, a request protocol could be a
+        `"some-format"` to request a driver's licenses.
       </dd>
     </dl>
     <h2>
@@ -111,7 +109,7 @@
       The following is in is scope for the this specification:
     </p>
     <ul>
-      <li>Requesting a [=digital identity credentials=].
+      <li>Requesting a [=digital credentials=].
       </li>
     </ul>
     <p>
@@ -119,12 +117,18 @@
     </p>
     <ul>
       <li>Creating, updating, deleting, or otherwise managing [=digital
-      identity credentials=].
+      credentials=].
       </li>
     </ul>
     <h2>
-      Extensions to the `CredentialsContainer` interface
+      Extensions to Credential Management API
     </h2>
+    <p>
+      ...coming soon...
+    </p>
+    <h3>
+      Extensions to the `CredentialsContainer` interface
+    </h3>
     <pre class="idl">
     partial interface CredentialsContainer {
       Promise&lt;DigitalCredential&gt; requestIdentity(DigitalCredentialRequestOptions options);
@@ -135,14 +139,14 @@
     </h3>
     <p data-dfn-for="CredentialsContainer">
       When the <dfn>requestIdentity()</dfn> method is called, the user agent
-      MUST run the [=request digital identity credentials=] steps.
+      MUST run the [=request a digital credential=] steps.
     </p>
     <h2>
-      The `IdentityRequestOptions` dictionary
+      The `DigitalCredentialRequestOptions` dictionary
     </h2>
     <p>
-      The {{IdentityRequestOptions}} dictionary is used to specify options when
-      requesting a digital identity credential.
+      The {{DigitalCredentialRequestOptions}} dictionary is used to specify
+      options when requesting a digital identity credential.
     </p>
     <pre class="idl">
     dictionary DigitalCredentialRequestOptions {
@@ -151,16 +155,17 @@
     };
     </pre>
     <p>
-      The <dfn data-dfn-for="IdentityRequestOptions">providers</dfn> member is
-      a sequence of [=digital credential/request protocol=] specific providers.
+      The <dfn data-dfn-for="DigitalCredentialRequestOptions">providers</dfn>
+      member is a sequence of [=digital credential/request protocol=] specific
+      providers.
     </p>
     <h3>
       The `signal` member
     </h3>
     <p>
-      The <dfn data-dfn-for="IdentityRequestOptions">signal</dfn> member is an
-      {{AbortSignal}} that allows the caller to abort an ongoing [=request
-      digital identity credentials=].
+      The <dfn data-dfn-for="DigitalCredentialRequestOptions">signal</dfn>
+      member is an {{AbortSignal}} that allows the caller to abort an ongoing
+      [=request a digital credential=].
     </p>
     <h2>
       The `IdentityRequestProvider` dictionary
@@ -194,21 +199,21 @@
     </h3>
     <p>
       The <dfn data-dfn-for="IdentityRequestProvider">request</dfn> member is
-      the request to be sent to the [=identity credential provider=].
+      the request to be sent to the [=credential provider=].
     </p>
     <h3>
       The `publicKey` member
     </h3>
     <p>
       The <dfn data-dfn-for="IdentityRequestProvider">publicKey</dfn> member is
-      the public key of the [=identity credential provider=].
+      the public key of the [=credential provider=].
     </p>
     <h2>
       Requesting a digital identity credential
     </h2>
     <p>
-      The following steps are taken to <dfn>request digital identity
-      credentials</dfn>, with {{IdentityRequestOptions}} |options|:
+      The following steps are taken to <dfn>request a digital credential</dfn>,
+      with {{DigitalCredentialRequestOptions}} |options|:
     </p>
     <ol>
       <li>Let |promise| be [=a new promise=].
@@ -217,21 +222,20 @@
       parallel=].
       </li>
       <li>For each |provider:IdentityRequestProvider| of |options|'s
-      {{IdentityRequestOptions/providers}}.
+      {{DigitalCredentialRequestOptions/providers}}.
         <ol>
           <li>[=verify the public key=] of |provider|.
           </li>
         </ol>
       </li>
-      <li>...present [=identity credential provider=] to user.
+      <li>...present [=credential provider=] to user.
       </li>
     </ol>
     <h2>
       The `DigitalCredential` interface
     </h2>
     <p>
-      The {{DigitalCredential}} interface represents a [=digital identity
-      credential=].
+      The {{DigitalCredential}} interface represents a [=digital credential=].
     </p>
     <pre class="idl">
     [Exposed=Window, SecureContext]
@@ -260,24 +264,42 @@
     </h2>
     <p>
       The following steps are taken to <dfn>verify the public key</dfn> of a
-      [=identity credential provider=], with {{CryptoKey}} |key|:
+      [=credential provider=], with {{CryptoKey}} |key|:
     </p>
     <ol>
-      <li>...restrictions on type, format, and usage of |key|...
+      <li>
+        <aside class="issue" data-number="56"></aside>
       </li>
     </ol>
     <h2 id="protocol-registry">
-      Identity Request Protocols Registry
+      Registry of protocols for requesting Digital Credential
     </h2>
     <p>
-      The following is the initial registry of [=digital credential/request
-      protocols=] that are supported by this specification.
+      The following is the registry of [=digital credential/request protocols=]
+      that are supported by this specification.
     </p>
+    <p class="note" title="Official Registry" data-cite="w3c-process">
+      It is expected that this registry will be become a [=W3C registry=] in
+      the future.
+    </p>
+    <h3>
+      Inclusion criteria
+    </h3>
     <p>
-      User agents MUST support the following [=digital credential/request
+      To be included in the registry...
+    </p>
+    <aside class="issue" data-number="58"></aside>
+    <h3>
+
+    </h3>
+    <p>
+      [=User agents=] MUST support the following [=digital credential/request
       protocols=]:
     </p>
     <table class="data">
+      <caption>
+        Table of officially registered [=digital credential/request protocols=].
+      </caption>
       <thead>
         <tr>
           <th>
@@ -293,14 +315,8 @@
       </thead>
       <tbody>
         <tr>
-          <td>
-            <code><dfn>"mdoc"</dfn></code>
-          </td>
-          <td>
-            A mobile driving license (mDL) request.
-          </td>
-          <td>
-            [[ISO-18013-5]]
+          <td colspan="3">
+            Coming soon...
           </td>
         </tr>
       </tbody>
