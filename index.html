@@ -182,7 +182,6 @@
     dictionary IdentityRequestProvider {
       required DOMString protocol;
       required ArrayBuffer request;
-      required CryptoKey publicKey;
     };
     </pre>
     <h3>
@@ -204,14 +203,6 @@
       The <dfn data-dfn-for="IdentityRequestProvider">request</dfn> member is
       the request to be sent to the [=credential provider=].
     </p>
-    <h3>
-      The `publicKey` member
-    </h3>
-    <aside class="issue" data-number="49"></aside>
-    <p>
-      The <dfn data-dfn-for="IdentityRequestProvider">publicKey</dfn> member is
-      the public key of the [=credential provider=].
-    </p>
     <h2>
       Requesting a digital identity credential
     </h2>
@@ -228,7 +219,7 @@
       <li>For each |provider:IdentityRequestProvider| of |options|'s
       {{DigitalCredentialRequestOptions/providers}}.
         <ol>
-          <li>[=verify the public key=] of |provider|.
+          <li>...process provider...
           </li>
         </ol>
       </li>
@@ -262,13 +253,6 @@
     <p>
       The <dfn data-dfn-for="DigitalCredential">data</dfn> member is the
       credential's encrypted data.
-    </p>
-    <h2>
-      Public key verification
-    </h2>
-    <p>
-      The following steps are taken to <dfn>verify the public key</dfn> of a
-      [=credential provider=], with {{CryptoKey}} |key|:
     </p>
     <ol>
       <li>
