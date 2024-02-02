@@ -158,11 +158,11 @@
     </h3>
     <aside class="issue" data-number="65"></aside>
     <h2>
-      The `DigitalIdentityRequestOptions` dictionary
+       Extensions to `CredentialRequestOptions` dictionary
     </h2>
     <pre class="idl">
-    dictionary DigitalIdentityRequestOptions : CredentialRequestOptions {
-      required sequence&lt;IdentityRequestProvider&gt; providers;
+    partial dictionary CredentialRequestOptions {
+     sequence&lt;IdentityRequestProvider&gt; providers;
     };
     </pre>
     <h3>
