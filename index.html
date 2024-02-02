@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>
-      Digital Credentials
+      Digital Identities
     </title>
     <script src="https://www.w3.org/Tools/respec/respec-w3c" class=
     "remove"></script>
@@ -19,10 +19,16 @@
           company: "Apple Inc.",
           companyURL: "https://apple.com",
         },
+        {
+          name: "Sam Goto",
+          email: "goto@google.com",
+          company: "Google Inc.",
+          companyURL: "https://google.com",
+        },
         // Add additional editors here.
         // https://github.com/w3c/respec/wiki/editors
       ],
-      shortName: "digital-credentials",
+      shortName: "digital-identity",
       specStatus: "CG-DRAFT",
       group: "wicg",
       localBiblio: {
@@ -44,11 +50,10 @@
   <body data-cite="credential-management-1 WebCryptoAPI">
     <section id="abstract">
       <p>
-        This document specifies an API solution for requesting digital
-        credentials (e.g. a driver's license) or verifying some aspect of a
-        digital credential (e.g., proof of age). The API builds on the
-        [[[credential-management-1]]] as a means to request a digital
-        credential from the user agent or underlying platform.
+        This document specifies an API to allow user agents to mediate access
+        to, and representing, a digital identity (e.g. a digital driver's
+        license). The API builds on [[[credential-management-1]]] as a means to
+        request a digital identity from the user agent or underlying platform.
       </p>
     </section>
     <section id="sotd">
@@ -65,115 +70,123 @@
     <h2>
       Model
     </h2>
-    <dl class="definitions">
+    <dl class="definitions" data-sort="">
       <dt>
-        <dfn>Digital credential</dfn>
-      </dt>
-      <dd>
-        A digital credential is a digital representation of a physical identity
-        credential (e.g., a driver's license, passport, etc). A digital
-        identity credential represents a set of claims about the subject of the
-        credential (e.g., the holder of the credential). A digital identity
-        credential is issued by an issuer (e.g., a government agency).
-      </dd>
-      <dt>
-        <dfn>Credential provider</dfn>
+        <dfn>Identity credential</dfn>
       </dt>
       <dd>
         <p>
-          A credential provider is a an application or OS-level service that
-          presents UI to the user to request a [=digital credential=]. For
-          example, a credential provider could be a wallet application that
-          requests a driver's license from the user.
+          A specialized type of [=credential=] corresponding to the real-world
+          identity of a person enabling developers to make authentication
+          decisions based on verified identity information.
         </p>
-        <p>
-          A credential provider is responsible for presenting the user with a
-          list of [=digital credential/request protocol=] specific providers
-          (e.g., a list of driver's license or applications that hold driver's
-          licenses).
-        </p>
+        <aside class="Note">
+          [=Credentials=] that are classified as [=identity credentials=]
+          always inherit from the {{Identity}} interface.
+        </aside>
       </dd>
       <dt>
-        <dfn for="digital credential">Request protocol</dfn>
+        <dfn data-local-lt="digital identities">Digital identity</dfn>
       </dt>
       <dd>
-        The request protocol is a standardized format/structure to [=request a
-        digital credential=]. For example, a request protocol could be a
-        `"some-format"` to request a driver's licenses.
+        <p>
+          A digital representation of an [=identity credential=], such as a
+          digital driver's license or passport, embodying verifiable claims
+          about an individual's identity. Issued by a trusted [=digital
+          identity/issuer=], it enables authenticated interactions.
+        </p>
+        <aside class="Note">
+          [=Digital identities=] are represented as {{DigitalIdentity}}
+          instances.
+        </aside>
+      </dd>
+      <dt>
+        <dfn>Identity credential chooser</dfn>
+      </dt>
+      <dd>
+        An application or service that provides a user interface for selecting
+        and/or querying a [=digital identity=], such as a digital wallet that
+        manages various identity documents and credentials.
+      </dd>
+      <dt>
+        <dfn data-for="digital identity">Request protocol</dfn>
+      </dt>
+      <dd>
+        A standardized format for requesting a [=digital identity=], designed
+        to ensure the secure, private, and interoperable exchange of identity
+        information. See [[#protocol-registry]].
+      </dd>
+      <dt>
+        <dfn data-for="Digital identity">Issuer</dfn>
+      </dt>
+      <dd>
+        The entity that issues a [=digital identity=], such as a government
+        agency or certified organizations.
       </dd>
     </dl>
     <h2>
       Scope
     </h2>
     <p>
-      The following is in is scope for the this specification:
+      The following items are within the scope of this specification:
     </p>
     <ul>
-      <li>Requesting a [=digital credentials=].
+      <li>Requesting a [=digital identity=], including mechanisms for secure
+      presentation.
       </li>
     </ul>
     <p>
-      The following is out of scope
+      The following items are out of scope:
     </p>
     <ul>
-      <li>Creating, updating, deleting, or otherwise managing [=digital
-      credentials=].
+      <li>Enrollment process for establishing a [=digital identity=].
+      </li>
+      <li>UI/UX considerations, with the exception of privacy considerations,
+      which are addressed to ensure the protection of user data during the
+      request process.
       </li>
     </ul>
     <h2>
-      Extensions to Credential Management API
+      Extensions to the `Navigator` interface
     </h2>
-    <p>
-      ...coming soon...
-    </p>
-    <h3>
-      Extensions to the `CredentialsContainer` interface
-    </h3>
     <pre class="idl">
-    partial interface CredentialsContainer {
-      Promise&lt;DigitalCredential&gt; requestIdentity(DigitalCredentialRequestOptions options);
+    partial interface Navigator {
+      [SecureContext, SameObject] readonly attribute CredentialsContainer identity;
     };
     </pre>
     <h3>
-      The `requestIdentity()` method
+      The `identity` attribute
     </h3>
-    <p data-dfn-for="CredentialsContainer">
-      When the <dfn>requestIdentity()</dfn> method is called, the user agent
-      MUST run the [=request a digital credential=] steps.
+    <p data-dfn-for="Navigator">
+      The <dfn>identity</dfn> attribute provides access to the the underlying
+      {{CredentialsContainer}} for managing [=identity credentials=].
     </p>
-    <aside class="issue" data-number="61"></aside>
+    <h3>
+      Extensions to Credential Management API
+    </h3>
+    <aside class="issue" data-number="65"></aside>
     <h2>
-      The `DigitalCredentialRequestOptions` dictionary
+      The `DigitalIdentityRequestOptions` dictionary
     </h2>
-    <p>
-      The {{DigitalCredentialRequestOptions}} dictionary is used to specify
-      options when requesting a digital identity credential.
-    </p>
     <pre class="idl">
-    dictionary DigitalCredentialRequestOptions {
-      AbortSignal signal;
+    dictionary DigitalIdentityRequestOptions : CredentialRequestOptions {
       required sequence&lt;IdentityRequestProvider&gt; providers;
     };
     </pre>
-    <p>
-      The <dfn data-dfn-for="DigitalCredentialRequestOptions">providers</dfn>
-      member is a sequence of [=digital credential/request protocol=] specific
-      providers.
-    </p>
     <h3>
-      The `signal` member
+      The `providers` member
     </h3>
     <p>
-      The <dfn data-dfn-for="DigitalCredentialRequestOptions">signal</dfn>
-      member is an {{AbortSignal}} that allows the caller to abort an ongoing
-      [=request a digital credential=].
+      The <dfn data-dfn-for="DigitalIdentityRequestOptions">providers</dfn>
+      member is a sequence of [=digital identity/request protocol=] specific
+      providers.
     </p>
     <h2>
       The `IdentityRequestProvider` dictionary
     </h2>
     <p>
       The {{IdentityRequestProvider}} dictionary is used to specify a [=digital
-      credential/request protocol=] specific provider, while also handling
+      identity/request protocol=] specific provider, while also handling
       cryptographic requirements.
     </p>
     <pre class="idl">
@@ -187,8 +200,8 @@
     </h3>
     <p>
       The <dfn data-dfn-for="IdentityRequestProvider">protocol</dfn> member
-      denotes the [=digital credential/request protocol=] when requesting an
-      identify credential via {{CredentialsContainer/requestIdentity()}}.
+      denotes the [=digital identity/request protocol=] when requesting an
+      identify credential.
     </p>
     <p>
       The {{IdentityRequestProvider/protocol}} member's value is be one of the
@@ -199,40 +212,30 @@
     </h3>
     <p>
       The <dfn data-dfn-for="IdentityRequestProvider">request</dfn> member is
-      the request to be sent to the [=credential provider=].
+      the request to be sent to the [=identity credential chooser=].
     </p>
     <h2>
-      Requesting a digital identity credential
+      The `Identity` interface
     </h2>
     <p>
-      The following steps are taken to <dfn>request a digital credential</dfn>,
-      with {{DigitalCredentialRequestOptions}} |options|:
+      The <dfn>Identity</dfn> interface represents an [=identity credential=].
     </p>
-    <ol>
-      <li>Let |promise| be [=a new promise=].
-      </li>
-      <li>Return |promise| and continue running the following steps [=in
-      parallel=].
-      </li>
-      <li>For each |provider:IdentityRequestProvider| of |options|'s
-      {{DigitalCredentialRequestOptions/providers}}.
-        <ol>
-          <li>...process provider...
-          </li>
-        </ol>
-      </li>
-      <li>...present [=credential provider=] to user.
-      </li>
-    </ol>
+    <pre class="idl">
+      [Exposed=Window]
+      interface Identity : Credential {
+        // Future things...
+      };
+    </pre>
     <h2>
-      The `DigitalCredential` interface
+      The `DigitalIdentity` interface
     </h2>
     <p>
-      The {{DigitalCredential}} interface represents a [=digital credential=].
+      The <dfn>DigitalIdentity</dfn> interface represents a [=digital
+      identity=].
     </p>
     <pre class="idl">
     [Exposed=Window, SecureContext]
-    interface DigitalCredential : Credential {
+    interface DigitalIdentity : Identity {
       readonly attribute DOMString protocol;
       readonly attribute ArrayBuffer data;
     };
@@ -241,27 +244,22 @@
       The `protocol` member
     </h3>
     <p>
-      The <dfn data-dfn-for="DigitalCredential">protocol</dfn> member is the
-      [=digital credential/request protocol=] that was used to request the
-      credential.
+      The <dfn data-dfn-for="DigitalIdentity">protocol</dfn> member is the
+      [=digital identity/request protocol=] that was used to request the
+      [=identity credential=].
     </p>
     <h3>
       The `data` member
     </h3>
     <p>
-      The <dfn data-dfn-for="DigitalCredential">data</dfn> member is the
+      The <dfn data-dfn-for="DigitalIdentity">data</dfn> member is the
       credential's encrypted data.
     </p>
-    <ol>
-      <li>
-        <aside class="issue" data-number="56"></aside>
-      </li>
-    </ol>
     <h2 id="protocol-registry">
-      Registry of protocols for requesting Digital Credential
+      Registry of protocols for requesting digital identity
     </h2>
     <p>
-      The following is the registry of [=digital credential/request protocols=]
+      The following is the registry of [=digital identity/request protocols=]
       that are supported by this specification.
     </p>
     <p class="note" title="Official Registry" data-cite="w3c-process">
@@ -276,13 +274,12 @@
     </p>
     <aside class="issue" data-number="58"></aside>
     <p>
-      [=User agents=] MUST support the following [=digital credential/request
+      [=User agents=] MUST support the following [=digital identity/request
       protocols=]:
     </p>
     <table class="data">
       <caption>
-        Table of officially registered [=digital credential/request
-        protocols=].
+        Table of officially registered [=digital identity/request protocols=].
       </caption>
       <thead>
         <tr>
