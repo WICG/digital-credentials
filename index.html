@@ -87,13 +87,13 @@
           about an individual's identity. Issued by a trusted [=digital
           identity/issuer=], it enables authenticated interactions.
         </p>
-        <aside class="Note">
-          [=Digital identities=] are represented as {{DigitalIdentity}}
-          instances.
+        <aside class="note">
+          [=Digital identities=] are represented as instances of the
+          {{DigitalIdentity}} interface.
         </aside>
       </dd>
       <dt>
-        <dfn>Identity credential chooser</dfn>
+        <dfn>Identity credential provider</dfn>
       </dt>
       <dd>
         An application or service that provides a user interface for selecting
@@ -106,7 +106,7 @@
       <dd>
         A standardized format for requesting a [=digital identity=], designed
         to ensure the secure, private, and interoperable exchange of identity
-        information. See [[#protocol-registry]].
+        information. See section [[[#protocol-registry]]].
       </dd>
       <dt>
         <dfn data-for="Digital identity">Issuer</dfn>
@@ -158,28 +158,29 @@
     </h3>
     <aside class="issue" data-number="65"></aside>
     <h2>
-       Extensions to `CredentialRequestOptions` dictionary
+      Extensions to `CredentialRequestOptions` dictionary
     </h2>
     <pre class="idl">
     partial dictionary CredentialRequestOptions {
-     sequence&lt;IdentityRequestProvider&gt; providers;
+      sequence&lt;IdentityRequestProvider&gt; providers;
     };
     </pre>
     <h3>
       The `providers` member
     </h3>
     <p>
-      The <dfn data-dfn-for="CredentialRequestOptions">providers</dfn>
-      member is a sequence of [=digital identity/request protocol=] specific
-      providers.
+      The <dfn data-dfn-for="CredentialRequestOptions">providers</dfn> member
+      is a sequence of [=digital identity/request protocol=] that can
+      potentially be handled by a user's selected [=identity credential
+      provider=].
     </p>
     <h2>
       The `IdentityRequestProvider` dictionary
     </h2>
     <p>
       The {{IdentityRequestProvider}} dictionary is used to specify a [=digital
-      identity/request protocol=] specific provider, while also handling
-      cryptographic requirements.
+      identity/request protocol=] and structured request, which the user agent
+      MAY match against a [=identity credential provider=].
     </p>
     <pre class="idl">
     dictionary IdentityRequestProvider {
@@ -204,13 +205,15 @@
     </h3>
     <p>
       The <dfn data-dfn-for="IdentityRequestProvider">request</dfn> member is
-      the request to be sent to the [=identity credential chooser=].
+      the request to be handled by the user's selected [=identity credential
+      provider=].
     </p>
     <h2>
       The `Identity` interface
     </h2>
     <p>
-      The <dfn>Identity</dfn> interface represents an [=identity credential=].
+      The <dfn>Identity</dfn> interface is used in the API to represent
+      [=credentials=] that are classified as an [=identity credential=].
     </p>
     <pre class="idl">
       [Exposed=Window]
