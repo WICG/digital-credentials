@@ -43,9 +43,14 @@
     <section id="abstract">
       <p>
         This document specifies an API to allow user agents to mediate access
-        to, and representing, a verifiably-issued digital identity (e.g. a government issued digital driver's license, a passport issued by a country, a student card or diploma issued by a university, an employee card issued by a company, a passenger's boarding pass issued by an airline, a profile issued by an online social network, membership cards, vaccination records, etc)  
-        license). The API builds on [[[credential-management-1]]] as a means to
-        request a digital identity from the user agent or underlying platform.
+        to, and representing, a verifiably-issued digital identity (e.g. a
+        government issued digital driver's license, a passport issued by a
+        country, a student card or diploma issued by a university, an employee
+        card issued by a company, a passenger's boarding pass issued by an
+        airline, a profile issued by an online social network, membership
+        cards, vaccination records, etc) license). The API builds on
+        [[[credential-management-1]]] as a means to request a digital identity
+        from the user agent or underlying platform.
       </p>
     </section>
     <section id="sotd">
@@ -69,8 +74,10 @@
       <dd>
         <p>
           A specialized type of [=credential=] corresponding to the real-world
-          identity of a person enabling a [=verifier=] to make authentication
-          decisions based on identity statements verifiably made by an [=issuer=].
+          identity of a person enabling a <a data-cite=
+          "vc-data-model-2.0#dfn-verifier">verifier</a> to make authentication
+          decisions based on identity statements verifiably made by an
+          [=issuer=].
         </p>
         <aside class="Note">
           [=Credentials=] that are classified as [=identity credentials=]
@@ -198,7 +205,8 @@
     </p>
     <p>
       The {{IdentityRequestProvider/protocol}} member's value is be one of the
-      well-defined keys defined in [[[#protocol-registry]]] or any other custom one.
+      well-defined keys defined in [[[#protocol-registry]]] or any other custom
+      one.
     </p>
     <h3>
       The `request` member
