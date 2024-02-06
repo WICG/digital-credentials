@@ -175,7 +175,7 @@
     </h2>
     <pre class="idl">
     dictionary DigitalCredentialRequestOptions {
-      sequence&lt;IdentityRequestProvider&gt; providers;
+      sequence&lt;DigitalCredentialsProvider&gt; providers;
     };
     </pre>
     <h3>
@@ -188,16 +188,16 @@
       software, such as a digital wallet.
     </p>
     <h2>
-      The `IdentityRequestProvider` dictionary
+      The `DigitalCredentialsProvider` dictionary
     </h2>
     <p>
-      The {{IdentityRequestProvider}} dictionary is used to specify an
+      The {{DigitalCredentialsProvider}} dictionary is used to specify an
       [=digital credential/exchange protocol=] and a [=digital
       credential/query=], which the user agent MAY match against software used
       by a holder, such as a digital wallet.
     </p>
     <pre class="idl">
-    dictionary IdentityRequestProvider {
+    dictionary DigitalCredentialsProvider {
       required DOMString protocol;
       required object request;
     };
@@ -206,12 +206,12 @@
       The `protocol` member
     </h3>
     <p>
-      The <dfn data-dfn-for="IdentityRequestProvider">protocol</dfn> member
+      The <dfn data-dfn-for="DigitalCredentialsProvider">protocol</dfn> member
       denotes the [=digital credential/exchange protocol=] when requesting an
       identify credential.
     </p>
     <p>
-      The {{IdentityRequestProvider/protocol}} member's value is be one of the
+      The {{DigitalCredentialsProvider/protocol}} member's value is be one of the
       well-defined keys defined in [[[#protocol-registry]]] or any other custom
       one.
     </p>
@@ -219,7 +219,7 @@
       The `request` member
     </h3>
     <p>
-      The <dfn data-dfn-for="IdentityRequestProvider">request</dfn> member is
+      The <dfn data-dfn-for="DigitalCredentialsProvider">request</dfn> member is
       the request to be handled by the holder's software, such as a digital
       wallet.
     </p>
