@@ -1,43 +1,35 @@
-# Proposals related to identity credentials
+# Digital Identities
 
-This repo is being used to work on, and hopefully converge on, a proposal
-related to the invocation of digital identity wallets from the web:
-* [Digital Credential](digital-credentials-2-proposal.md)
+- [Digital identities spec](https://wicg.github.io/digital-identities/)
 
-Earlier proposals still being discussed:
-* [Identity Credential](identity-credential-proposal.md)
-* [Original Digital Credential](digital-credential-proposal.md)
-* [navigator.identity.get()](navigator-identity-proposal.md)
-* [Mobile Document Request API](mobile-document-request-api-proposal.md)
+This incubation is attempting to specify an API for user agents that would mediate access to, and representation of, verifiably-issued digital identities.
+These identities can range from government-issued documents, such as driver's licenses and passports, and potentially other credentials types in the future.
 
-Risks and mitigation principals for the larger online real-world-identity space are being worked on as part of the W3C PING's [credential-considerations repository](https://github.com/w3cping/credential-considerations).
+The [Digital Identities API](https://wicg.github.io/digital-identities/) builds upon [Credential Management](https://www.w3.org/TR/credential-management-1/) standard to enable the secure and private exchange of digital identity information. It facilitates authenticated interactions by representing digital identities through the `DigitalIdentity` interface, which embodies verifiable claims about an individual's identity.
 
-## Alternatives being developed elsewhere
+## Scope
 
-* Analysis of [custom URL schemes](custom-schemes.md)
-* [CHAPI](https://chapi.io/) - a browser [API](https://dbpedia.org/resource/API) ([API spec](https://w3c-ccg.github.io/credential-handler-api/)) and [polyfill](https://dbpedia.org/resource/Polyfill_(programming)) ([polyfill spec](https://github.com/credential-handler/credential-handler-polyfill)) focusing on wallet selection (rather than credential selection) and enabling both storage and presentation of credentials from both native and web wallets.
+This project covers the requesting mechanisms for digital identities, including secure presentation aspects. It does not encompass the issuance process for establishing a digital identity or UI/UX considerations beyond privacy aspects related to data protection during the request process.
 
-# Related meetings / resources
+## Trying out the API
 
-## Meetings
+**🚧 Note: The API is still extremely unstable and undergoing a lot of changes (almost daily!). 🚧**
 
-* Slack discussions in `wicg-identity-cred` in W3C Community instance
-* Meeting notes: https://github.com/WICG/identity-credential/wiki/Meeting-Notes
+However, if you want to try it out:
+
+- [Try out the API in Chrome](https://github.com/WICG/digital-identities/wiki/HOWTO%3A-Try-the-Prototype-API-in-Chrome-Android)
+
+## Contributing
+
+This is an unofficial proposal under development. Contributions, feedback, and discussions are highly encouraged to refine and enhance the API specification.
+[Join the WICG](https://www.w3.org/community/wicg/) to help us in shape the future of digital identity management on the web.
 
 ### Weekly Meetings
 
-"A" calls are Americas/EMEA-friendly
+* Slack ["wicg-identity-cred"](https://w3ccommunity.slack.com/archives/C05UG0EJUDB) in W3C Community instance.
+* [Meeting notes](https://github.com/WICG/identity-credential/wiki/Meeting-Notes)
+* 📆 [ICS file (calendar items)](https://drive.google.com/file/d/1u8QK2-9gCo_qKify7VKeHDntU85Rc7Xx/view?usp=sharing) (v2)
 
-"B" calls are APAC-friendly
+## Initial proposals
 
-📆 [ICS file (calendar items)](https://drive.google.com/file/d/1u8QK2-9gCo_qKify7VKeHDntU85Rc7Xx/view?usp=sharing) (v2)
-
-**Upcoming Calls**
-- 2023-01-15 NO CALL
-- [2024-01-24 00:00Z](https://www.timeanddate.com/worldclock/converter.html?iso=20240124T000000&p1=tz_z) (B)
-- [2024-01-29 16:00Z](https://www.timeanddate.com/worldclock/converter.html?iso=20240129T160000&p1=tz_z) (A)
-
-
-### Additional Sessions
-* W3C TPAC breakout session - [Identity wallets and the web](https://www.w3.org/events/meetings/43317b7e-b0cd-4684-a03d-fdd06d742f43/)
-  * [Notes](https://docs.google.com/document/d/1sW74RUVamz8g6-23IHvMOgHMg-ZvIz5lcsajBvZxtes/edit)
+The initial proposals have been moved to the proposals folder. They are still available as historical references.

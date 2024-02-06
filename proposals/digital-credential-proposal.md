@@ -1,4 +1,10 @@
-This is an alternative design that optimizes for decoupling federation and wallets further (so that they have more autonomy to evolve independently) 
+# ⚠️ This proposals has been superseded ⚠️
+
+- Please refer to the [Digital identities spec](https://wicg.github.io/digital-identities/) instead. It represents the community's consensus.
+
+## Alternative proposal
+
+This is an alternative design that optimizes for decoupling federation and wallets further (so that they have more autonomy to evolve independently)
 while still accomplishing the goal of being able to request them at the same time in the same dialog.
 
 In this proposal, we create a new Credential Manager Credential type, say a DigitalCredential, as opposed to integrate with the existing 
