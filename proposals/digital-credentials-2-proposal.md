@@ -1,4 +1,8 @@
-# Towards a preliminary API to retrieve Digital Credentials
+# ⚠️ This proposal has been superseded ⚠️
+
+- Please refer to the [Digital identities spec](https://wicg.github.io/digital-identities/) instead. It represents the community's consensus
+
+## Towards a preliminary API to retrieve Digital Credentials
 
 Digital identities encompass a range of use cases, from age verification to sharing verifiable identity proofs, along with numerous other credential types. Managing and retrieving these identities is complicated by the varied formats in which they exist. A standardized approach, adaptable to diverse identity formats is essential for the Web, as it's expected that this API will be used in an extensive range of jurisdictions (which in turn may use different credential representation and retrieval standards). Moreover, such an approach must prioritize user privacy and guarantee robust security while allowing sites to verify the credentials they request and receive while keeping users in control over what, when, and with who, is share.
 

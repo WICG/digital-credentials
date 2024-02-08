@@ -1,7 +1,10 @@
-# Mobile Document Request API
+# ⚠️ This proposal has been superseded ⚠️
 
+- Please refer to the [Digital identities spec](https://wicg.github.io/digital-identities/) instead. It represents the community's consensus.
 
-## Authors:
+## Mobile Document Request API
+
+## Authors
 
 - [@dcrousso](https://github.com/dcrousso)
 - [@hlozi](https://github.com/hlozi)
