@@ -1,10 +1,10 @@
-# ⚠️ This proposals has been superseded ⚠️
+# ⚠️ This proposal has been superseded ⚠️
 
 - Please refer to the [Digital identities spec](https://wicg.github.io/digital-identities/) instead. It represents the community's consensus.
 
 ## Alternate design
 
-This is an alternative design that optimizes for decoupling identity verification and authentication further (so that developers get a clear signal about their differences) while still accomplishing the goal of being able to request multiple identity schemes (e.g. mdocs, vcs and federation) at the same time in the same dialog.
+This is an alternative design that further optimizes the decoupling of identity verification and authentication (so that developers get a clear signal about their differences), while still accomplishing the goal of being able to request multiple identity schemes (e.g., mdocs, vcs, and federation) at the same time in a single dialog.
 
 In this proposal, we create a new namespace for identity verification, say `navigator.identity`, as opposed to integrate with the existing 
 authentication-oriented [Credential Manager](https://www.w3.org/TR/credential-management-1/) being used by WebAuthn, WebOTP and FedCM.
