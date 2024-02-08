@@ -4,8 +4,8 @@
 
 ## Alternative proposal
 
-This is an alternative design that optimizes for decoupling federation and wallets further (so that they have more autonomy to evolve independently)
-while still accomplishing the goal of being able to request them at the same time in the same dialog.
+This is an alternative design that further optimizes for decoupling federation and wallets (so that they have more autonomy to evolve independently),
+while still accomplishing the goal of being able to request both at the same time in a single dialog.
 
 In this proposal, we create a new Credential Manager Credential type, say a DigitalCredential, as opposed to integrate with the existing 
 [IdentityCredential](https://fedidcg.github.io/FedCM/#browser-api-identity-credential-interface) type being used by FedCM.
