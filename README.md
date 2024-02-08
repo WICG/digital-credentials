@@ -1,6 +1,6 @@
 # Digital Identities
 
-- [Digital identities spec](https://wicg.github.io/digital-identities/)
+- [Digital identities draft spec](https://wicg.github.io/digital-identities/)
 
 This incubation is attempting to specify an API for user agents that would mediate access to, and representation of, verifiably-issued digital identities.
 These identities can range from government-issued documents, such as driver's licenses and passports, and potentially other credentials types in the future.
