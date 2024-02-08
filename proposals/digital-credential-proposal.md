@@ -1,4 +1,4 @@
-# ⚠️ This proposals has been superseded ⚠️
+# ⚠️ This proposal has been superseded ⚠️
 
 - Please refer to the [Digital identities spec](https://wicg.github.io/digital-identities/) instead. It represents the community's consensus.
 
