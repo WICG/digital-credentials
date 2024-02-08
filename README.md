@@ -9,7 +9,7 @@ The [Digital Identities API](https://wicg.github.io/digital-identities/) builds 
 
 ## Scope
 
-This project covers the requesting mechanisms for digital identities, including secure presentation aspects. It does not include the issuance process for establishing a digital identity nor UI/UX considerations beyond privacy aspects related to data protection during the request process.
+This project covers the requesting mechanisms for digital identities, including secure presentation aspects. It does not yet encompass the issuance process for establishing a digital identity nor UI/UX considerations beyond privacy aspects related to data protection during the request process.
 
 ## Trying out the API
 
