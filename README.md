@@ -3,7 +3,7 @@
 - [Digital identities draft spec](https://wicg.github.io/digital-identities/)
 
 This incubation is attempting to specify an API for user agents that would mediate access to, and representation of, verifiably-issued digital identities.
-These identities can range from government-issued documents, such as driver's licenses and passports, and potentially other credentials types in the future.
+These identities can range from government-issued documents, such as driver's licenses and passports, to start with, to other credential types, potentially in the future.
 
 The [Digital Identities API](https://wicg.github.io/digital-identities/) builds upon [Credential Management](https://www.w3.org/TR/credential-management-1/) standard to enable the secure and private exchange of digital identity information. It facilitates authenticated interactions by representing digital identities through the `DigitalIdentity` interface, which embodies verifiable claims about an individual's identity.
 
