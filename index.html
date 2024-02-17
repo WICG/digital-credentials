@@ -42,15 +42,13 @@
   <body data-cite="credential-management-1">
     <section id="abstract">
       <p>
-        This document specifies an API to allow user agents to mediate access
-        to, and representing, a verifiably-issued digital credential (e.g., a
-        government issued digital driver's license, a passport issued by a
-        country, a student card or diploma issued by a university, an employee
-        card issued by a company, a passenger's boarding pass issued by an
-        airline, a profile issued by an online social network, membership
-        cards, vaccination records, etc) license). The API builds on
-        [[[credential-management-1]]] as a means to request a digital
-        credential from the user agent or underlying platform.
+        This document specifies an API to enable [=user agents=] to mediate
+        access to, and present, a digital credential such as a driver's license,
+        a student ID card, a boarding pass, and
+        <a href="#credential-type-examples">other types of credentials and
+        licenses</a>. The API builds on [[[credential-management-1]]] as a means
+        to request a digital credential from the user agent or underlying
+        platform.
       </p>
     </section>
     <section id="sotd">
@@ -64,6 +62,39 @@
     <p>
       TBW
     </p>
+    <p id="credential-type-examples">
+      There are many types of digital credentials that can be conveyed using
+      this API. Some of these types include:
+    </p>
+    <ul>
+      <li>
+        a driver's license issued by a testing facility
+      </li>
+      <li>
+        a passport issued by a government
+      </li>
+      <li>
+        a student identification card or diploma issued by a university
+      </li>
+      <li>
+        an employee identification card issued by a company
+      </li>
+      <li>
+        a traveler's boarding pass issued by an airline
+      </li>
+      <li>
+        a profile issued by an online social network
+      </li>
+      <li>
+        membership cards issued by a retailer
+      </li>
+      <li>
+        healthcare records issued by a hospital, and
+      </li>
+      <li>
+        professional licenses issued by a trade association.
+      </li>
+    </ul>
     <h2>
       Model
     </h2>
