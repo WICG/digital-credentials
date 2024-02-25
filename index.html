@@ -101,19 +101,20 @@ the definitions are likely to change over the next several months.
         that manages various [=example credential types|credential types=].
       </dd>
       <dt>
-        <dfn>Presentation request</dfn>
+        <dfn data-dfn-for="digital credential">query</dfn>
       </dt>
       <dd>
-        A format that a [=verifier=] uses, via an [=exchange protocol=], to
-        request a [=digital credential=] from a [=credential provider=].
+        A format that a [=verifier=] uses, via an [=digital credential/exchange
+        protocol=], to request a [=digital credential=] from a [=credential
+        provider=].
       </dd>
       <dt>
         <dfn>Presentation</dfn>
       </dt>
       <dd>
-        A format that a [=credential repository=] uses, via an
-        [=exchange protocol=], to respond to a [=presentation request=] by
-        a [=verifier=].
+        A format that a [=credential repository=] uses, via an [=digital
+        credential/exchange protocol=], to respond to a [=digital
+        credential/query=] by a [=verifier=].
       </dd>
       <dt>
         <dfn data-dfn-for="digital credential">Exchange protocol</dfn>
@@ -193,16 +194,17 @@ the definitions are likely to change over the next several months.
     </h3>
     <p>
       The <dfn data-dfn-for="DigitalCredentialRequestOptions">providers</dfn>
-      specify an [=exchange protocol=] and [=presentation request=],
-      which the user agent MAY match against a [=credential provider=].
+      specify an [=digital credential/exchange protocol=] and [=digital
+      credential/query=], which the user agent MAY match against a [=credential
+      provider=].
     </p>
     <h2>
       The `IdentityRequestProvider` dictionary
     </h2>
     <p>
-      The {{IdentityRequestProvider}} dictionary is used to specify an
-      [=exchange protocol=] and a [=presentation request=], which the user agent
-      MAY match against a [=credential provider=].
+      The {{IdentityRequestProvider}} dictionary is used to specify an [=digital
+      credential/exchange protocol=] and a [=digital credential/query=], which
+      the user agent MAY match against a [=credential provider=].
     </p>
     <pre class="idl">
     dictionary IdentityRequestProvider {
@@ -215,7 +217,7 @@ the definitions are likely to change over the next several months.
     </h3>
     <p>
       The <dfn data-dfn-for="IdentityRequestProvider">protocol</dfn> member
-      denotes the [=exchange protocol=] when requesting an
+      denotes the [=digital credential/exchange protocol=] when requesting an
       identify credential.
     </p>
     <p>
@@ -250,7 +252,7 @@ the definitions are likely to change over the next several months.
     </h3>
     <p>
       The <dfn data-dfn-for="DigitalCredential">protocol</dfn> member is the
-      [=exchange protocol=] that was used to request the
+      [=digital credential/exchange protocol=] that was used to request the
       [=digital credential=].
     </p>
     <h3>
@@ -264,7 +266,7 @@ the definitions are likely to change over the next several months.
       Registry of protocols for requesting digital credential
     </h2>
     <p>
-      The following is the registry of [=exchange protocols=]
+      The following is the registry of [=digital credential/exchange protocols=]
       that are supported by this specification.
     </p>
     <p class="note" title="Official Registry" data-cite="w3c-process">
@@ -279,11 +281,13 @@ the definitions are likely to change over the next several months.
     </p>
     <aside class="issue" data-number="58"></aside>
     <p>
-      [=User agents=] MUST support the following [=exchange protocols=]:
+      [=User agents=] MUST support the following [=digital credential/exchange
+      protocols=]:
     </p>
     <table class="data">
       <caption>
-        Table of officially registered [=exchange protocols=].
+        Table of officially registered [=digital credential/exchange
+        protocols=].
       </caption>
       <thead>
         <tr>
