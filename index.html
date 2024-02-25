@@ -92,7 +92,7 @@ the definitions are likely to change over the next several months.
         [=claims=] made by an [=issuer=] about one or more [=subjects=].
       </dd>
       <dt>
-        <dfn>Credential provider</dfn>
+        <dfn>Credential manager</dfn>
       </dt>
       <dd>
         Software that provides a user interface for querying, selecting, and
@@ -106,13 +106,13 @@ the definitions are likely to change over the next several months.
       <dd>
         A format that a [=verifier=] uses, via an [=digital credential/exchange
         protocol=], to request a [=digital credential=] from a [=credential
-        provider=].
+        manager=].
       </dd>
       <dt>
         <dfn>Presentation</dfn>
       </dt>
       <dd>
-        A format that a [=credential repository=] uses, via an [=digital
+        A format that a [=credential manager=] uses, via an [=digital
         credential/exchange protocol=], to respond to a [=digital
         credential/query=] by a [=verifier=].
       </dd>
@@ -121,7 +121,7 @@ the definitions are likely to change over the next several months.
       </dt>
       <dd>
         A protocol used for exchanging a [=digital credential=] between a
-        [=credential provider=] and a [=verifier=]. See section
+        [=credential manager=] and a [=verifier=]. See section
         [[[#protocol-registry]]].
       </dd>
     </dl>
@@ -186,17 +186,17 @@ the definitions are likely to change over the next several months.
     </h2>
     <pre class="idl">
     dictionary DigitalCredentialRequestOptions {
-      sequence&lt;IdentityRequestProvider&gt; providers;
+      sequence&lt;IdentityRequestProvider&gt; managers;
     };
     </pre>
     <h3>
-      The `providers` member
+      The `managers` member
     </h3>
     <p>
-      The <dfn data-dfn-for="DigitalCredentialRequestOptions">providers</dfn>
+      The <dfn data-dfn-for="DigitalCredentialRequestOptions">managers</dfn>
       specify an [=digital credential/exchange protocol=] and [=digital
       credential/query=], which the user agent MAY match against a [=credential
-      provider=].
+      manager=].
     </p>
     <h2>
       The `IdentityRequestProvider` dictionary
@@ -204,7 +204,7 @@ the definitions are likely to change over the next several months.
     <p>
       The {{IdentityRequestProvider}} dictionary is used to specify an [=digital
       credential/exchange protocol=] and a [=digital credential/query=], which
-      the user agent MAY match against a [=credential provider=].
+      the user agent MAY match against a [=credential manager=].
     </p>
     <pre class="idl">
     dictionary IdentityRequestProvider {
@@ -231,7 +231,7 @@ the definitions are likely to change over the next several months.
     <p>
       The <dfn data-dfn-for="IdentityRequestProvider">request</dfn> member is
       the request to be handled by the user's selected [=credential
-      provider=].
+      manager=].
     </p>
     <h2>
       The `DigitalCredential` interface
