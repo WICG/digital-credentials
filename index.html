@@ -31,8 +31,7 @@
       shortName: "digital-identity",
       specStatus: "CG-DRAFT",
       group: "wicg",
-      localBiblio: {
-      },
+      localBiblio: {},
       xref: {
         profile: "web-platform",
       },
@@ -76,30 +75,49 @@
     <h2>
       Model
     </h2>
-    <dl class="definitions" data-sort="" data-cite="vc-data-model">
+
+    <p class="note" title="Definitions under discussion">
+The goal of the definitions in this section is to reuse or establish
+terminology that is common across a variety of digital credential formats and
+protocols. Discussions surrounding these definitions are active and
+the definitions are likely to change over the next several months.
+    </p>
+
+    <dl class="definitions" data-sort="" data-cite="vc-data-model-2.0">
       <dt>
         <dfn>Digital credential</dfn>
       </dt>
       <dd>
-        <p>
-          Is a [=verifiable credential=] about a person.
+        A cryptographically signed digital document containing one or more
+        [=claims=] made by an [=issuer=] about one or more [=subjects=].
+
+        <p class="note" title="Focus on digital credentials about people">
+          This specification is currently focused on digital credentials pertaining to
+          people.
         </p>
       </dd>
       <dt>
-        <dfn>Identity credential provider</dfn>
+        <dfn data-dfn-for="digital credential">query</dfn>
       </dt>
       <dd>
-        An application or service that provides a user interface for selecting
-        and/or querying a [=digital credential=], such as a digital wallet that
-        manages various identity documents and credentials.
+        A format that [=verifier=] software or a [=user agent=] uses, via an [=digital credential/exchange
+        protocol=], to request a [=digital credential=] from a [=holder=].
       </dd>
       <dt>
-        <dfn data-for="digital credential">Request protocol</dfn>
+        <dfn>Presentation response</dfn>
       </dt>
       <dd>
-        A standardized format for requesting a [=digital credential=], designed
-        to ensure the secure, private, and interoperable exchange of identity
-        information. See section [[[#protocol-registry]]].
+        A format that a [=holder|holder's=] software, such as a digital wallet,
+        uses, via an [=digital credential/exchange protocol=], to respond to a
+        [=digital credential/query=] by a [=verifier=].
+      </dd>
+      <dt>
+        <dfn data-dfn-for="digital credential">Exchange protocol</dfn>
+      </dt>
+      <dd>
+        A protocol used for exchanging a [=digital credential=] between a
+        [=holder=] and a [=verifier=]. See section
+        [[[#protocol-registry]]].
       </dd>
     </dl>
     <h2>
@@ -171,17 +189,18 @@
     </h3>
     <p>
       The <dfn data-dfn-for="DigitalCredentialRequestOptions">providers</dfn>
-      specify a [=digital identity/request protocol=] and structured request,
-      which the user agent MAY match against a [=identity credential
-      provider=].
+      specify an [=digital credential/exchange protocol=] and [=digital
+      credential/query=], which the user agent MAY match against a
+      holder's software, such as a digital wallet.
     </p>
     <h2>
       The `IdentityRequestProvider` dictionary
     </h2>
     <p>
-      The {{IdentityRequestProvider}} dictionary is used to specify a [=digital
-      identity/request protocol=] and structured request, which the user agent
-      MAY match against a [=identity credential provider=].
+      The {{IdentityRequestProvider}} dictionary is used to specify an [=digital
+      credential/exchange protocol=] and a [=digital credential/query=], which
+      the user agent MAY match against software used by a holder, such as
+      a digital wallet.
     </p>
     <pre class="idl">
     dictionary IdentityRequestProvider {
@@ -194,7 +213,7 @@
     </h3>
     <p>
       The <dfn data-dfn-for="IdentityRequestProvider">protocol</dfn> member
-      denotes the [=digital credential/request protocol=] when requesting an
+      denotes the [=digital credential/exchange protocol=] when requesting an
       identify credential.
     </p>
     <p>
@@ -207,8 +226,8 @@
     </h3>
     <p>
       The <dfn data-dfn-for="IdentityRequestProvider">request</dfn> member is
-      the request to be handled by the user's selected [=identity credential
-      provider=].
+      the request to be handled by the holder's software, such as a
+      digital wallet.
     </p>
     <h2>
       The `DigitalCredential` interface
@@ -229,7 +248,7 @@
     </h3>
     <p>
       The <dfn data-dfn-for="DigitalCredential">protocol</dfn> member is the
-      [=digital credential/request protocol=] that was used to request the
+      [=digital credential/exchange protocol=] that was used to request the
       [=digital credential=].
     </p>
     <h3>
@@ -243,7 +262,7 @@
       Registry of protocols for requesting digital credential
     </h2>
     <p>
-      The following is the registry of [=digital credential/request protocols=]
+      The following is the registry of [=digital credential/exchange protocols=]
       that are supported by this specification.
     </p>
     <p class="note" title="Official Registry" data-cite="w3c-process">
@@ -258,12 +277,12 @@
     </p>
     <aside class="issue" data-number="58"></aside>
     <p>
-      [=User agents=] MUST support the following [=digital credential/request
+      [=User agents=] MUST support the following [=digital credential/exchange
       protocols=]:
     </p>
     <table class="data">
       <caption>
-        Table of officially registered [=digital credential/request
+        Table of officially registered [=digital credential/exchange
         protocols=].
       </caption>
       <thead>
