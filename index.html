@@ -75,14 +75,12 @@
     <h2>
       Model
     </h2>
-
     <p class="note" title="Definitions under discussion">
-The goal of the definitions in this section is to reuse or establish
-terminology that is common across a variety of digital credential formats and
-protocols. Discussions surrounding these definitions are active and
-the definitions are likely to change over the next several months.
+      The goal of the definitions in this section is to reuse or establish
+      terminology that is common across a variety of digital credential formats
+      and protocols. Discussions surrounding these definitions are active and
+      the definitions are likely to change over the next several months.
     </p>
-
     <dl class="definitions" data-sort="" data-cite="vc-data-model-2.0">
       <dt>
         <dfn>Digital credential</dfn>
@@ -90,18 +88,18 @@ the definitions are likely to change over the next several months.
       <dd>
         A cryptographically signed digital document containing one or more
         [=claims=] made by an [=issuer=] about one or more [=subjects=].
-
         <p class="note" title="Focus on digital credentials about people">
-          This specification is currently focused on digital credentials pertaining to
-          people.
+          This specification is currently focused on digital credentials
+          pertaining to people.
         </p>
       </dd>
       <dt>
         <dfn data-dfn-for="digital credential">query</dfn>
       </dt>
       <dd>
-        A format that [=verifier=] software or a [=user agent=] uses, via an [=digital credential/exchange
-        protocol=], to request a [=digital credential=] from a [=holder=].
+        A format that [=verifier=] software or a [=user agent=] uses, via an
+        [=digital credential/exchange protocol=], to request a [=digital
+        credential=] from a [=holder=].
       </dd>
       <dt>
         <dfn>Presentation response</dfn>
@@ -116,8 +114,7 @@ the definitions are likely to change over the next several months.
       </dt>
       <dd>
         A protocol used for exchanging a [=digital credential=] between a
-        [=holder=] and a [=verifier=]. See section
-        [[[#protocol-registry]]].
+        [=holder=] and a [=verifier=]. See section [[[#protocol-registry]]].
       </dd>
     </dl>
     <h2>
@@ -190,17 +187,17 @@ the definitions are likely to change over the next several months.
     <p>
       The <dfn data-dfn-for="DigitalCredentialRequestOptions">providers</dfn>
       specify an [=digital credential/exchange protocol=] and [=digital
-      credential/query=], which the user agent MAY match against a
-      holder's software, such as a digital wallet.
+      credential/query=], which the user agent MAY match against a holder's
+      software, such as a digital wallet.
     </p>
     <h2>
       The `IdentityRequestProvider` dictionary
     </h2>
     <p>
-      The {{IdentityRequestProvider}} dictionary is used to specify an [=digital
-      credential/exchange protocol=] and a [=digital credential/query=], which
-      the user agent MAY match against software used by a holder, such as
-      a digital wallet.
+      The {{IdentityRequestProvider}} dictionary is used to specify an
+      [=digital credential/exchange protocol=] and a [=digital
+      credential/query=], which the user agent MAY match against software used
+      by a holder, such as a digital wallet.
     </p>
     <pre class="idl">
     dictionary IdentityRequestProvider {
@@ -226,8 +223,8 @@ the definitions are likely to change over the next several months.
     </h3>
     <p>
       The <dfn data-dfn-for="IdentityRequestProvider">request</dfn> member is
-      the request to be handled by the holder's software, such as a
-      digital wallet.
+      the request to be handled by the holder's software, such as a digital
+      wallet.
     </p>
     <h2>
       The `DigitalCredential` interface
@@ -262,8 +259,8 @@ the definitions are likely to change over the next several months.
       Registry of protocols for requesting digital credential
     </h2>
     <p>
-      The following is the registry of [=digital credential/exchange protocols=]
-      that are supported by this specification.
+      The following is the registry of [=digital credential/exchange
+      protocols=] that are supported by this specification.
     </p>
     <p class="note" title="Official Registry" data-cite="w3c-process">
       It is expected that this registry will be become a [=W3C registry=] in
