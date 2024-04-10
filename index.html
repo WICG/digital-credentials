@@ -202,7 +202,7 @@
     <pre class="idl">
     dictionary IdentityRequestProvider {
       required DOMString protocol;
-      required DOMString request;
+      required object request;
     };
     </pre>
     <h3>
@@ -237,7 +237,7 @@
     [Exposed=Window, SecureContext]
     interface DigitalCredential : Credential {
       readonly attribute DOMString protocol;
-      readonly attribute DOMString data;
+      readonly attribute Uint8Array data;
     };
     </pre>
     <h3>
