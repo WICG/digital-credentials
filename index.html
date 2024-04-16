@@ -237,7 +237,7 @@
     [Exposed=Window, SecureContext]
     interface DigitalCredential : Credential {
       readonly attribute DOMString protocol;
-      [SameObject] readonly attribute Uint8Array data;
+      readonly attribute DOMString data;
     };
     </pre>
     <h3>
