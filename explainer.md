@@ -1,4 +1,4 @@
-Digital Credentials API
+# Digital Credentials API
 
 Government recognized digital credentials (e.g. driver’s licenses) are being increasingly utilized on the web. We propose a deliberate and flexible API to enable browsers to continuously improve the balance of benefits and risks for users and the entire online community.
 
@@ -26,11 +26,8 @@ So, to the extent that we can, it is important to leave levels of indirections t
 To balance this tension we propose an API with the following key properties:
 
 - By separating the act of requesting from the specific protocol, we can enable flexibility and adaptability in both the protocol and credential formats. This way, changes in browsers won't hinder progress or block new developments.
-
 - Require request transparency, enabling user-agent inspection for risk analysis
-
 - Assume response opacity (encrypted responses), enabling verifiers and holders to control where potentially sensitive PII is exposed
-
 - Prevent website from silently querying for the availability of digital credentials and communicating with wallet providers without explicit user consent 
 
 At its core, the API is designed for a website ("verifier") to [transparently](https://github.com/w3cping/credential-considerations/blob/main/credentials-considerations.md#in-context-explanations) request the [selective disclosure](https://github.com/w3cping/credential-considerations/blob/main/credentials-considerations.md#selective-disclosure) of attributes from (issued) digital credentials that were provisioned - ahead of time - to wallets ("holders"), in a manner that is seamlessly compatible with existing architectural choices (such as [OpenID4VP integration](https://github.com/openid/OpenID4VP/issues/125)).
@@ -65,35 +62,24 @@ You can read a more detailed and technical description of the API in the [specif
 There are many alternatives that were considered, most notably:
 
 - [Do nothing](https://github.com/w3cping/credential-considerations/blob/main/risks.md#the-consequences-of-a-failure-to-act-are-as-valid-as-those-of-acting) (the intentional status quo in browsers for the past several years)
-
 - Various different [API proposals](https://github.com/WICG/digital-identities/tree/main/proposals): [an mDoc-specific API](https://github.com/WICG/digital-identities/blob/main/proposals/mobile-document-request-api-proposal.md), [extending the Credential Management API](https://github.com/WICG/digital-identities/blob/main/proposals/digital-credential-proposal.md), [extending the FedCM API](https://github.com/WICG/digital-identities/blob/main/proposals/identity-credential-proposal.md) and [introducing navigator.identity](https://github.com/WICG/digital-identities/blob/main/proposals/navigator-identity-proposal.md)
-
 
 # Open Questions
 
 There are still many open questions, but a few big ones:
 
 - To what extent does the browser introspect the request to wallets (for privacy and security reasons)? How much of that needs to interoperate between browsers, vs. be browser-specific points of differentiation in offering privacy features to users?
-
 - Will existing protocols ([example](https://github.com/openid/OpenID4VP/issues/125)) adopt this API?
-
 - Will regulation ([example](https://digital-strategy.ec.europa.eu/en/library/european-digital-identity-architecture-and-reference-framework-outline)) adopt this API?
 
 
 # Related Work
 
-- [Chromium: RWI privacy risk mitigation design](https://docs.google.com/document/d/1L68tmNXCQXucsCV8eS8CBd_F9FZ6TNwKNOaFkA8RfwI/edit#heading=h.8gq5f7p3it8q), Rick Byers
-
 - [Real-world identity on the web - risks and mitigations](https://github.com/w3cping/credential-considerations/blob/main/risks.md#the-consequences-of-a-failure-to-act-are-as-valid-as-those-of-acting), Rick Byers
-
 - [Concerns with custom schemes for identity presentment](https://github.com/WICG/digital-identities/blob/main/custom-schemes.md), Rick Byers
-
 - [Digital Credentials API Standards Position](https://github.com/WebKit/standards-positions/issues/332#issuecomment-2019400609), Marcos Caceres
-
 - [User considerations for credential presentation on the Web](https://github.com/w3cping/credential-considerations/blob/main/credentials-considerations.md), Nick Doty
-
 - [Privacy Principles](https://w3ctag.github.io/privacy-principles/#identity), Jeffrey Yasskin and Robin Berjon
-
 - [Intent to deprecate forwarding of mdoc-scheme URLs as Android Intents](https://groups.google.com/a/chromium.org/g/blink-dev/c/wcCrcMTELS0/m/ZSPxAT0LAgAJ), Adam Langley
-
 - [Wallets on the web - PING @TPAC](https://docs.google.com/presentation/d/1Z7blMTME1tAQAdO-Wr42oVNN3CRIbklASjbJdB1JYOc/edit?resourcekey=0-ockU2NbemVbLEeF94-peNA#slide=id.p), Rick Byers
+- [Chromium: RWI privacy risk mitigation design](https://docs.google.com/document/d/1L68tmNXCQXucsCV8eS8CBd_F9FZ6TNwKNOaFkA8RfwI/edit#heading=h.8gq5f7p3it8q), Rick Byers
