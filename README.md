@@ -1,5 +1,6 @@
 # Digital Identities
 
+- [Digital identities explainer](explainer.md)
 - [Digital identities draft spec](https://wicg.github.io/digital-identities/)
 
 This incubation is attempting to specify an API for user agents that would mediate access to, and representation of, verifiably-issued digital identities.
