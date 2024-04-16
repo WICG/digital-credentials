@@ -25,7 +25,7 @@ So, to the extent that we can, it is important to leave levels of indirections t
 
 To balance this tension we propose an API with the following key properties:
 
-- By separating the act of requesting from the specific protocol, we can enable flexibility and adaptability in both the protocol and credential formats. This way, changes in browsers won't hinder progress or block new developments.
+- By separating the act of requesting from the specific protocol, we can enable flexibility and adaptability in both the protocol and credential formats. This way, the pace of changes in browsers won't hinder progress or block new developments.
 - Require request transparency, enabling user-agent inspection for risk analysis
 - Assume response opacity (encrypted responses), enabling verifiers and holders to control where potentially sensitive PII is exposed
 - Prevent website from silently querying for the availability of digital credentials and communicating with wallet providers without explicit user consent 
