@@ -1,13 +1,12 @@
 # Digital Credentials
 
-📄 [Digital credentials explainer](explainer.md) and [draft spec](https://wicg.github.io/digital-identities/)
-
+📄 [Digital credentials explainer](explainer.md) and [draft spec](https://wicg.github.io/digital-identities/).
 
 This incubation is attempting to specify an API for user agents that would mediate access to, and representation of, verifiably-issued digital credentials.
 
 These identities can range from government-issued documents, such as driver's licenses and passports, to start with, to other credential types, potentially in the future.
 
-The [Digital Credential API](https://wicg.github.io/digital-identities/) builds upon the [Credential Management standard](https://www.w3.org/TR/credential-management-1/) to enable the secure and private exchange of digital identity information. It facilitates authenticated interactions by representing digital credentials through the `DigitalIdentity` interface, which embodies verifiable claims about an individual's identity.
+[Digital Credentials](https://wicg.github.io/digital-identities/) builds upon [Credential Management](https://www.w3.org/TR/credential-management-1/) to enable the secure and private exchange of digital identity information. It facilitates authenticated interactions by representing digital credentials through the `DigitalIdentity` interface, which embodies verifiable claims about an individual's identity.
 
 ## Scope
 
