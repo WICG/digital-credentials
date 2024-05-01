@@ -123,7 +123,7 @@ No. In particular, the current scope is just about credential presentation (read
 > 06.  Do the features in your specification expose information about the
 >      underlying platform to origins?
 
-Not directly. Wallets may (intentionally or inadvertently) expose some information through this API (such as some information indicating which wallet app the user is using). But the primary motivation for these wallets over traditional federated authentication systems is that the wallet can act in the user’s interest to protect their privacy even from the credential issuer. Issuers generally choose which wallets to support their credentials in and can impose privacy requirements on those wallets. Users will often have their choice of multiple wallets and are expected to use reputation for privacy as part of their decision making.
+Not directly. Wallets may (intentionally or inadvertently) expose some information through this API (such as some indication of which wallet app the user is using). But the primary motivation for these wallets over traditional federated authentication systems is that the wallet can act in the user’s interest to protect their privacy even from the credential issuer. Issuers generally choose which wallets to support their credentials in and can impose privacy requirements on those wallets. Users will often have their choice of multiple wallets and are expected to use reputation for privacy as part of their decision making.
 
 > 07.  Does this specification allow an origin to send data to the underlying
 >      platform?
@@ -161,12 +161,12 @@ The API is currently available only in first-party contexts, but there is an [op
 > 14.  How do the features in this specification work in the context of a browser’s
 >      Private Browsing or Incognito mode?
 
-Like other browser authentication (eg. WebAuthn) and identification (eg. autofill) features, the feature is available to users to use in private browsing. Regardless of whether private browsing is in use, the feature is designed to not communicate information without the user’s explicit permission each and every time. There are legitimate use cases for this API in private browsing such as privacy-preserving age verification.
+Like other browser authentication (eg. WebAuthn) and identification (eg. autofill) features, the feature is available to users to use in private browsing. Regardless of whether private browsing is in use, the feature is designed to not communicate information without the user’s explicit permission each and every time it's invoked. There are legitimate use cases for this API in private browsing such as privacy-preserving age verification.
 
 > 15.  Does this specification have both "Security Considerations" and "Privacy
 >      Considerations" sections?
 
-Not yet but it will. The specification is still being written as we incubate the API and gain experience with real-world experiments. 
+Not yet, but it will. The specification is still being written as we incubate the API and gain experience with real-world experiments. 
 
 > 16.  Do features in your specification enable origins to downgrade default
 >      security protections?
@@ -177,15 +177,15 @@ No
 >      (instead of getting destroyed) after navigation, and potentially gets reused
 >      on future navigations back to the document?
 
-The API requires a user gesture and implementations should fail or postpone any requests which occur while the page is not visible to the user.
+Implementations should fail or postpone any requests which occur while the page is not visible to the user. The spec may introduce a [requirement for user activation](https://github.com/WICG/digital-identities/issues/91) which could help with this.
 
 > 18.  What happens when a document that uses your feature gets disconnected?
 
-The API is not supported outside of a top-level browsing context.
+The API is not supported outside of a top-level browsing context. If we change that, then I imagine it would be reasonable for the API to fail when invoked from a disconnected document.
 
 > 19.  What should this questionnaire have asked?
 
-What are the security and privacy implications of not shipping this feature?
+What are the security and privacy implications of not shipping this feature? How does this feature fit into the larger privacy risk landscape. We believe the feature will lead to a reduced risk relative to the status quo, but this is very subjective and hard to demonstrate difinitively. 
 
 # Related Work
 
