@@ -84,7 +84,7 @@ The following topics are currently out of scope for the API:
 > 01.  What information does this feature expose,
 >      and for what purposes?
 
-The Digital Credential API exposes a one-time user-mediated end-to-end encrypted communication channel from websites, to digital wallet applications, and back to websites. It is designed to be a better option than established lower-level communication channels like custom schemes, QR codes, and server-to-server network communication. How exactly this channel is used is up to the wallet applications and host operating system, but we are designing it to be suitable for conveying presentations of digital credentials such as claims in mobile driver’s licenses.
+The Digital Credential API exposes a one-time user-mediated communication channel from websites, to digital wallet applications, and back to websites with end-to-end encryption of the response. It is designed to be a better option than established lower-level communication channels like custom schemes, QR codes, and server-to-server network communication. How exactly this channel is used is up to the wallet applications and host operating system, but we are designing it to be suitable for conveying presentations of digital credentials such as claims in mobile driver’s licenses.
 
 > 02.  Do features in your specification expose the minimum amount of information
 >      necessary to implement the intended functionality?
@@ -181,7 +181,7 @@ Implementations should fail or postpone any requests which occur while the page 
 
 > 18.  What happens when a document that uses your feature gets disconnected?
 
-The API is not supported outside of a top-level browsing context. If we change that, then I imagine it would be reasonable for the API to fail when invoked from a disconnected document.
+Probably just silently ignored, but [we'll discuss](https://github.com/WICG/digital-identities/issues/112).
 
 > 19.  What should this questionnaire have asked?
 
