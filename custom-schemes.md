@@ -19,7 +19,7 @@ Existing specifications like [OpenID4VP](https://openid.net/specs/openid-4-verif
 
    - After launching an application via a custom URL scheme, mobile operating systems don't provide a mechanism for switching back to the invoking application / browser tab.
    - Wallet applications may choose to start a new navigation to a new web page to complete the journey, but that can be slow and jarring, may not open in the same browser the user was originally using, and leaves a "dead tab" behind.
-   - Alternatively wallet applications could rely on the user manually switching back to the browser application they were in, but that can be hard to communicate to users and risks abandomment.
+   - Alternatively wallet applications could rely on the user manually switching back to the browser application they were in, but that can be hard to communicate to users and risks the web page being reloaded due to mobile operating system memory management facilities, and therefore risks user abandomment.
    - A browser API can ensure the original webpage remains resident during the wallet application and seamlessly return to it with the credential data.
 
 ### What is the user experience when multiple wallet apps are installed?
