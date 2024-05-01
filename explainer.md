@@ -84,16 +84,16 @@ The following topics are currently out of scope for the API:
 > 01.  What information does this feature expose,
 >      and for what purposes?
 
-The Digital Credential API exposes a one-time user-mediated end-to-end encrypted communication channel from websites, to digital wallet applications, and back to websites. It is designed to be a better option than established lower-level communication channels like custom schemes and server-to-server network communication. How exactly this channel is used is up to the wallet applications and host operating system, but we are designing it to be suitable for conveying presentations of digital credentials such as claims in mobile driver’s licenses.
+The Digital Credential API exposes a one-time user-mediated end-to-end encrypted communication channel from websites, to digital wallet applications, and back to websites. It is designed to be a better option than established lower-level communication channels like custom schemes, QR codes, and server-to-server network communication. How exactly this channel is used is up to the wallet applications and host operating system, but we are designing it to be suitable for conveying presentations of digital credentials such as claims in mobile driver’s licenses.
 
 > 02.  Do features in your specification expose the minimum amount of information
 >      necessary to implement the intended functionality?
 
-A primary use case of the digital credentials API is for selective disclosure of identity properties such as a cryptographic attestation that the user holds a California driver’s license for an adult. The use of selective disclosure, however, is a decision for the verifier website, wallet and credential issuer based on the use case. There are legitimate scenarios, such as creating or recovering an account on a government website, where uniquely identifiable and potentially non-resettable PII is potentially exposed.
+A primary use case of the digital credentials API is for selective disclosure of identity properties such as a cryptographic attestation that the user holds a California driver’s license of an adult. The use of selective disclosure, however, is a decision for the verifier website, wallet and credential issuer based on the use case. There are legitimate scenarios, such as creating or recovering an account on a government website, where uniquely identifiable and potentially non-resettable PII is potentially exposed.
 
 The API is designed to expect the use of response encryption so that this PII is exposed only to the requesting server and not any code running in the web page or browser. It is an [open question](https://github.com/WICG/digital-identities/issues/109) whether this response encryption is something we can reasonably enforce at this layer or not.
 
-The API is also designed to require request transparency to enable user agents to appropriately inform users about the level of privacy risk involved in the request. A major area of outstanding work is to outline in the specification our privacy and security guidance to implementers, but we already know that the [Chromium implementation](https://docs.google.com/document/d/1L68tmNXCQXucsCV8eS8CBd_F9FZ6TNwKNOaFkA8RfwI/edit) intends to show users stronger warnings in riskier scenarios such as those that lack the use of selective disclosure.
+The API is also designed to require request transparency to enable user agents and operating systems to appropriately inform users about the level of privacy risk involved in the request. A major area of outstanding work is to outline in the specification our privacy and security guidance to implementers, but we already know that the [Chromium implementation](https://docs.google.com/document/d/1L68tmNXCQXucsCV8eS8CBd_F9FZ6TNwKNOaFkA8RfwI/edit) intends to show users stronger warnings in riskier scenarios such as those that lack the use of selective disclosure.
 
 > 03.  Do the features in your specification expose personal information,
 >      personally-identifiable information (PII), or information derived from
@@ -103,17 +103,17 @@ Yes, the API is designed to help facilitate communication of PII from secure wal
 
 > 04.  How do the features in your specification deal with sensitive information?
 
-Today online identity verification (eg. for KYC) is usually done by submitting photos of government identity documents (for example, uploading photos containing the PII via the web’s `<input type=file>` mechanism. Due to the privacy and security limits of this approach, credential issuers and verifiers are working to move to the use of wallet applications which can do selective disclosure of cryptographical attested properties. Today those approaches rely on generic web->app communication paths like custom schemes and server-to-server communication. 
+Today online identity verification (eg. for KYC) is usually done by submitting photos of government identity documents (for example, uploading photos containing the PII via the web’s `<input type=file>` mechanism. Due to the privacy and security limits of this approach, credential issuers and verifiers are working to move to the use of wallet applications which can do selective disclosure of cryptographically attested properties. Today those approaches rely on generic web->app communication paths like custom schemes and server-to-server communication. 
 
 The use of wallets aims to improve on the status quo of uploading images in a number of ways:
-Enable the use of selective disclosure (eg. for more privacy-friendly age-over-18 verification)
-Enable the PII to be end-to-end encrypted between the wallet application and the relevant verification server
-Enable the use of request authentication where a wallet is required to cryptographically verify that the requester has permission to access the credential
+ * Enable the use of selective disclosure (eg. for more privacy-friendly age 18+ verification)
+ * Enable the PII to be end-to-end encrypted between the wallet application and the relevant verification server
+ * Enable the use of request authentication where a wallet is required to cryptographically verify that the requester has permission to access the credential
 
 Further, this specification aims to improve over the existing communication channels used by websites to talk to wallet apps by:
-Enabling browsers and operating systems to provide meaningful credential selection and permission screens to users prior to wallet applications becoming aware of the presentation request
-Securely communicate the origin of the requesting site to the wallet application so that it can implement it’s own MITM protection with support of WebPKI
-Enabling browsers to inspect requests and provide additional UI affordances to users
+ * Enabling browsers and operating systems to provide meaningful credential selection and permission screens to users prior to wallet applications becoming aware of the presentation request
+ * Securely communicate the origin of the requesting site to the wallet application so that it can implement it’s own MITM protection with support of WebPKI
+ * Enabling browsers to inspect requests and provide additional UI affordances to users
 
 > 05.  Do the features in your specification introduce state
 >      that persists across browsing sessions?
