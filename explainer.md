@@ -89,7 +89,7 @@ The Digital Credential API exposes a one-time user-mediated communication channe
 > 02.  Do features in your specification expose the minimum amount of information
 >      necessary to implement the intended functionality?
 
-A primary use case of the digital credentials API is for selective disclosure of identity properties such as a cryptographic attestation that the user holds a California driver’s license of an adult. The use of selective disclosure, however, is a decision for the verifier website, wallet and credential issuer based on the use case. There are legitimate scenarios, such as creating or recovering an account on a government website, where uniquely identifiable and potentially non-resettable PII is potentially exposed.
+A primary use case of the digital credentials API is for selective disclosure of identity properties such as a cryptographic attestation that the user holds a California driver’s license of an adult. The use of selective disclosure, however, is a decision for the verifier website, wallet, and credential issuer, based on the use case. There are legitimate scenarios, such as creating or recovering an account on a government website, where uniquely identifiable and potentially non-resettable PII might be exposed.
 
 The API is designed to expect the use of response encryption so that this PII is exposed only to the requesting server and not any code running in the web page or browser. It is an [open question](https://github.com/WICG/digital-identities/issues/109) whether this response encryption is something we can reasonably enforce at this layer or not.
 
