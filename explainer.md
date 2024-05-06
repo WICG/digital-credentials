@@ -111,8 +111,8 @@ The use of wallets aims to improve on the status quo of uploading images in a nu
  * Enable request authentication, where a wallet is required to cryptographically verify that the requester has permission to access the credential
 
 Further, this specification aims to improve over the existing communication channels used by websites to talk to wallet apps by:
- * Enabling browsers and operating systems to provide meaningful credential selection and permission screens to users prior to wallet applications becoming aware of the presentation request
- * Securely communicate the origin of the requesting site to the wallet application so that it can implement it’s own MITM protection with support of WebPKI
+ * Enabling browsers and operating systems to provide meaningful credential selection and permission screens to users, prior to wallet applications becoming aware of the presentation request
+ * Securely communicating the origin of the requesting site to the wallet application, so that it can implement its own MITM protection with support of WebPKI
  * Enabling browsers to inspect requests and provide additional UI affordances to users
 
 > 05.  Do the features in your specification introduce state
