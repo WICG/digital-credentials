@@ -106,9 +106,9 @@ Yes, the API is designed to help facilitate communication of PII from secure wal
 Today, online identity verification (e.g., for KYC) is usually done by submitting photos of government identity documents (for example, uploading photos containing the PII via the web’s `<input type=file>` mechanism. Due to the privacy and security limits of this approach, credential issuers and verifiers are working to move to the use of wallet applications which can selectively disclose cryptographically-attested properties. Today, those approaches rely on generic web→app communication paths like custom schemes and server-to-server communication. 
 
 The use of wallets aims to improve on the status quo of uploading images in a number of ways:
- * Enable the use of selective disclosure (eg. for more privacy-friendly age 18+ verification)
- * Enable the PII to be end-to-end encrypted between the wallet application and the relevant verification server
- * Enable the use of request authentication where a wallet is required to cryptographically verify that the requester has permission to access the credential
+ * Enable selective disclosure (e.g., for more privacy-friendly age≥18 verification)
+ * Enable end-to-end PII encryption between the wallet application and the relevant verification server
+ * Enable request authentication, where a wallet is required to cryptographically verify that the requester has permission to access the credential
 
 Further, this specification aims to improve over the existing communication channels used by websites to talk to wallet apps by:
  * Enabling browsers and operating systems to provide meaningful credential selection and permission screens to users prior to wallet applications becoming aware of the presentation request
