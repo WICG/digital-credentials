@@ -77,7 +77,7 @@ There are still many open questions, but a few big ones:
 The following topics are currently out of scope for the API:
 
 - A website (issuer) requesting the issuance of a digital credential to a digital wallet
-- A website (verifier) explicitly requesting mutiple digital credentials from multiple wallets in the same request
+- A website (verifier) explicitly requesting multiple digital credentials from multiple wallets in the same request
 
 # Related Work
 
