@@ -72,6 +72,12 @@ There are still many open questions, but a few big ones:
 - Will existing protocols ([example](https://github.com/openid/OpenID4VP/issues/125)) adopt this API?
 - Will regulation ([example](https://digital-strategy.ec.europa.eu/en/library/european-digital-identity-architecture-and-reference-framework-outline)) adopt this API?
 
+# Out of Scope
+
+The following topics are currently out of scope for the API:
+
+- A website (issuer) requesting the issuance of a digital credential to a digital wallet
+- A website (verifier) explicitly requesting mutiple digital credentials from multiple wallets in the same request
 
 # Related Work
 
