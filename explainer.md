@@ -58,7 +58,7 @@ You can read a more detailed and technical description of the API in the [specif
 
 # Security and Privacy
 
-See [Security and privacy TAG Questionnaire](SecurityAndPrivacy.md)
+See [Security and privacy TAG Questionnaire](security-privacy.md)
 
 # Alternatives Considered
 
