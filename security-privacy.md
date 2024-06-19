@@ -18,7 +18,7 @@ The API is also designed to require request transparency to enable user agents a
 >      personally-identifiable information (PII), or information derived from
 >      either?
 
-Yes. The API is designed to help facilitate communication of personally-identifiable information (PII) from wallet applications to verifier web servers, through a relying party (a web application). 
+Yes. The API is designed to help facilitate communication of personally-identifiable information (PII) from wallet applications to verifier web servers, through a relying party (a web application).
 
 > 04.  How do the features in your specification deal with sensitive information?
 
@@ -68,7 +68,7 @@ Not yet, but we expect to expand the API to enable cross-device presentation flo
 > 11.  Do features in this specification allow an origin some measure of control over
 >      a user agent's native UI?
 
-Not control, no. User agents may add additional affordances for user transparency and control. 
+Not control, no. User agents may add additional affordances for user transparency and control.
 
 > 12.  What temporary identifiers do the features in this specification create or
 >      expose to the web?
@@ -88,7 +88,7 @@ Like other browser authentication (e.g., WebAuthn) and identification (e.g., aut
 > 15.  Does this specification have both "Security Considerations" and "Privacy
 >      Considerations" sections?
 
-Not yet, but it will. The specification is still being written as we incubate the API and gain experience with real-world experiments. 
+Not yet, but it will. The specification is still being written as we incubate the API and gain experience with real-world experiments.
 
 > 16.  Do features in your specification enable origins to downgrade default
 >      security protections?
@@ -108,3 +108,4 @@ Probably just silently ignored, but [we'll discuss](https://github.com/WICG/digi
 > 19.  What should this questionnaire have asked?
 
 What are the security and privacy implications of not shipping this feature? How does this feature fit into the larger privacy risk landscape. We believe the feature will lead to a reduced risk relative to the status quo, but this is very subjective and hard to demonstrate definitively. 
+
