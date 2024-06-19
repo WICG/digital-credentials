@@ -107,5 +107,5 @@ Probably just silently ignored, but [we'll discuss](https://github.com/WICG/digi
 
 > 19.  What should this questionnaire have asked?
 
-What are the security and privacy implications of not shipping this feature? How does this feature fit into the larger privacy risk landscape. We believe the feature will lead to a reduced risk relative to the status quo, but this is very subjective and hard to demonstrate definitively. 
+What are the security and privacy implications of not shipping this feature? How does this feature fit into the larger privacy risk landscape. We believe the feature will lead to a reduced risk relative to the status quo, but this is very subjective and hard to demonstrate definitively.
 
