@@ -241,7 +241,7 @@
       {{DigitalCredential}} instances are [=Credential/origin bound=].
     </p>
     <h3>
-      Extensions to Credential Management API
+      Integration with Credential Management API
     </h3>
     <aside class="issue" data-number="65"></aside>
     <h3>
@@ -272,6 +272,28 @@
       The <dfn data-dfn-for="DigitalCredential">data</dfn> member is the
       credential's response data.
     </p>
+    <h3>
+      [[\DiscoverFromExternalSource]](origin, options, sameOriginWithAncestors)
+      internal method
+    </h3>
+    <p>
+      When invoked, the <dfn class="export" data-dfn-for=
+      "DigitalCredential">[[\DiscoverFromExternalSource]](origin, options,
+      sameOriginWithAncestors)</dfn> internal method MUST:
+    </p>
+    <li>Let |global| be [=this=]'s [=relevant global object=].
+    </li>
+    <li>Let |document| be |global|'s [=associated `Document`=].
+    </li>
+    <li>If |document| is not a [=Document/fully active descendant of a
+    top-level traversable with user attention=], [=exception/throw=]
+    {{"NotAllowedError"}} {{DOMException}}.
+    </li>
+    <li>If |window| does not have [transient activation], [=exception/throw=]
+    {{"NotAllowedError"}} {{DOMException}}.
+    </li>
+    <li>[=Consume user activation=] of |window|.
+    </li>
     <h3>
       [[\Store]](credential, sameOriginWithAncestors) internal method
     </h3>
