@@ -155,10 +155,6 @@
       The <dfn>identity</dfn> attribute provides access to the the underlying
       {{CredentialsContainer}} for managing [=digital credentials=].
     </p>
-    <h3>
-      Extensions to Credential Management API
-    </h3>
-    <aside class="issue" data-number="65"></aside>
     <h2>
       Extensions to `CredentialRequestOptions` dictionary
     </h2>
@@ -241,6 +237,13 @@
       readonly attribute any data;
     };
     </pre>
+    <p>
+      {{DigitalCredential}} instances are [=Credential/origin bound=].
+    </p>
+    <h3>
+      Extensions to Credential Management API
+    </h3>
+    <aside class="issue" data-number="65"></aside>
     <h3>
       The `protocol` member
     </h3>
@@ -268,6 +271,43 @@
     <p>
       The <dfn data-dfn-for="DigitalCredential">data</dfn> member is the
       credential's response data.
+    </p>
+    <h3>
+      [[\Store]](credential, sameOriginWithAncestors) internal method
+    </h3>
+    <p>
+      When invoked, the <dfn class="export" data-dfn-for=
+      "DigitalCredential">[[\Store]](credential, sameOriginWithAncestors)</dfn>
+      MUST call the default implementation of {{Credential}}'s
+      {{Credential/[[Store]](credential, sameOriginWithAncestors)}} internal
+      method with the same arguments.
+    </p>
+    <h3>
+      [[\Create]](origin, options, sameOriginWithAncestors) internal method
+    </h3>
+    <p>
+      When invoked, the <dfn class="export" data-dfn-for=
+      "DigitalCredential">[[\Create]](origin, options,
+      sameOriginWithAncestors)</dfn> internal method MUST call the default
+      implementation of {{Credential}}'s {{Credential/[[Create]](origin,
+      options, sameOriginWithAncestors)}} internal method with the same
+      arguments.
+    </p>
+    <h3>
+      [[\type]] internal slot
+    </h3>
+    <p>
+      The {{DigitalCredential}} [=interface object=] has an internal slot named
+      <dfn class="export" data-dfn-for="DigitalCredential">[[\type]]</dfn>
+      whose value is "digital".
+    </p>
+    <h3>
+      [[\discovey]] internal slot
+    </h3>
+    <p>
+      The {{DigitalCredential}} [=interface object=] has an internal slot named
+      <dfn class="export" data-dfn-for="DigitalCredential">[[\discovery]]</dfn>
+      whose value is "remote".
     </p>
     <h2 id="protocol-registry">
       Registry of protocols for requesting digital credential
