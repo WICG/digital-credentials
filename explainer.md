@@ -56,6 +56,9 @@ Here is an example of how the  the API might be used in practice:
 ```
 You can read a more detailed and technical description of the API in the [specification draft](https://wicg.github.io/digital-identities/).
 
+## Horizontal reviews
+
+* [Security and privacy TAG Questionnaire](horizontal-reviews/security-privacy.md)
 
 # Alternatives Considered
 
