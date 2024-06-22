@@ -281,27 +281,29 @@
       "DigitalCredential">[[\DiscoverFromExternalSource]](origin, options,
       sameOriginWithAncestors)</dfn> internal method MUST:
     </p>
-    <li>Let |global| be [=this=]'s [=relevant global object=].
-    </li>
-    <li>Let |document| be |global|'s [=associated `Document`=].
-    </li>
-    <li>If |document| is not a [=Document/fully active descendant of a
-    top-level traversable with user attention=], [=exception/throw=]
-    {{"NotAllowedError"}} {{DOMException}}.
-    </li>
-    <li>If |window| does not have [=transient activation=], [=exception/throw=]
-    {{"NotAllowedError"}} {{DOMException}}.
-    </li>
-    <li>[=Consume user activation=] of |window|.
-    </li>
-    <li>
-      <aside class="issue">
-        Details of how to actually get the [=digital credential=] are forthcoming.
-      </aside> 
-    </li>
-    <li>
-       Return a {{DigitalCredential}}.
-    </li>
+    <ol class="algorithm">
+      <li>Let |global| be [=this=]'s [=relevant global object=].
+      </li>
+      <li>Let |document| be |global|'s [=associated `Document`=].
+      </li>
+      <li>If |document| is not a [=Document/fully active descendant of a
+      top-level traversable with user attention=], [=exception/throw=]
+      {{"NotAllowedError"}} {{DOMException}}.
+      </li>
+      <li>If |window| does not have [=transient activation=],
+      [=exception/throw=] {{"NotAllowedError"}} {{DOMException}}.
+      </li>
+      <li>[=Consume user activation=] of |window|.
+      </li>
+      <li>
+        <aside class="issue">
+          Details of how to actually get the [=digital credential=] are
+          forthcoming.
+        </aside>
+      </li>
+      <li>Return a {{DigitalCredential}}.
+      </li>
+    </ol>
     <h3>
       [[\Store]](credential, sameOriginWithAncestors) internal method
     </h3>
