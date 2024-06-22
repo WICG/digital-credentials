@@ -273,6 +273,16 @@
       credential's response data.
     </p>
     <h3>
+      [[\DiscoverFromExternalSource]](origin, options, sameOriginWithAncestors)
+      internal method
+    </h3>
+    <ol>
+      <li>If |document| is not [=allowed to use=] the
+      <a>"digital-credentials-get"</a> permission, then [=exception/throw=] a
+      {{"NotAllowedError="}} {{DOMException}}.
+      </li>
+    </ol>
+    <h3>
       [[\Store]](credential, sameOriginWithAncestors) internal method
     </h3>
     <p>
@@ -309,6 +319,29 @@
       <dfn class="export" data-dfn-for="DigitalCredential">[[\discovery]]</dfn>
       whose value is "remote".
     </p>
+    <section class="informative">
+      <h3>
+        User consent
+      </h3>
+      <p>
+        The <cite>Digital Credential API</cite> is a [=powerful feature=] that
+        requires [=express permission=] from an end-user. This requirement is
+        normatively enforced when calling `navigator.identity.get()` via the
+        {{DigitalCredential\[[DiscoverFromExternalSource]](origin, options,
+        sameOriginWithAncestors)}} internal method.
+      </p>
+    </section>
+    <section id="permissions-policy" data-cite="permissions-policy">
+      <h2>
+        Permissions Policy integration
+      </h2>
+      <p>
+        This specification defines a [=policy-controlled feature=] identified
+        by the string <dfn class="permission">"digital-credentials-get"</dfn>
+        [[permissions-policy]]. Its [=policy-controlled feature/default
+        allowlist=] is [=allowlist/'self'=].
+      </p>
+    </section>
     <h2 id="protocol-registry">
       Registry of protocols for requesting digital credential
     </h2>
