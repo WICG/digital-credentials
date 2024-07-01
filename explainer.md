@@ -64,6 +64,10 @@ The specification allows usage of the API from a remote/third-party origin via t
 <iframe allow="digital-credentials-get"></iframe>
 ```
 
+## Horizontal reviews
+
+* [Security and privacy TAG Questionnaire](horizontal-reviews/security-privacy.md)
+
 # Alternatives Considered
 
 There are many alternatives that were considered, most notably:
