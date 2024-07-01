@@ -56,6 +56,13 @@ Here is an example of how the  the API might be used in practice:
 ```
 You can read a more detailed and technical description of the API in the [specification draft](https://wicg.github.io/digital-identities/).
 
+### Using the API from another origin
+
+The specification allows usage of the API from a remote/third-party origin via the "digital-credentials-get" Permissions Policy. This is useful for scenarios where a website wants to request digital credentials from a wallet provider that is hosted on a different origin. The Permissions Policy can be set on an iframe that embeds the website that wants to use the API. Here is an example of how the Permissions Policy can be set on an iframe:
+
+```HTML
+<iframe allow="digital-credentials-get"></iframe>
+```
 
 # Alternatives Considered
 
