@@ -309,6 +309,27 @@
       <dfn class="export" data-dfn-for="DigitalCredential">[[\discovery]]</dfn>
       whose value is "remote".
     </p>
+    <section class="informative">
+      <h3>
+        User consent
+      </h3>
+      <p>
+        The <cite>Digital Credential API</cite> is a [=powerful feature=] that
+        requires [=express permission=] from an end-user. This requirement is
+        normatively enforced when calling {{CredentialsContainer}}'s
+        {{CredentialsContainer/get()}} method.
+      </p>
+    </section>
+    <section id="permissions-policy" data-cite="permissions-policy">
+      <h2>
+        Permissions Policy integration
+      </h2>
+      <p>
+        This specification defines a [=policy-controlled feature=] identified
+        by the string <dfn class="permission">"digital-credentials-get"</dfn>. 
+        Its [=policy-controlled feature/default allowlist=] is [=allowlist/'self'=].
+      </p>
+    </section>
     <h2 id="protocol-registry">
       Registry of protocols for requesting digital credential
     </h2>
