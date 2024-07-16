@@ -34,26 +34,35 @@ At its core, the API is designed for a website ("verifier") to [transparently](h
 
 Here is an example of how the  the API might be used in practice:
 
-```javascript
-    const digitalCredential = await navigator.identity.get({
-      digital: {
-        providers: [{
-          // Protocol extensibility:
-          protocol: "oid4vp",
-          // An example of an OpenID4VP request to wallets.
-          // Based on https://github.com/openid/OpenID4VP/issues/125
-          request: {
-            nonce: "n-0S6_WzA2Mj",
-            presentation_definition: {
-              // Presentation Exchange request, omitted for brevity
-            }
-          }
-        }],
-      },
-    });
-    // To be decrypted on the server...
-    const encryptedData = digitalCredential.data;
+The API needs to be initiated through a user gesture, such as a button click:
+
+```html
+<button onclick="requestLicense()">Request Driver's license<button>
 ```
+
+
+```javascript
+async function requestLicense() {
+  const oid4pv = {
+    // Protocol extensibility:
+    protocol: "oid4vp", // An example of an OpenID4VP request to wallets. // Based on https://github.com/openid/OpenID4VP/issues/125
+    request: {
+      nonce: "n-0S6_WzA2Mj",
+      presentation_definition: {
+        // Presentation Exchange request, omitted for brevity
+      },
+    },
+  };
+  const digitalCredential = await navigator.identity.get({
+    digital: {
+      providers: [oid4pv],
+    },
+  });
+  // To be decrypted on the server...
+  const encryptedData = digitalCredential.data;
+}
+```
+
 You can read a more detailed and technical description of the API in the [specification draft](https://wicg.github.io/digital-identities/).
 
 ### Using the API from another origin
