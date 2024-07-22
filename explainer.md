@@ -28,7 +28,7 @@ To balance this tension we propose an API with the following key properties:
 - By separating the act of requesting from the specific protocol, we can enable flexibility and adaptability in both the protocol and credential formats. This way, the pace of changes in browsers won't hinder progress or block new developments.
 - Require request transparency, enabling user-agent inspection for risk analysis
 - Assume response opacity (encrypted responses), enabling verifiers and holders to control where potentially sensitive PII is exposed
-- Sites learn nothing without user permission. Prevent websites from silently querying for the availability of digital credentials and communicating with wallet providers prior to the user confirming each action.
+- Websites cannot access any information without user interaction. This API ensures that sites cannot silently query for digital credentials or communicate with wallet providers without the user's active participation and confirmation of each action.
 
 At its core, the API is designed for a website ("verifier") to [transparently](https://github.com/w3cping/credential-considerations/blob/main/credentials-considerations.md#in-context-explanations) request the [selective disclosure](https://github.com/w3cping/credential-considerations/blob/main/credentials-considerations.md#selective-disclosure) of attributes from (issued) digital credentials that were provisioned - ahead of time - to wallets ("holders"), in a manner that is seamlessly compatible with existing architectural choices (such as [OpenID4VP integration](https://github.com/openid/OpenID4VP/issues/125)).
 
