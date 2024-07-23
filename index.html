@@ -295,8 +295,12 @@
       </li>
       <li>[=Consume user activation=] of |window|.
       </li>
-      <li>If |options|'s {{DigitalCredentialRequestOptions/providers}} member
-      is empty, [=exception/throw=] {{"TypeError"}} {{DOMException}}.
+      <li>Let |providers| be |options|'s
+      {{DigitalCredentialRequestOptions/digital}}'s
+      {{IdentityRequestProvider/providers}} member.
+      </li>
+      <li>If |providers| is empty, [=exception/throw=] {{"TypeError"}}
+      {{DOMException}}.
       </li>
       <li>
         <aside class="issue">
