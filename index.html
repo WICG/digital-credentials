@@ -295,6 +295,9 @@
       </li>
       <li>[=Consume user activation=] of |window|.
       </li>
+      <li>If |options|'s {{DigitalCredentialRequestOptions/providers}} member
+      is empty, [=exception/throw=] {{"TypeError"}} {{DOMException}}.
+      </li>
       <li>
         <aside class="issue">
           Details of how to actually get the [=digital credential=] are
