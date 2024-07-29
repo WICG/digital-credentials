@@ -282,13 +282,6 @@
       sameOriginWithAncestors)</dfn> internal method MUST:
     </p>
     <ol class="algorithm">
-      <li>Let |providers| be |options|'s
-      {{DigitalCredentialRequestOptions/digital}}'s
-      {{IdentityRequestProvider/providers}} member.
-      </li>
-      <li>If |providers| is empty, [=exception/throw=] a {{"TypeError"}}
-      {{DOMException}}.
-      </li>
       <li>Let |global| be [=this=]'s [=relevant global object=].
       </li>
       <li>Let |document| be |global|'s [=associated `Document`=].
@@ -302,6 +295,13 @@
       </li>
       <li>[=Consume user activation=] of |window|.
       </li>
+      <li>Let |providers| be |options|'s
+        {{DigitalCredentialRequestOptions/digital}}'s
+        {{IdentityRequestProvider/providers}} member.
+        </li>
+        <li>If |providers| is empty, [=exception/throw=] a {{"TypeError"}}
+        {{DOMException}}.
+        </li>
       <li>
         <aside class="issue">
           Details of how to actually get the [=digital credential=] are
