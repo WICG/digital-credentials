@@ -296,6 +296,15 @@
       <li>[=Consume user activation=] of |window|.
       </li>
       <li>
+        <strong>Validate |options|</strong>:
+        <ol>
+          <li>If |options|'s {{CredentialRequestOptions/mediation}} is not
+          {CredentialMediationRequirement/"required"}, [=exception/throw=] a
+          {{TypeError}}.
+          </li>
+        </ol>
+      </li>
+      <li>
         <aside class="issue">
           Details of how to actually get the [=digital credential=] are
           forthcoming.
