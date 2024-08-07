@@ -240,7 +240,7 @@
     [Exposed=Window, SecureContext]
     interface DigitalCredential : Credential {
       readonly attribute DOMString protocol;
-      readonly attribute any data;
+      readonly attribute object data;
     };
     </pre>
     <p>
@@ -261,22 +261,10 @@
     <h3>
       The `data` member
     </h3>
-    <aside class="issue" title="Why the 'any' data type?">
-      <p>
-        We are currently exploring the use of a more structured data type for
-        the `data` attribute as we attempt to understand the requirements of
-        various digital credential formats and protocols. <strong>We expect
-        this data type to change in the very near future.</strong>
-      </p>
-      <p>
-        We are also investigating how [[[webauthn]]] deals with this. See
-        <a href="https://github.com/WICG/digital-identities/issues/95">issue
-        #95</a>.
-      </p>
-    </aside>
     <p>
       The <dfn data-dfn-for="DigitalCredential">data</dfn> member is the
-      credential's response data.
+      credential's response data. It contains the subset of JSON-parseable
+      object types.
     </p>
     <h3>
       [[\DiscoverFromExternalSource]](origin, options, sameOriginWithAncestors)
