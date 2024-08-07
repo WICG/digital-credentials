@@ -294,6 +294,29 @@
       </li>
       <li>If |providers| is empty, [=exception/throw=] a {{TypeError}}.
       </li>
+      <li>[=List/For each=] |provider| in |providers|:
+        <ol>
+          <li>If |provider|'s {{DigitalCredentialsProvider/protocol}} is does
+          not match a [=digital credentials registry/protocol identifier=] from
+          the [=digital credentials registry=], [=exception/throw=] a
+          {{TypeError}}.
+          </li>
+          <li>Let |dictionary| be the [=digital credentials registry/Web IDL
+          dictionary=] for |provider|'s
+          {{DigitalCredentialsProvider/protocol}}.
+          </li>
+          <li>Let |request| be |provider|'s
+          {{DigitalCredentialsProvider/request}} [=converted to an idl
+          value|converted=] to |dictionary|. [=exception/throw|Rethrow=] any
+          exceptions.
+          </li>
+          <li>Validate |request| against any validation rules set forth in the
+          corresponding [=digital credentials registry/specification=]. If any
+          of |request|'s members are invalid, [=exception/throw=] a
+          {{TypeError}}.
+          </li>
+        </ol>
+      </li>
       <li>
         <aside class="issue">
           Details of how to actually get the [=digital credential=] are
@@ -366,8 +389,9 @@
       Registry of protocols for requesting digital credential
     </h2>
     <p>
-      The following is the registry of [=digital credential/exchange
-      protocols=] that are supported by this specification.
+      The following is the <dfn data-lt="digital credentials registry">digital
+      credentials registryls exchange protocols</dfn> that are supported by
+      this specification.
     </p>
     <p class="note" title="Official Registry" data-cite="w3c-process">
       It is expected that this registry will be become a [=W3C registry=] in
@@ -392,13 +416,19 @@
       <thead>
         <tr>
           <th>
-            Protocol identifier
+            <dfn data-dfn-for="digital credentials registry">Protocol
+            identifier</dfn>
+          </th>
+          <th>
+            <dfn data-dfn-for="digital credentials registry">Web IDL
+            dictionary</dfn>
           </th>
           <th>
             Description
           </th>
           <th>
-            Specification
+            <dfn data-dfn-for=
+            "digital credentials registry">Specification</dfn>
           </th>
         </tr>
       </thead>
