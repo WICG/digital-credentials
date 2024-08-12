@@ -302,6 +302,31 @@
       <li>[=Consume user activation=] of |window|.
       </li>
       <li>
+        Let |requestHash| be the SHA-256 hash of the JSON-serialized {{IdentityRequestProvider/request}} object, with [=map/Keys=] sorted in ascending lexicographical order.
+      </li>
+      <li>
+        Let |collectedClientData| be a new {{CollectedClientData}} instance whose fields are:
+        <ul>
+          <li>
+            {{CollectedClientData/type}}: The string "digitalcredentials.get".
+          </li>
+          <li>
+            {{CollectedClientData/requestHash}}: |requestHash|
+          </li>
+          <li>
+            {{CollectedClientData/origin}}: The [=ascii serialization of an origin|serialization of=] |callerOrigin|.
+          </li>
+          <li>
+            {{CollectedClientData/topOrigin}}: The [=ascii serialization of an origin|serialization of=] |callerOrigin|'s [=environment/top-level origin=]
+            if the sameOriginWithAncestors argument passed to this internal method is `false`, else `undefined`.
+            <aside class="issue" title="same-origin with its ancestors reference">https://github.com/w3c/webappsec-credential-management/pull/253</aside>
+          </li>
+          <li>
+            {{CollectedClientData/crossOrigin}}: The inverse of the value of the sameOriginWithAncestors argument passed to this internal method.
+          </li>
+        </ul>
+      </li>
+      <li>
         <aside class="issue">
           Details of how to actually get the [=digital credential=] are
           forthcoming.
@@ -347,6 +372,31 @@
       <dfn class="export" data-dfn-for="DigitalCredential">[[\discovery]]</dfn>
       whose value is "remote".
     </p>
+    <h3>
+      Wallet Responses (interface <dfn interface>WalletResponse</dfn>)
+    </h3>
+    <p>
+      Wallets respond to Verifier requests by returning an object derived from the {{WalletResponse}} interface:
+    </p>
+    <pre class="idl">
+      [Exposed=Window, SecureContext]
+      interface WalletResponse {
+        [SameObject] readonly attribute ArrayBuffer      clientDataJSON;
+      };
+    </pre>
+    <h4>
+      Presentations (interface <dfn interface>WalletPresentationResponse</dfn>)
+    </h4>
+    <p>
+      The {{WalletPresentationResponse}} interface represents a wallet's response to a client's request for a digital credential presentation.
+    </p>
+    <pre class="idl">
+      [Exposed=Window, SecureContext]
+      interface WalletPresentationResponse: WalletResponse {
+        [SameObject] readonly attribute DOMString      protocol;
+        [SameObject] readonly attribute object      data;
+      };
+    </pre>
     <section class="informative">
       <h3>
         User consent
@@ -357,6 +407,63 @@
         normatively enforced when calling {{CredentialsContainer}}'s
         {{CredentialsContainer/get()}} method.
       </p>
+    </section>
+    <section id="supporting-data-structures" data-cite="supporting-data-structures">
+      <h2>
+        Supporting Data Structures
+      </h2>
+      <p>
+        The {{DigitalCredential}} type uses certain data structures that are specified in supporting specifications.
+        These are as follows.
+      </p>
+      <h3>
+        Client Data
+      </h3>
+      <pre class="idl">
+        dictionary CollectedClientData {
+          required DOMString  type;
+          required DOMString  requestHash;
+          required DOMString  origin;
+          DOMString           topOrigin;
+          boolean             crossOrigin;
+        };
+      </pre>
+      <div data-dfn-for="CollectedClientData">
+        <dl>
+          <dt>
+            <dfn>type</dfn>
+          </dt>
+          <dd>
+            This member contains the string "digitalcredentials.get" when requesting presentation of an existing digital credential.
+          </dd>
+          <dt>
+            <dfn>requestHash</dfn>
+          </dt>
+          <dd>
+            A SHA-256 hash of the JSON-serialized request object, with [=map/Keys=] sorted in ascending lexicographical order.
+          </dd>
+          <dt>
+            <dfn>origin</dfn>
+          </dt>
+          <dd>
+            This member contains the fully qualified [=origin=] of the requester, as provided to the wallet by the client, in the syntax defined by [[!RFC6454]].
+          </dd>
+          <dt>
+            <dfn>topOrigin</dfn>
+          </dt>
+          <dd>
+            This OPTIONAL member contains the fully qualified [=environment/top-level origin=] of the requester, in the syntax defined by [[!RFC6454]].
+            It is set only if the call was made from context that is not same-origin with its ancestors, i.e. if {{CollectedClientData/crossOrigin}} is `true`.
+            <aside class="issue" title="same-origin with its ancestors reference">https://github.com/w3c/webappsec-credential-management/pull/253</aside>
+          </dd>
+          <dt>
+            <dfn>crossOrigin</dfn>
+          </dt>
+          <dd>
+            This OPTIONAL member contains the inverse of the `sameOriginWithAncestors` argument value that was passed into the internal method.
+          </dd>
+        </dl>
+      </div>
     </section>
     <section id="permissions-policy" data-cite="permissions-policy">
       <h2>
