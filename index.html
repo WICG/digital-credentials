@@ -292,13 +292,18 @@
       <li>Let |providers| be |options|'s {{CredentialRequestOptions/digital}}'s
       {{DigitalCredentialRequestOptions/providers}} member.
       </li>
-      <li>If |providers| is empty, [=exception/throw=] a {{TypeError}}.
+      <li>If |providers| [=list/is empty=], [=exception/throw=] a
+      {{TypeError}}.
       </li>
-      <li>[=List/For each=] |provider| in |providers|:
+      <li>Let |range| be [=list/get the indices=] of |providers|.
+      </li>
+      <li>[=For each=] |n| of the |range|:
         <ol>
-          <li>If |provider|'s {{DigitalCredentialsProvider/protocol}} does
-          not match a [=digital credentials registry/protocol identifier=] from
-          the [=digital credentials registry=], [=exception/throw=] a
+          <li>Let |provider| be [=list/item=] at |providers|'s |n| index.
+          </li>
+          <li>If |provider|'s {{DigitalCredentialsProvider/protocol}} does not
+          match a [=digital credentials registry/protocol identifier=] from the
+          [=digital credentials registry=], [=exception/throw=] a
           {{TypeError}}.
           </li>
           <li>Let |dictionary| be the [=digital credentials registry/Web IDL
@@ -314,6 +319,9 @@
           corresponding [=digital credentials registry/specification=]. If any
           of |request|'s members are invalid, [=exception/throw=] a
           {{TypeError}}.
+          </li>
+          <li>Set [=list/item=] at |providers|'s |n| index's
+          {{DigitalCredentialsProvider/request}} to |request|.
           </li>
         </ol>
       </li>
@@ -390,8 +398,8 @@
     </h2>
     <p>
       The following are <dfn data-lt="digital credentials registry">exchange
-      protocols from the digital credentials registry</dfn>, supported by
-      this specification.
+      protocols from the digital credentials registry</dfn>, supported by this
+      specification.
     </p>
     <p class="note" title="Official Registry" data-cite="w3c-process">
       It is expected that this registry will be become a [=W3C registry=] in
