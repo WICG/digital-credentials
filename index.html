@@ -319,11 +319,9 @@
       [[\Store]](credential, sameOriginWithAncestors) internal method
     </h3>
     <p>
-      The {{Credential/[[Store]](credential, sameOriginWithAncestors)}} method is not supported for the {{DigitalCredential}} type, 
-      so its implementation of the {{Credential/[[Store]](credential, sameOriginWithAncestors)}} internal method always throws an error.
-    </p>
-    <p>
-      When this method is invoked, the user agent MUST execute the following algorithm:
+       When invoked, the <dfn class="export" data-dfn-for=
+      "DigitalCredential">[[\Store]](credential, sameOriginWithAncestors)</dfn>
+      MUST:
     </p>      
       <ol>
         <li>Throw a {{"NotSupportedError"}} {{DOMException}}.</li>
