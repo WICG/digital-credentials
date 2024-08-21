@@ -230,6 +230,15 @@
       The <dfn>DigitalCredential</dfn> interface represents a conceptual
       [=digital credential=].
     </p>
+    <p>
+      [=Request a credential|Requesting a `DigitalCredential` credential=] does
+      not support {{CredentialMediationRequirement/"conditional"}} [=user
+      mediation=]. [=User mediation=] is always
+      {{CredentialMediationRequirement/"required"}}. No other
+      {{CredentialMediationRequirement}} enum value is supported, apart from
+      {{CredentialMediationRequirement/"required"}}, and results in a
+      {{TypeError}} when {{CredentialsContainer/get()}} is called.
+    </p>
     <pre class="idl">
     [Exposed=Window, SecureContext]
     interface DigitalCredential : Credential {
@@ -294,15 +303,6 @@
       [=exception/throw=] {{"NotAllowedError"}} {{DOMException}}.
       </li>
       <li>[=Consume user activation=] of |window|.
-      </li>
-      <li>
-        <strong>Validate |options|</strong>:
-        <ol>
-          <li>If |options|'s {{CredentialRequestOptions/mediation}} is not
-          {CredentialMediationRequirement/"required"}, [=exception/throw=] a
-          {{TypeError}}.
-          </li>
-        </ol>
       </li>
       <li>
         <aside class="issue">
