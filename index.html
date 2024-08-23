@@ -234,9 +234,9 @@
       [=Request a credential|Requesting a `DigitalCredential` credential=] does
       not support {{CredentialMediationRequirement/"conditional"}} [=user
       mediation=]. [=User mediation=] is always
-      {{CredentialMediationRequirement/"required"}}. No other
-      {{CredentialMediationRequirement}} enum value is supported, apart from
-      {{CredentialMediationRequirement/"required"}}, and results in a
+      {{CredentialMediationRequirement/"required"}}. The only supported
+      {{CredentialMediationRequirement}} enum value is
+      {{CredentialMediationRequirement/"required"}}, which results in a
       {{TypeError}} when {{CredentialsContainer/get()}} is called.
     </p>
     <pre class="idl">
