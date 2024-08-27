@@ -232,12 +232,12 @@
     </p>
     <p>
       [=Request a credential|Requesting a `DigitalCredential` credential=] does
-      not support {{CredentialMediationRequirement/"conditional"}} [=user
+      not support {{CredentialMediationRequirement/"conditional"}} and {{CredentialMediationRequirement/"optional"}} and {{CredentialMediationRequirement/"silent"}} [=user
       mediation=]. [=User mediation=] is always
       {{CredentialMediationRequirement/"required"}}. The only supported
       {{CredentialMediationRequirement}} enum value is
       {{CredentialMediationRequirement/"required"}}, which results in a
-      {{TypeError}} when {{CredentialsContainer/get()}} is called.
+      {{TypeError}} when {{CredentialsContainer/get()}} is called with anything but {{CredentialMediationRequirement/"required"}}.
     </p>
     <pre class="idl">
     [Exposed=Window, SecureContext]
