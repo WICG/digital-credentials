@@ -55,7 +55,7 @@ async function requestLicense() {
   };
   const digitalCredential = await navigator.identity.get({
     digital: {
-      providers: [oid4pv],
+      requests: [oid4pv],
     },
   });
   // To be decrypted on the server...
