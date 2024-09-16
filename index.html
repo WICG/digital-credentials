@@ -189,7 +189,7 @@
     </h2>
     <pre class="idl">
     dictionary DigitalCredentialRequestOptions {
-      sequence&lt;DigitalCredentialsProvider&gt; requests;
+      sequence&lt;DigitalCredentialsRequest&gt; requests;
     };
     </pre>
     <h3>
@@ -213,7 +213,7 @@
     <pre class="idl">
     dictionary DigitalCredentialsRequest {
       required DOMString protocol;
-      required object request;
+      required object data;
     };
     </pre>
     <h3>
@@ -230,12 +230,12 @@
       custom one.
     </p>
     <h3>
-      The `request` member
+      The `data` member
     </h3>
     <p>
-      The <dfn data-dfn-for="DigitalCredentialsRequest">request</dfn> member
-      is the request to be handled by the holder's software, such as a digital
-      wallet.
+      The <dfn data-dfn-for="DigitalCredentialsRequest">data</dfn> member is
+      the [=digital credential/query=] to be handled by the holder's software,
+      such as a digital wallet.
     </p>
     <h2>
       The `DigitalCredential` interface
