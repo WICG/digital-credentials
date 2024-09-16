@@ -53,7 +53,7 @@ async function requestLicense() {
       },
     },
   };
-  const digitalCredential = await navigator.identity.get({
+  const digitalCredential = await navigator.credentials.get({
     digital: {
       providers: [oid4pv],
     },
