@@ -296,7 +296,38 @@
       <li>Let |providers| be |options|'s {{CredentialRequestOptions/digital}}'s
       {{DigitalCredentialRequestOptions/providers}} member.
       </li>
-      <li>If |providers| is empty, [=exception/throw=] a {{TypeError}}.
+      <li>If |providers| [=list/is empty=], [=exception/throw=] a
+      {{TypeError}}.
+      </li>
+      <li>Let |range| be [=list/get the indices|the indices=] of |providers|.
+      </li>
+      <li>[=Set/For each=] |n| of the |range|:
+        <ol>
+          <li>Let |provider| be the [=list/item=] at |providers|'s |n| index.
+          </li>
+          <li>If |provider|'s {{DigitalCredentialsProvider/protocol}} does not
+          match a [=digital credentials registry/protocol identifier=] from the
+          [=digital credentials registry=], [=exception/throw=] a
+          {{TypeError}}.
+          </li>
+          <li>Let |dictionary| be the [=digital credentials registry/Web IDL
+          dictionary=] for |provider|'s
+          {{DigitalCredentialsProvider/protocol}}.
+          </li>
+          <li>Let |request| be |provider|'s
+          {{DigitalCredentialsProvider/request}} [=converted to an idl
+          value|converted=] to |dictionary|. [=exception/throw|Rethrow=] any
+          exceptions.
+          </li>
+          <li>Validate |request| against any validation rules set forth in the
+          corresponding [=digital credentials registry/specification=]. If any
+          of |request|'s members are invalid, [=exception/throw=] a
+          {{TypeError}}.
+          </li>
+          <li>Set [=list/item=] at |providers|'s |n| index's
+          {{DigitalCredentialsProvider/request}} to |request|.
+          </li>
+        </ol>
       </li>
       <li>
         <aside class="issue">
@@ -370,8 +401,9 @@
       Registry of protocols for requesting digital credential
     </h2>
     <p>
-      The following is the registry of [=digital credential/exchange
-      protocols=] that are supported by this specification.
+      The following <dfn data-lt="digital credentials registry">exchange
+      protocols from the digital credentials registry</dfn> are supported by
+      this specification.
     </p>
     <p class="note" title="Official Registry" data-cite="w3c-process">
       It is expected that this registry will be become a [=W3C registry=] in
@@ -396,13 +428,19 @@
       <thead>
         <tr>
           <th>
-            Protocol identifier
+            <dfn data-dfn-for="digital credentials registry">Protocol
+            identifier</dfn>
+          </th>
+          <th>
+            <dfn data-dfn-for="digital credentials registry">Web IDL
+            dictionary</dfn>
           </th>
           <th>
             Description
           </th>
           <th>
-            Specification
+            <dfn data-dfn-for=
+            "digital credentials registry">Specification</dfn>
           </th>
         </tr>
       </thead>
