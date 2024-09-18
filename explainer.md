@@ -46,7 +46,7 @@ async function requestLicense() {
   const oid4pv = {
     // Protocol extensibility:
     protocol: "oid4vp", // An example of an OpenID4VP request to wallets. // Based on https://github.com/openid/OpenID4VP/issues/125
-    request: {
+    data: {
       nonce: "n-0S6_WzA2Mj",
       presentation_definition: {
         // Presentation Exchange request, omitted for brevity
@@ -55,7 +55,7 @@ async function requestLicense() {
   };
   const digitalCredential = await navigator.credentials.get({
     digital: {
-      providers: [oid4pv],
+      requests: [oid4pv],
     },
   });
   // To be decrypted on the server...
