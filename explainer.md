@@ -37,33 +37,58 @@ Here is an example of how the  the API might be used in practice:
 The API needs to be initiated through a user gesture, such as a button click:
 
 ```html
-<button onclick="requestLicense()">Request Driver's license<button>
+<button onclick="requestCredential()">Request Driver's license<button>
 ```
 
 
 ```javascript
-async function requestLicense() {
-  const oid4pv = {
-    // Protocol extensibility:
-    protocol: "oid4vp", // An example of an OpenID4VP request to wallets. // Based on https://github.com/openid/OpenID4VP/issues/125
-    data: {
-      nonce: "n-0S6_WzA2Mj",
-      presentation_definition: {
-        // Presentation Exchange request, omitted for brevity
-      },
-    },
-  };
-  const digitalCredential = await navigator.credentials.get({
-    digital: {
-      requests: [oid4pv],
-    },
-  });
-  // To be decrypted on the server...
-  const encryptedData = digitalCredential.data;
-}
+async function requestCredential() {
+
+  // Check for Digital Credentials API support
+  if (typeof window.DigitalCredential !== 'undefined') {
+    
+    try {
+      
+      // These parameters are typically fetched from the backend.
+      // Statically defined here for protocol extensibility illustration purposes.
+      const oid4vp = {
+        protocol: "oid4vp", // An example of an OpenID4VP request to wallets. // Based on https://github.com/openid/OpenID4VP/issues/125
+        data: {
+          nonce: "n-0S6_WzA2Mj",
+          presentation_definition: {
+          //Presentation Exchange request, omitted for brevity
+          },
+        },
+      };
+
+      // create an Abort Controller
+      const controller = new AbortController();
+
+      // Call the Digital Credentials API using the presentation request from the backend
+      let dcResponse = await navigator.credentials.get({
+        signal: controller.signal,
+        digital: {
+          requests: [ oid4vp ]
+        }
+      });
+
+      // Send the encrypted response to the backend for decryption and verification
+      // Ommitted for brevity
+
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  } else {
+    
+    // fallback scenario, illustrative only
+    alert("The Digital Credentials API is not supported in this browser.")
+  }
+};
 ```
 
-You can read a more detailed and technical description of the API in the [specification draft](https://wicg.github.io/digital-identities/).
+> Example from: https://digitalcredentials.dev/docs/verifier-site/requesting-cred
+
+You can read a more detailed and technical description of the API in the [specification draft](https://wicg.github.io/digital-credentials/).
 
 ### Using the API from another origin
 
