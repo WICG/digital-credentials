@@ -53,7 +53,7 @@
         license, government-issued identification card, and/or [=credential
         type examples|other types of digital credential=]. The API builds on
         [[[credential-management-1]]] as a means by which to request a digital
-        credential from a user agent or underlying platform.
+        credential from a user agent or underlying platform. 
       </p>
     </section>
     <section id="sotd">
@@ -240,13 +240,12 @@
     </p>
     <p>
       [=User mediation=] is always
-      {{CredentialMediationRequirement/"required"}}. [=Request a
+      {{CredentialMediationRequirement/"required"}} or {{CredentialMediationRequirement/"optional"}}. [=Request a
       credential|Requesting a DigitalCredential credential=] does not support
-      {{CredentialMediationRequirement/"conditional"}},
-      {{CredentialMediationRequirement/"optional"}}, or
+      {{CredentialMediationRequirement/"conditional"}} or
       {{CredentialMediationRequirement/"silent"}} [=user mediation=]. If
       {{CredentialsContainer/get()}} is called with anything other than
-      {{CredentialMediationRequirement/"required"}}, a {{TypeError}} will be
+      {{CredentialMediationRequirement/"required"}} or {{CredentialMediationRequirement/"optional"}}, a {{TypeError}} will be
       thrown.
     </p>
     <pre class="idl">
