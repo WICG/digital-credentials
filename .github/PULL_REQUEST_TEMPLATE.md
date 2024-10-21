@@ -16,4 +16,5 @@ Documentation and checks
 - [ ] Affects security
 - [ ] Pinged MDN
 - [ ] Updated Explainer
+- [ ] Updated digitalcredentials.dev
  
