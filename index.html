@@ -231,6 +231,9 @@
       the [=digital credential/request data=] to be handled by the holder's
       software, such as a digital wallet.
     </p>
+    <p>
+      The object MUST only contain [=JSON type=] values.
+    </p>
     <h2>
       The `DigitalCredential` interface
     </h2>
@@ -252,6 +255,7 @@
     <pre class="idl">
     [Exposed=Window, SecureContext]
     interface DigitalCredential : Credential {
+      [Default] object toJSON();
       readonly attribute DOMString protocol;
       readonly attribute object data;
     };
@@ -306,6 +310,9 @@
       {{DigitalCredentialRequestOptions/requests}} member.
       </li>
       <li>If |requests| is empty, [=exception/throw=] a {{TypeError}}.
+      </li>
+      <li>If |requests| does not contain [=JSON type=] values,
+        [=exception/throw=] a {{TypeError}}.
       </li>
       <li>
         <aside class="issue">
