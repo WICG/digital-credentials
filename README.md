@@ -18,7 +18,7 @@ This project covers the requesting mechanisms for digital credentials, including
 
 However, if you want to try it out:
 
-- [Try out the API in Chrome](https://github.com/WICG/digital-identities/wiki/HOWTO%3A-Try-the-Prototype-API-in-Chrome-Android)
+- [Try out the API in Chrome](https://digitalcredentials.dev/docs/requirements/)
 
 ## Contributing
 
