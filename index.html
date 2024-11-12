@@ -308,8 +308,13 @@
       </li>
       <li>If |requests| is empty, [=exception/throw=] a {{TypeError}}.
       </li>
-      <li>If |requests| does not contain [=JSON type=] values,
-        [=exception/throw=] a {{TypeError}}.
+      <li>
+        [=List/For each=] |request| of |requests|:
+        <ol>
+          <li>
+            [=serialize a JavaScript value to a JSON string|Serialize=] |request| to a JSON string.
+          </li>
+        </ol>
       </li>
       <li>
         <aside class="issue">
