@@ -444,9 +444,80 @@
             TAG Security and Privacy Considerations Questionnaire (WIP)</a>
           </li>
         </ul>
-
       </div>
+
+      <section>
+        <h3>Credential Protocols</h3>
+
+        <p class="issue" title="Work in progress">
+Explain that while the API provides security at the browser API level, that
+security for the underlying credential issuance or presentation protocol is a
+separate concern and that developers need to understand that layer of the stack
+to get a total picture of the protections that are in place during any given
+transaction.
+        </p>
+      </section>
+
+      <section>
+        <h3>Cross-device Protocols</h3>
+
+        <p class="issue" title="Work in progress">
+Explain that cross-device issuance or presentation uses a separate protocol
+that has its own security characteristics.
+        </p>
+      </section>
+
+      <section>
+        <h3>Quishing</h3>
+
+        <p class="issue" title="Work in progress">
+Explain that the API is designed to avoid the problem of quishing
+(phishing via QR Codes) and other QR Code and non-browser API-based attacks
+and to be aware of exposure of QR Codes during digital credential interactions.
+        </p>
+      </section>
+
+      <section>
+        <h3>Data Integrity</h3>
+
+        <p class="issue" title="Work in progress">
+Explain that the API does not provide data integrity on the digital
+credential requests or responses and that responsibility is up to the
+underlying protocol used for the request or response.
+        </p>
+      </section>
+
+      <section>
+        <h3>Authentication</h3>
+
+        <p class="issue" title="Work in progress">
+Explain that authentication (such as a PIN code to unlock) to a particular app,
+such as a digital wallet, that responds to an API request is crucial in
+high-risk use cases.
+        </p>
+      </section>
+
+      <section>
+        <h3>Cross-Site Scripting (XSS) and Cross-Site Request Forgery (CSRF)</h3>
+
+        <p class="issue" title="Work in progress">
+Explain what attacks are possible via XSS and CSRF, if any.
+        </p>
+      </section>
+
+      <section>
+        <h3>Session Security</h3>
+
+        <p class="issue" title="Work in progress">
+Explain that once a secure session is established at a website using
+credentials exchanged over this API, that the subsequent security is no
+longer a function of the credential used or this API and is up to the
+session management utilized on the website.
+        </p>
+      </section>
+
     </section>
+
     <section class="informative">
       <h2>
         Privacy Considerations
@@ -474,8 +545,86 @@
             for consideration in Internet and Web standardization
           </li>
         </ul>
-
       </div>
+
+      <section>
+        <h3>Unnecessary Requests for Credentials</h3>
+
+        <p class="issue" title="Work in progress">
+Explain how the API could be used to unnecessarily request digital credentials
+from individuals such as requesting a driver's license to log into a
+movie rating website and how the ecosystem can mitigate this risk.
+        </p>
+      </section>
+
+      <section>
+        <h3>Over Collection of Data</h3>
+
+        <p class="issue" title="Work in progress">
+Explain how the API could be used to request more data than necessary for
+a transaction and how the ecosystem can mitigate that over collection.
+        </p>
+      </section>
+
+      <section>
+        <h3>Individual Consent</h3>
+
+        <p class="issue" title="Work in progress">
+Explain how the API acquires an individual's consent to share a digital
+credential and how digital wallets can also provide further consent when
+sharing information.
+        </p>
+      </section>
+
+      <section>
+        <h3>Data Retention</h3>
+
+        <p class="issue" title="Work in progress">
+Explain how verifiers might retain data and what the ecosystem does to
+mitigate excessive data retention policies.
+        </p>
+      </section>
+
+      <section>
+        <h3>Compliance with Privacy Regulations</h3>
+
+        <p class="issue" title="Work in progress">
+Explain to what extent the API complies with known privacy regulations (e.g.,
+consent) and what parts of those regulations are not possible to enforce via the
+API (e.g., retention).
+        </p>
+      </section>
+
+      <section>
+        <h3>Selective and Unlinkable Disclosure</h3>
+
+        <p class="issue" title="Work in progress">
+Explain how selective disclosure and unlinkable disclosure help preserve
+privacy as well as their limitations in doing so.
+        </p>
+      </section>
+
+      <section>
+        <h3>Phoning Home</h3>
+
+        <p class="issue" title="Work in progress">
+Explain how some systems might "phone home", the impact on privacy that
+might have, and what the ecosystem provides to mitigate the risk.
+        </p>
+      </section>
+
+      <section>
+        <h3>Transmission of Personally Identifiable Information</h3>
+
+        <p class="issue" title="Work in progress">
+Explain that the API does enable the transmission of personally identifiable
+information and that it does its best to ensure there is informed consent
+by the individual, but that the consent might be provided due to exhaustion
+or not understanding what PII is being transmitted and how to mitigate those
+concerns.
+        </p>
+      </section>
+
     </section>
     <section class="informative">
       <h2>
