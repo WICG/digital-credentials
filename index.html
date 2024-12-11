@@ -64,8 +64,31 @@
     <h2>
       Introduction
     </h2>
+    <p>
+      This document defines an API enabling a website to request presentation of a verifiable digital credential (VDC).
+    </p>
+    <p>
+      The API design is agnostic to both credential presentation exchange protocols and credential formats. However, this document includes a registry of credential presentation exchange protocols to ensure interoperability.
+    </p>
+    <p>
+      The API is designed to support the following key properties:
+      <ul>
+        <li>
+          By separating the act of requesting from the specific protocol, we can enable flexibility and adaptability in both the protocol and credential formats. This way, the pace of changes in browsers won't hinder progress or block new developments.
+        </li>
+        <li>
+          Require request transparency, enabling user-agent inspection for risk analysis.
+        </li>
+        <li>
+          Assume response opacity (encrypted responses), enabling verifiers and holders to control where potentially sensitive PII is exposed.
+        </li>
+        <li>
+          Websites cannot access any information without user interaction. This API ensures that sites cannot silently query for digital credentials or communicate with wallet providers without the user's active participation and confirmation of each action.
+        </li>
+      </ul>
+    </p>
     <p id="credential-type-examples">
-      There are many types of digital credential that can be presented using
+      There are many types of verifiable digital credentials that can be presented using
       this API. <dfn data-lt="credential type examples">Examples of these
       types</dfn> include:
     </p>
