@@ -68,7 +68,7 @@
       This document defines an API enabling a website to request presentation of a <dfn data-abbr>verifiable digital credential</dfn> (VDC).
     </p>
     <p>
-      The API design is agnostic to both credential presentation exchange protocols and credential formats. However, this document includes a registry of credential presentation exchange protocols to ensure interoperability.
+      The API design is agnostic to both credential presentation exchange protocols and credential formats. However, this document includes a [[[#protocol-registry]]] to ensure interoperability.
     </p>
     <p>
       The API is designed to support the following key properties:
@@ -80,10 +80,10 @@
           Require request transparency, enabling user-agent inspection for risk analysis.
         </li>
         <li>
-          Assume response opacity (encrypted responses), enabling verifiers and holders to control where potentially sensitive PII is exposed.
+          Assume response opacity (encrypted responses), enabling verifiers and holders to control where potentially sensitive personally identifiable information is exposed.
         </li>
         <li>
-          Forbid websites from accessing any information without user interaction. This API ensures that sites cannot silently query for digital credentials nor communicate with wallet providers without the user's active participation and confirmation of each action.
+          Forbid websites from accessing any information without user interaction, ensuring that sites cannot silently query for digital credentials nor communicate with wallet providers without the user's active participation and confirmation of each action.
         </li>
       </ul>
     </p>
