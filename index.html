@@ -188,7 +188,7 @@
     </h2>
     <pre class="idl">
     dictionary DigitalCredentialRequestOptions {
-      sequence&lt;DigitalCredentialsRequest&gt; requests;
+      sequence&lt;DigitalCredentialRequest&gt; requests;
     };
     </pre>
     <h3>
@@ -201,17 +201,17 @@
       holder's software, such as a digital wallet.
     </p>
     <h2>
-      The `DigitalCredentialsRequest` dictionary
+      The `DigitalCredentialRequest` dictionary
     </h2>
     <p>
-      The {{DigitalCredentialsRequest}} dictionary represents a [=digital
+      The {{DigitalCredentialRequest}} dictionary represents a [=digital
       credential/presentation request=]. It is used to specify an [=digital
       credential/exchange protocol=] and a [=digital credential/request data=],
       which the user agent MAY match against software used by a holder, such as
       a digital wallet.
     </p>
     <pre class="idl">
-    dictionary DigitalCredentialsRequest {
+    dictionary DigitalCredentialRequest {
       required DOMString protocol;
       required object data;
     };
@@ -220,12 +220,12 @@
       The `protocol` member
     </h3>
     <p>
-      The <dfn data-dfn-for="DigitalCredentialsRequest">protocol</dfn> member
+      The <dfn data-dfn-for="DigitalCredentialRequest">protocol</dfn> member
       denotes the [=digital credential/exchange protocol=] when requesting an
       identify credential.
     </p>
     <p>
-      The {{DigitalCredentialsRequest/protocol}} member's value is be one of
+      The {{DigitalCredentialRequest/protocol}} member's value is be one of
       the well-defined keys defined in [[[#protocol-registry]]] or any other
       custom one.
     </p>
@@ -233,7 +233,7 @@
       The `data` member
     </h3>
     <p>
-      The <dfn data-dfn-for="DigitalCredentialsRequest">data</dfn> member is
+      The <dfn data-dfn-for="DigitalCredentialRequest">data</dfn> member is
       the [=digital credential/request data=] to be handled by the holder's
       software, such as a digital wallet.
     </p>
