@@ -74,19 +74,19 @@
       The API is designed to support the following goals:
       <ul>
         <li>
-          Keep the act of requesting separate from the specific protocol, thereby enabling flexibility and adaptability in both the protocol and credential formats. This way, the pace of change in browsers won't hinder progress nor block new developments.
+          Keep the act of requesting separate from the specific protocol, thereby enabling the extensibility of the protocol and credential formats. 
         </li>
         <li>
-          Require request transparency, enabling user-agent inspection for risk analysis.
+          Require request to be unencrypted, enabling user-agent inspection for risk analysis.
         </li>
         <li>
           Assume response opacity (encrypted responses), enabling verifiers and holders to control where potentially sensitive personally identifiable information is exposed.
         </li>
         <li>
-          Forbid websites from accessing any information without user interaction, ensuring that sites cannot silently query for digital credentials nor communicate with wallet providers without the user's active participation and confirmation of each action.
+          Require user interaction for requests, ensuring that sites cannot silently query for digital credentials nor communicate with wallet providers without the user's active participation and confirmation of each action.
         </li>
         <li>
-          Enable platform-provided credential selection UX when multiple wallet applications have credentials which match a request.
+          Enable platform-provided credential selection UX when multiple wallet applications have credentials that match a request.
         </li>
         <li>
           Enable platforms to potentially provide secure cross-device requests with proximity checks.
