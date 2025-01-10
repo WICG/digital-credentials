@@ -64,10 +64,48 @@
     <h2>
       Introduction
     </h2>
+    <p>
+      This document defines an API enabling a website to request presentation
+      of a [=digital credential=].
+    </p>
+    <p>
+      The API design is agnostic to both credential presentation [=digital
+      credential/exchange protocols=] and credential formats. However, to
+      promote interoperability this document includes a
+      [[[#protocol-registry]]].
+    </p>
+    <p>
+      The API is designed to support the following goals:
+    </p>
+    <ul>
+      <li>Keep the act of requesting separate from the specific [=digital
+      credential/protocol=], thereby enabling the extensibility of the
+      [=digital credential/protocol=] and credential formats.
+      </li>
+      <li>Require [=digital credential/requests=] to be unencrypted, enabling
+      user-agent inspection for risk analysis.
+      </li>
+      <li>Assume [=digital credential/presentation response|responses=] opacity
+      (encrypted responses), enabling verifiers and holders to control where
+      potentially sensitive personally identifiable information is exposed.
+      </li>
+      <li>Require [=transient activation=] to perform [=digital
+      credential/requests=], ensuring that sites cannot silently query for
+      digital credentials nor communicate with wallet providers without the
+      user's active participation and confirmation of each action.
+      </li>
+      <li>Enable platform-provided credential selection UX when multiple wallet
+      applications have credentials that match a [=digital
+      credential/requests=].
+      </li>
+      <li>Enable platforms to potentially provide secure cross-device [=digital
+      credential/requests=] with proximity checks.
+      </li>
+    </ul>
     <p id="credential-type-examples">
-      There are many types of digital credential that can be presented using
-      this API. <dfn data-lt="credential type examples">Examples of these
-      types</dfn> include:
+      [=Digital credentials=] of many types can be presented using this API.
+      <dfn data-lt="credential type examples">Examples of these types</dfn>
+      include:
     </p>
     <ul>
       <li>a driving license, passport, or other identity card issued by a
@@ -107,7 +145,8 @@
         </p>
       </dd>
       <dt>
-        <dfn data-dfn-for="digital credential">Presentation request</dfn>
+        <dfn data-dfn-for="digital credential" data-local-lt=
+        "requests">Presentation request</dfn>
       </dt>
       <dd>
         A presentation request is a request for a [=digital credential=]
@@ -123,7 +162,8 @@
         credential=] from a [=holder=].
       </dd>
       <dt>
-        <dfn>Presentation response</dfn>
+        <dfn data-dfn-for="digital credential" data-local-lt=
+        "response">Presentation response</dfn>
       </dt>
       <dd>
         A format that a [=holder|holder's=] software, such as a digital wallet,
@@ -131,7 +171,8 @@
         [=digital credential/request data=] by a [=verifier=].
       </dd>
       <dt>
-        <dfn data-dfn-for="digital credential">Exchange protocol</dfn>
+        <dfn data-dfn-for="digital credential" data-local-lt=
+        "protocol">Exchange protocol</dfn>
       </dt>
       <dd>
         A protocol used for exchanging a [=digital credential=] between a
