@@ -49,11 +49,11 @@
     <section id="abstract">
       <p>
         This document specifies an API to enable [=user agents=] to mediate
-        access to, and presentation of, digital credentials such as a driver's
-        license, government-issued identification card, and/or [=credential
-        type examples|other types of digital credential=]. The API builds on
-        [[[credential-management-1]]] as a means by which to request a digital
-        credential from a user agent or underlying platform.
+        access to, presentation of, and issuance of digital credentials such 
+        as a driver's license, government-issued identification card, 
+        and/or [=credential type examples|other types of digital credential=]. 
+        The API builds on [[[credential-management-1]]] as a means by which to 
+        request or issue a digital credential from a user agent or underlying platform.
       </p>
     </section>
     <section id="sotd">
@@ -65,11 +65,11 @@
       Introduction
     </h2>
     <p>
-      This document defines an API enabling a website to request presentation
-      of a [=digital credential=].
+      This document defines an API enabling a website to request presentation 
+      or issuance of a [=digital credential=].
     </p>
     <p>
-      The API design is agnostic to both credential presentation [=digital
+      The API design is agnostic to both credential presentation/issuance [=digital
       credential/exchange protocols=] and credential formats. However, to
       promote interoperability this document includes a
       [[[#protocol-registry]]].
@@ -78,7 +78,7 @@
       The API is designed to support the following goals:
     </p>
     <ul>
-      <li>Keep the act of requesting separate from the specific [=digital
+      <li>Keep the act of requesting/issuance separate from the specific [=digital
       credential/protocol=], thereby enabling the extensibility of the
       [=digital credential/protocol=] and credential formats.
       </li>
@@ -98,12 +98,15 @@
       applications have credentials that match a [=digital
       credential/requests=].
       </li>
+      <li>Enable platform-provided wallet selection UX when multiple wallet
+        applications support the issuance request.
+        </li>
       <li>Enable platforms to potentially provide secure cross-device [=digital
       credential/requests=] with proximity checks.
       </li>
     </ul>
     <p id="credential-type-examples">
-      [=Digital credentials=] of many types can be presented using this API.
+      [=Digital credentials=] of many types can be presented/issued using this API.
       <dfn data-lt="credential type examples">Examples of these types</dfn>
       include:
     </p>
@@ -197,13 +200,13 @@
       anything about a given [=request=] unless the [=holder=] explicitly
       consents to use that software.
       </li>
+      <li>Issuance process for establishing a [=digital credential=].
+      </li>
     </ul>
     <p>
       The following items are out of scope:
     </p>
     <ul>
-      <li>Issuance process for establishing a [=digital credential=].
-      </li>
       <li>UI/UX considerations, with the exception of privacy considerations,
       which are addressed to ensure the protection of user data during the
       request process.
@@ -306,6 +309,52 @@
     <p>
       {{DigitalCredential}} instances are [=Credential/origin bound=].
     </p>
+    <h2>
+      Extensions to `CredentialCreationOptions` dictionary
+    </h2>
+    <pre class="idl">
+    partial dictionary CredentialCreationOptions {
+      DigitalCredentialCreationOptions digital;
+    };
+    </pre>
+    <h3>
+      The `digital` member
+    </h3>
+    <p>
+      The <dfn data-dfn-for="CredentialCreationOptions">digital</dfn> member
+      allows for options to configure the issuance of a [=digital credential=].
+    </p>
+    <h2>
+      The `DigitalCredentialCreationOptions` dictionary
+    </h2>
+    <pre class="idl">
+    dictionary DigitalCredentialCreationOptions {
+      required DOMString protocol;
+      required object data;
+    };
+    </pre>
+    <h3>
+      The `protocol` member
+    </h3>
+    <p>
+      The <dfn data-dfn-for="DigitalCredentialCreationOptions">protocol</dfn> member
+      denotes the [=digital credential/exchange protocol=] when issuing a
+      digital credential.
+    </p>
+    <p>
+      The {{DigitalCredentialCreationOptions/protocol}} member's value is be one of the
+      well-defined keys defined in [[[#protocol-registry]]] or any other custom
+      one.
+    </p>
+    <h3>
+      The `data` member
+    </h3>
+    <p>
+      <!-- TODO this isn't accurate, figure out how to phrase this -->
+      The <dfn data-dfn-for="DigitalCredentialCreationOptions">data</dfn> member is the
+      [=digital credential/request data=] to be handled by the holder's
+      software, such as a digital wallet.
+    </p>
     <h3>
       Integration with Credential Management API
     </h3>
@@ -379,11 +428,37 @@
     <p>
       When invoked, the <dfn class="export" data-dfn-for=
       "DigitalCredential">[[\Create]](origin, options,
-      sameOriginWithAncestors)</dfn> internal method MUST call the default
-      implementation of {{Credential}}'s {{Credential/[[Create]](origin,
-      options, sameOriginWithAncestors)}} internal method with the same
-      arguments.
+      sameOriginWithAncestors)</dfn> internal method MUST:
     </p>
+    <ol class="algorithm">
+      <li>Let |global| be [=this=]'s [=relevant global object=].
+      </li>
+      <li>Let |document| be |global|'s [=associated `Document`=].
+      </li>
+      <li>If |document| is not a [=Document/fully active descendant of a
+      top-level traversable with user attention=], [=exception/throw=]
+      {{"NotAllowedError"}} {{DOMException}}.
+      </li>
+      <li>If |window| does not have [=transient activation=],
+      [=exception/throw=] {{"NotAllowedError"}} {{DOMException}}.
+      </li>
+      <li>[=Consume user activation=] of |window|.
+      </li>
+      <li>Let |data| be |options|'s {{CredentialCreationOptions/digital}}'s
+      {{DigitalCredentialCreationOptions/data}} member.
+      </li>
+      <li>If |requests| is empty, [=exception/throw=] a {{TypeError}}.
+      </li>
+      <li>
+        <aside class="issue">
+          Details of how to actually issue the [=digital credential=] are
+          forthcoming.
+        </aside>
+      </li>
+      <!-- Figure out what should be returned here -->
+      <li>Return a {{DigitalCredential}}.
+      </li>
+    </ol>
     <h3>
       [[\type]] internal slot
     </h3>
