@@ -82,27 +82,31 @@
       credential/protocol=], thereby enabling the extensibility of the
       [=digital credential/protocol=] and credential formats.
       </li>
-      <li>Require [=digital credential/requests=] to be unencrypted, enabling
+      <li>Require [=digital credential/presentation requests=] and [=digital credential/issuance request=] to be unencrypted, enabling
       user-agent inspection for risk analysis.
       </li>
-      <li>Assume [=digital credential/presentation response|responses=] opacity
-      (encrypted responses), enabling verifiers and holders to control where
+      <li>Assume [=digital credential/presentation response=] and 
+      [=digital credential/issuance response=] opacity (encrypted responses), 
+      enabling issuers,  verifiers and holders to control where
       potentially sensitive personally identifiable information is exposed.
       </li>
       <li>Require [=transient activation=] to perform [=digital
-      credential/requests=], ensuring that sites cannot silently query for
+      credential/presentation requests=] or [=digital
+      credential/issuance request=], ensuring that sites cannot silently query for/offer
       digital credentials nor communicate with wallet providers without the
       user's active participation and confirmation of each action.
       </li>
       <li>Enable platform-provided credential selection UX when multiple wallet
-      applications have credentials that match a [=digital
-      credential/requests=].
+      applications have credentials that match [=digital
+      credential/presentation requests=] or an [=digital
+      credential/issuance request=].
       </li>
       <li>Enable platform-provided wallet selection UX when multiple wallet
         applications support the issuance request.
         </li>
       <li>Enable platforms to potentially provide secure cross-device [=digital
-      credential/requests=] with proximity checks.
+      credential/presentation requests=] and  [=digital
+      credential/issuance request=] with proximity checks.
       </li>
     </ul>
     <p id="credential-type-examples">
@@ -149,7 +153,7 @@
       </dd>
       <dt>
         <dfn data-dfn-for="digital credential" data-local-lt=
-        "requests">Presentation request</dfn>
+        "presentation requests">Presentation request</dfn>
       </dt>
       <dd>
         A presentation request is a request for a [=digital credential=]
@@ -166,12 +170,38 @@
       </dd>
       <dt>
         <dfn data-dfn-for="digital credential" data-local-lt=
-        "response">Presentation response</dfn>
+        "presentation response">Presentation response</dfn>
       </dt>
       <dd>
         A format that a [=holder|holder's=] software, such as a digital wallet,
         uses, via an [=digital credential/exchange protocol=], to respond to a
         [=digital credential/request data=] by a [=verifier=].
+      </dd>
+      <dt>
+        <dfn data-dfn-for="digital credential" data-local-lt=
+        "issuance request">Issuance request</dfn>
+      </dt>
+      <dd>
+        An issuance request is an offer to issue a [=digital credential=]
+        composed of an [=digital credential/credential offer=] and a [=digital
+        credential/exchange protocol=].
+      </dd>
+      <dt>
+        <dfn data-dfn-for="digital credential">credential offer</dfn>
+      </dt>
+      <dd>
+        A format that [=issuer=] software or a [=user agent=] uses, via an
+        [=digital credential/exchange protocol=], to offer issuing a [=digital
+        credential=] from an [=issuer=].
+      </dd>
+      <dt>
+        <dfn data-dfn-for="digital credential" data-local-lt=
+        "issuance response">Issuance response</dfn>
+      </dt>
+      <dd>
+        A format that a [=holder|holder's=] software, such as a digital wallet,
+        uses, via an [=digital credential/exchange protocol=], to respond to an
+        [=digital credential/credential offer=] by an [=issuer=].
       </dd>
       <dt>
         <dfn data-dfn-for="digital credential" data-local-lt=
@@ -327,6 +357,13 @@
     <h2>
       The `DigitalCredentialCreationOptions` dictionary
     </h2>
+    <p>
+      The {{DigitalCredentialRequest}} dictionary represents a [=digital
+      credential/issuance request=]. It is used to specify an [=digital
+      credential/exchange protocol=] and a [=digital credential/credential offer=],
+      which the user agent MAY forward to a software used by a holder, such as
+      a digital wallet.
+    </p>
     <pre class="idl">
     dictionary DigitalCredentialCreationOptions {
       required DOMString protocol;
@@ -350,9 +387,8 @@
       The `data` member
     </h3>
     <p>
-      <!-- TODO this isn't accurate, figure out how to phrase this -->
       The <dfn data-dfn-for="DigitalCredentialCreationOptions">data</dfn> member is the
-      [=digital credential/request data=] to be handled by the holder's
+      [=digital credential/credential offer=] to be handled by the holder's
       software, such as a digital wallet.
     </p>
     <h3>
@@ -455,8 +491,7 @@
           forthcoming.
         </aside>
       </li>
-      <!-- Figure out what should be returned here -->
-      <li>Return a {{DigitalCredential}}.
+      <li>Return a {{DigitalCredential}}. {{DigitalCredential/protocol}} is the protocol that was used to issue this credential. {{DigitalCredential/data}} is a response defined by the protocol.
       </li>
     </ol>
     <h3>
