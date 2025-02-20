@@ -29,7 +29,7 @@ This is an unofficial proposal under development. Contributions, feedback, and d
 
 - Slack ["wicg-identity-cred"](https://w3ccommunity.slack.com/archives/C05UG0EJUDB) in W3C Community instance.
 - [Meeting notes](https://github.com/WICG/identity-credential/wiki/Meeting-Notes)
-- 📆 [ICS file (calendar items)](https://drive.google.com/file/d/1Qe6x1akabfqQo4UF9p2EHxo1gvxWPl6s/view?usp=sharing) (24-25 ST)
+- 📆 [ICS file (calendar items)](https://drive.google.com/file/d/1O4Tyeq1HVa8XobZoNefZe-0CgIWH6pzy/view?usp=sharing) (2025DST)
 - [Agenda doc](https://docs.google.com/document/d/1Sq9tjh4Hv887Mzjoor-ZauXJ1glq6MCdjTsyUYNHjWA/)
 
 ## Initial proposals
