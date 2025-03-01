@@ -299,6 +299,7 @@
     <pre class="idl">
     [Exposed=Window, SecureContext]
     interface DigitalCredential : Credential {
+      [Default] object toJSON();
       readonly attribute DOMString protocol;
       [SameObject] readonly attribute object data;
     };
@@ -353,6 +354,14 @@
       {{DigitalCredentialRequestOptions/requests}} member.
       </li>
       <li>If |requests| is empty, [=exception/throw=] a {{TypeError}}.
+      </li>
+      <li>
+        [=List/For each=] |request| of |requests|:
+        <ol>
+          <li>
+            [=serialize a JavaScript value to a JSON string|Serialize=] |request| to a JSON string. [=exception/throw|Re-throw=] any [=exception=].
+          </li>
+        </ol>
       </li>
       <li>
         <aside class="issue">
