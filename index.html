@@ -49,11 +49,11 @@
     <section id="abstract">
       <p>
         This document specifies an API to enable [=user agents=] to mediate
-        access to, and presentation of, digital credentials such as a driver's
-        license, government-issued identification card, and/or [=credential
-        type examples|other types of digital credential=]. The API builds on
-        [[[credential-management-1]]] as a means by which to request a digital
-        credential from a user agent or underlying platform.
+        access to, presentation of, and issuance of digital credentials such 
+        as a driver's license, government-issued identification card, 
+        and/or [=credential type examples|other types of digital credential=]. 
+        The API builds on [[[credential-management-1]]] as a means by which to 
+        request or issue a digital credential from a user agent or underlying platform.
       </p>
     </section>
     <section id="sotd">
@@ -65,11 +65,11 @@
       Introduction
     </h2>
     <p>
-      This document defines an API enabling a website to request presentation
-      of a [=digital credential=].
+      This document defines an API enabling a website to request presentation 
+      or issuance of a [=digital credential=].
     </p>
     <p>
-      The API design is agnostic to both credential presentation [=digital
+      The API design is agnostic to both credential presentation and issuance [=digital
       credential/exchange protocols=] and credential formats. However, to
       promote interoperability this document includes a
       [[[#protocol-registry]]].
@@ -78,33 +78,41 @@
       The API is designed to support the following goals:
     </p>
     <ul>
-      <li>Keep the act of requesting separate from the specific [=digital
+      <li>Keep the acts of requesting and issuance separate from the specific [=digital
       credential/protocol=], thereby enabling the extensibility of the
       [=digital credential/protocol=] and credential formats.
       </li>
-      <li>Require [=digital credential/requests=] to be unencrypted, enabling
+      <li>Require [=digital credential/presentation requests=] and 
+      [=digital credential/issuance requests=] to be unencrypted, enabling
       user-agent inspection for risk analysis.
       </li>
-      <li>Assume [=digital credential/presentation response|responses=] opacity
-      (encrypted responses), enabling verifiers and holders to control where
+      <li>Assume opaque (i.e., encrypted) [=digital credential/presentation responses=]
+      and [=digital credential/issuance responses=],
+      enabling issuers, verifiers and holders to control where
       potentially sensitive personally identifiable information is exposed.
       </li>
       <li>Require [=transient activation=] to perform [=digital
-      credential/requests=], ensuring that sites cannot silently query for
-      digital credentials nor communicate with wallet providers without the
-      user's active participation and confirmation of each action.
+      credential/presentation requests=] or [=digital
+      credential/issuance requests=], ensuring that sites cannot silently query for
+      nor offer digital credentials, nor communicate with wallet providers, without
+      the user's active participation and confirmation of each action.
       </li>
       <li>Enable platform-provided credential selection UX when multiple wallet
       applications have credentials that match a [=digital
-      credential/requests=].
+      credential/presentation request=] or [=digital
+      credential/issuance request=].
       </li>
-      <li>Enable platforms to potentially provide secure cross-device [=digital
-      credential/requests=] with proximity checks.
+      <li>Enable platform-provided wallet selection UX when multiple wallet
+        applications support an [=digital credential/issuance request=].
+        </li>
+      <li>Enable platforms to provide secure cross-device [=digital
+      credential/presentation requests=] and [=digital
+      credential/issuance requests=] with proximity checks.
       </li>
     </ul>
     <p id="credential-type-examples">
-      [=Digital credentials=] of many types can be presented using this API.
-      <dfn data-lt="credential type examples">Examples of these types</dfn>
+      [=Digital credentials=] of many types can be presented and issued using this
+      API. <dfn data-lt="credential type examples">Examples of these types</dfn>
       include:
     </p>
     <ul>
@@ -146,7 +154,7 @@
       </dd>
       <dt>
         <dfn data-dfn-for="digital credential" data-local-lt=
-        "requests">Presentation request</dfn>
+        "presentation requests">Presentation request</dfn>
       </dt>
       <dd>
         A presentation request is a request for a [=digital credential=]
@@ -163,12 +171,36 @@
       </dd>
       <dt>
         <dfn data-dfn-for="digital credential" data-local-lt=
-        "response">Presentation response</dfn>
+        "presentation response">Presentation response</dfn>
       </dt>
       <dd>
-        A format that a [=holder|holder's=] software, such as a digital wallet,
+        A format that a [=holder's=] software, such as a digital wallet,
         uses, via an [=digital credential/exchange protocol=], to respond to a
-        [=digital credential/request data=] by a [=verifier=].
+        [=digital credential/presentation request=] by a [=verifier=].
+      </dd>
+      <dt>
+        <dfn data-dfn-for="digital credential" data-local-lt="issuance">Issuance request</dfn>
+      </dt>
+      <dd>
+        An issuance request is a request to issue a [=digital credential=]
+        composed of an [=digital credential/credential offer=] and a [=digital
+        credential/exchange protocol=].
+      </dd>
+      <dt>
+        <dfn data-dfn-for="digital credential">credential offer</dfn>
+      </dt>
+      <dd>
+        A data structure that [=issuer=] or [=user agent=] software uses, via an
+        [=digital credential/exchange protocol=], to offer issuance of a [=digital
+        credential=] by an [=issuer=].
+      </dd>
+      <dt>
+        <dfn data-dfn-for="digital credential">Issuance response</dfn>
+      </dt>
+      <dd>
+        A format that [=holder=] software, such as a digital wallet,
+        uses, via an [=digital credential/exchange protocol=], to respond to a
+        [=digital credential/credential offer=] by an [=issuer=].
       </dd>
       <dt>
         <dfn data-dfn-for="digital credential" data-local-lt=
@@ -197,13 +229,13 @@
       anything about a given [=request=] unless the [=holder=] explicitly
       consents to use that software.
       </li>
+      <li>Issuance process for establishing a [=digital credential=].
+      </li>
     </ul>
     <p>
       The following items are out of scope:
     </p>
     <ul>
-      <li>Issuance process for establishing a [=digital credential=].
-      </li>
       <li>UI/UX considerations, with the exception of privacy considerations,
       which are addressed to ensure the protection of user data during the
       request process.
@@ -307,10 +339,6 @@
       {{DigitalCredential}} instances are [=Credential/origin bound=].
     </p>
     <h3>
-      Integration with Credential Management API
-    </h3>
-    <aside class="issue" data-number="65"></aside>
-    <h3>
       The `protocol` member
     </h3>
     <p>
@@ -326,6 +354,62 @@
       credential's response data. It contains the subset of JSON-parseable
       object types.
     </p>
+    <h2>
+      Extensions to `CredentialCreationOptions` dictionary
+    </h2>
+    <pre class="idl">
+    partial dictionary CredentialCreationOptions {
+      DigitalCredentialCreationOptions digital;
+    };
+    </pre>
+    <h3>
+      The `digital` member
+    </h3>
+    <p>
+      The <dfn data-dfn-for="CredentialCreationOptions">digital</dfn> member
+      allows for options to configure the issuance of a [=digital credential=].
+    </p>
+    <h2>
+      The `DigitalCredentialCreationOptions` dictionary
+    </h2>
+    <p>
+      The {{DigitalCredentialRequest}} dictionary represents an [=digital
+      credential/issuance request=]. It is used to specify an [=digital
+      credential/exchange protocol=] and a [=digital credential/credential offer=],
+      which the user agent MAY forward to [=holder=] software, such as
+      a digital wallet.
+    </p>
+    <pre class="idl">
+    dictionary DigitalCredentialCreationOptions {
+      required DOMString protocol;
+      required object data;
+    };
+    </pre>
+    <h3>
+      The `protocol` member
+    </h3>
+    <p>
+      The <dfn data-dfn-for="DigitalCredentialCreationOptions">protocol</dfn> member
+      denotes the [=digital credential/exchange protocol=] when issuing a
+      digital credential.
+    </p>
+    <p>
+      The {{DigitalCredentialCreationOptions/protocol}} member's value is a
+      well-defined key as defined in [[[#protocol-registry]]] or a custom
+      key as defined by an implementation or deployment.
+    </p>
+    <h3>
+      The `data` member
+    </h3>
+    <p>
+      The <dfn data-dfn-for="DigitalCredentialCreationOptions">data</dfn> member is a
+      [=digital credential/credential offer=] to be handled by [=holder=]
+      software, such as a digital wallet, that conforms to some standard in the [[[#protocol-registry]]].
+    </p>
+    <h2>
+      Integration with Credential Management API
+    </h2>
+    <aside class="issue" data-number="65"></aside>
     <h3>
       [[\DiscoverFromExternalSource]](origin, options, sameOriginWithAncestors)
       internal method
@@ -379,11 +463,39 @@
     <p>
       When invoked, the <dfn class="export" data-dfn-for=
       "DigitalCredential">[[\Create]](origin, options,
-      sameOriginWithAncestors)</dfn> internal method MUST call the default
-      implementation of {{Credential}}'s {{Credential/[[Create]](origin,
-      options, sameOriginWithAncestors)}} internal method with the same
-      arguments.
+      sameOriginWithAncestors)</dfn> internal method MUST, if the user agent doesn't 
+      support issuance, call the default implementation of {{Credential}}'s 
+      {{Credential/[[Create]](origin,options, sameOriginWithAncestors)}} 
+      internal method with the same arguments. Otherwise, it MUST:
     </p>
+    <ol class="algorithm">
+      <li>Let |global| be [=this=]'s [=relevant global object=].
+      </li>
+      <li>Let |document| be |global|'s [=associated `Document`=].
+      </li>
+      <li>If |document| is not a [=Document/fully active descendant of a
+      top-level traversable with user attention=], [=exception/throw=]
+      {{"NotAllowedError"}} {{DOMException}}.
+      </li>
+      <li>If |window| does not have [=transient activation=],
+      [=exception/throw=] {{"NotAllowedError"}} {{DOMException}}.
+      </li>
+      <li>[=Consume user activation=] of |window|.
+      </li>
+      <li>Let |data| be |options|'s {{CredentialCreationOptions/digital}}'s
+      {{DigitalCredentialCreationOptions/data}} member.
+      </li>
+      <li>If |requests| is empty, [=exception/throw=] a {{TypeError}}.
+      </li>
+      <li>
+        <aside class="issue">
+          Details of how to actually issue the [=digital credential=] are
+          forthcoming.
+        </aside>
+      </li>
+      <li>Return a {{DigitalCredential}}. {{DigitalCredential/protocol}} is the protocol that was used to issue this credential. {{DigitalCredential/data}} is a response defined by the protocol.
+      </li>
+    </ol>
     <h3>
       [[\type]] internal slot
     </h3>
