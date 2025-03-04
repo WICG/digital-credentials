@@ -174,7 +174,7 @@
         "presentation response">Presentation response</dfn>
       </dt>
       <dd>
-        A format that a [=holder|holder's=] software, such as a digital wallet,
+        A format that a [=holder's=] software, such as a digital wallet,
         uses, via an [=digital credential/exchange protocol=], to respond to a
         [=digital credential/presentation request=] by a [=verifier=].
       </dd>
@@ -182,7 +182,7 @@
         <dfn data-dfn-for="digital credential" data-local-lt="issuance">Issuance request</dfn>
       </dt>
       <dd>
-        An issuance request is an offer to issue a [=digital credential=]
+        An issuance request is a request to issue a [=digital credential=]
         composed of an [=digital credential/credential offer=] and a [=digital
         credential/exchange protocol=].
       </dd>
@@ -338,6 +338,22 @@
     <p>
       {{DigitalCredential}} instances are [=Credential/origin bound=].
     </p>
+    <h3>
+      The `protocol` member
+    </h3>
+    <p>
+      The <dfn data-dfn-for="DigitalCredential">protocol</dfn> member is the
+      [=digital credential/exchange protocol=] that was used to request the
+      [=digital credential=].
+    </p>
+    <h3>
+      The `data` member
+    </h3>
+    <p>
+      The <dfn data-dfn-for="DigitalCredential">data</dfn> member is the
+      credential's response data. It contains the subset of JSON-parseable
+      object types.
+    </p>
     <h2>
       Extensions to `CredentialCreationOptions` dictionary
     </h2>
@@ -357,7 +373,7 @@
       The `DigitalCredentialCreationOptions` dictionary
     </h2>
     <p>
-      The {{DigitalCredentialRequest}} dictionary represents a [=digital
+      The {{DigitalCredentialRequest}} dictionary represents an [=digital
       credential/issuance request=]. It is used to specify an [=digital
       credential/exchange protocol=] and a [=digital credential/credential offer=],
       which the user agent MAY forward to a software used by a holder, such as
@@ -387,30 +403,13 @@
     </h3>
     <p>
       The <dfn data-dfn-for="DigitalCredentialCreationOptions">data</dfn> member is a
-      [=digital credential/credential offer=] that conforms to some standard in the
-      [[[#protocol-registry]]], to be handled by [=holder=]
+      [=digital credential/credential offer=] to be handled by [=holder=]
       software, such as a digital wallet, that conforms to some standard in the [[[#protocol-registry]]].
     </p>
-    <h3>
+    <h2>
       Integration with Credential Management API
-    </h3>
+    </h2>
     <aside class="issue" data-number="65"></aside>
-    <h3>
-      The `protocol` member
-    </h3>
-    <p>
-      The <dfn data-dfn-for="DigitalCredential">protocol</dfn> member is the
-      [=digital credential/exchange protocol=] that was used to request the
-      [=digital credential=].
-    </p>
-    <h3>
-      The `data` member
-    </h3>
-    <p>
-      The <dfn data-dfn-for="DigitalCredential">data</dfn> member is the
-      credential's response data. It contains the subset of JSON-parseable
-      object types.
-    </p>
     <h3>
       [[\DiscoverFromExternalSource]](origin, options, sameOriginWithAncestors)
       internal method
