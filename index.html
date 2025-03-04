@@ -376,7 +376,7 @@
       The {{DigitalCredentialRequest}} dictionary represents an [=digital
       credential/issuance request=]. It is used to specify an [=digital
       credential/exchange protocol=] and a [=digital credential/credential offer=],
-      which the user agent MAY forward to a software used by a holder, such as
+      which the user agent MAY forward to [=holder=] software, such as
       a digital wallet.
     </p>
     <pre class="idl">
@@ -463,7 +463,10 @@
     <p>
       When invoked, the <dfn class="export" data-dfn-for=
       "DigitalCredential">[[\Create]](origin, options,
-      sameOriginWithAncestors)</dfn> internal method MUST:
+      sameOriginWithAncestors)</dfn> internal method MUST, if the user agent doesn't 
+      support issuance, call the default implementation of {{Credential}}'s 
+      {{Credential/[[Create]](origin,options, sameOriginWithAncestors)}} 
+      internal method with the same arguments. Otherwise, it MUST:
     </p>
     <ol class="algorithm">
       <li>Let |global| be [=this=]'s [=relevant global object=].
