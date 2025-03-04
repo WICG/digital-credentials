@@ -436,9 +436,101 @@
     <h3>
       Inclusion criteria
     </h3>
+    <aside class="note">
+      The below criteria are a work in progress and are likely to change as
+      this document evolves.
+    </aside>
     <p>
-      To be included in the registry...
+      To be included in the registry, the [=digital credential/exchange
+      protocol=]:
     </p>
+    <ol>
+      <li>MUST be standardized at a <a href="https://www.w3.org/liaisons/">recognized standards development organization</a> and have
+      a stable URL.
+      </li>
+      <li>MUST define a [[WebIDL]] [=dictionary=] representation of the
+      [=digital credential/exchange protocol=] request structure (i.e., the
+      [=dictionary=] to which the {{DigitalCredentialsProvider}}'s
+      {{DigitalCredentialsProvider/request}} is [=converted to idl
+      values|converted=] to before it is passed onto underlying platform).
+      </li>
+      <li>MUST define a [[WebIDL]] [=dictionary=] representation of the
+      [=digital credential/exchange protocol=] response structure (i.e., the
+      [=dictionary=] to which the {{DigitalCredential}}'s
+      {{DigitalCredential/data}} is [=converted to idl values|converted=] before it
+      is made available to the relying party).
+      </li>
+      <li>MUST define validation rules for members of the request and response
+      structures.
+      </li>
+      <li>MUST have undergone privacy review by the W3C's Privacy Interest
+      Group and Federated Identity Working Group.
+      </li>
+      <li>MUST have undergone security review by the Federated Identity Working
+      Group.
+      </li>
+      <li>MUST have implementation commitment from at least two implementers in
+      independent browser engines, to meet the W3C's adequate implementation
+      experience requirements.
+      </li>
+      <li>MUST have formally recorded consensus by the Working Group to be
+      included in the registry.
+      </li>
+    </ol>
+    <p>
+      Once the above criteria are met, the protocol will be included in the
+      registry.
+    </p>
+    <h3>
+      Change process
+    </h3>
+    <p>
+      To add a new [=digital credential/exchange protocol=] to the registry, or
+      to update an existing one:
+    </p>
+    <dl>
+      <dt>
+        Define a protocol identifier
+      </dt>
+      <dd>
+        The protocol identifier MUST be a unique string that is not already in
+        use in the registry. Use only lowercase ASCII letters, digits, and
+        hyphens (e.g., "protocol", "the-protocol"). Avoid using version numbers
+        in the protocol identifier.
+      </dd>
+      <dt>
+        Link to a Web IDL request dictionary
+      </dt>
+      <dd>
+        The <dfn>Web IDL request dictionary</dfn> MUST be a [=dictionary=] that
+        defines the structure of the request that is passed, via
+        {{DigitalCredentialsProvider}}'s
+        {{DigitalCredentialsProvider/request}}, to the holder's a digital
+        wallet.
+      </dd>
+      <dt>
+        Link to a Web IDL response dictionary
+      </dt>
+      <dd>
+        The <dfn>Web IDL response dictionary</dfn> MUST be a [=dictionary=]
+        that defines the structure of {{DigitalCredential}}'s
+        {{DigitalCredential/data}}.
+      </dd>
+      <dt>
+        Describe the protocol
+      </dt>
+      <dd>
+        The description MUST be a brief summary of the protocol's purpose and
+        use case.
+      </dd>
+      <dt>
+        Provide a link to the specification
+      </dt>
+      <dd>
+        The specification MUST be a stable URL that points to the authoritative
+        source for the protocol, including validation rules.
+      </dd>
+    </dl>
     <aside class="issue" data-number="58"></aside>
     <p>
       [=User agents=] MUST support the following [=digital credential/exchange
@@ -452,13 +544,20 @@
       <thead>
         <tr>
           <th>
-            Protocol identifier
+            <dfn data-dfn-for="digital credentials registry">Protocol
+            identifier</dfn>
           </th>
           <th>
-            Description
+            <dfn data-dfn-for="digital credentials registry">Web IDL request
+            dictionary</dfn>
           </th>
           <th>
-            Specification
+            <dfn data-dfn-for="digital credentials registry">Web IDL response
+            dictionary</dfn>
+          </th>
+          <th>
+            <dfn data-dfn-for=
+            "digital credentials registry">Specification</dfn>
           </th>
         </tr>
       </thead>
