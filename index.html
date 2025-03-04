@@ -82,36 +82,37 @@
       credential/protocol=], thereby enabling the extensibility of the
       [=digital credential/protocol=] and credential formats.
       </li>
-      <li>Require [=digital credential/presentation requests=] and [=digital credential/issuance request=] to be unencrypted, enabling
+      <li>Require [=digital credential/presentation requests=] and 
+      [=digital credential/issuance requests=] to be unencrypted, enabling
       user-agent inspection for risk analysis.
       </li>
-      <li>Assume [=digital credential/presentation response=] and 
-      [=digital credential/issuance response=] opacity (encrypted responses), 
-      enabling issuers,  verifiers and holders to control where
+      <li>Assume opaque (i.e., encrypted) [=digital credential/presentation responses=]
+      and [=digital credential/issuance responses=],
+      enabling issuers, verifiers and holders to control where
       potentially sensitive personally identifiable information is exposed.
       </li>
       <li>Require [=transient activation=] to perform [=digital
       credential/presentation requests=] or [=digital
-      credential/issuance request=], ensuring that sites cannot silently query for/offer
-      digital credentials nor communicate with wallet providers without the
-      user's active participation and confirmation of each action.
+      credential/issuance requests=], ensuring that sites cannot silently query for
+      nor offer digital credentials, nor communicate with wallet providers, without
+      the user's active participation and confirmation of each action.
       </li>
       <li>Enable platform-provided credential selection UX when multiple wallet
-      applications have credentials that match [=digital
-      credential/presentation requests=] or an [=digital
+      applications have credentials that match a [=digital
+      credential/presentation request=] or [=digital
       credential/issuance request=].
       </li>
       <li>Enable platform-provided wallet selection UX when multiple wallet
-        applications support the issuance request.
+        applications support an [=digital credential/issuance request=].
         </li>
-      <li>Enable platforms to potentially provide secure cross-device [=digital
-      credential/presentation requests=] and  [=digital
-      credential/issuance request=] with proximity checks.
+      <li>Enable platforms to provide secure cross-device [=digital
+      credential/presentation requests=] and [=digital
+      credential/issuance requests=] with proximity checks.
       </li>
     </ul>
     <p id="credential-type-examples">
-      [=Digital credentials=] of many types can be presented/issued using this API.
-      <dfn data-lt="credential type examples">Examples of these types</dfn>
+      [=Digital credentials=] of many types can be presented and issued using this
+      API. <dfn data-lt="credential type examples">Examples of these types</dfn>
       include:
     </p>
     <ul>
@@ -175,11 +176,10 @@
       <dd>
         A format that a [=holder|holder's=] software, such as a digital wallet,
         uses, via an [=digital credential/exchange protocol=], to respond to a
-        [=digital credential/request data=] by a [=verifier=].
+        [=digital credential/presentation request=] by a [=verifier=].
       </dd>
       <dt>
-        <dfn data-dfn-for="digital credential" data-local-lt=
-        "issuance request">Issuance request</dfn>
+        <dfn data-dfn-for="digital credential" data-local-lt="issuance">Issuance request</dfn>
       </dt>
       <dd>
         An issuance request is an offer to issue a [=digital credential=]
@@ -378,16 +378,17 @@
       digital credential.
     </p>
     <p>
-      The {{DigitalCredentialCreationOptions/protocol}} member's value is be one of the
-      well-defined keys defined in [[[#protocol-registry]]] or any other custom
-      one.
+      The {{DigitalCredentialCreationOptions/protocol}} member's value is a
+      well-defined key as defined in [[[#protocol-registry]]] or a custom
+      key as defined by an implementation or deployment.
     </p>
     <h3>
       The `data` member
     </h3>
     <p>
-      The <dfn data-dfn-for="DigitalCredentialCreationOptions">data</dfn> member is the
-      [=digital credential/credential offer=] to be handled by the holder's
+      The <dfn data-dfn-for="DigitalCredentialCreationOptions">data</dfn> member is a
+      [=digital credential/credential offer=] that conforms to some standard in the
+      [[[#protocol-registry]]], to be handled by [=holder=]
       software, such as a digital wallet.
     </p>
     <h3>
