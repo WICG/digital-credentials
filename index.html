@@ -69,9 +69,11 @@
       and issuance of a [=digital credential=].
     </p>
     <p>
-      The API design is agnostic to both credential presentation [=digital
-      credential/exchange protocols=], credential [=digital
-      credential/issuance protocols=] and credential formats. However, to
+      The API design is agnostic to both credential 
+      [=digital credential/presentation requests|presentation=] [=digital
+      credential/exchange protocols=], credential 
+      [=digital credential/issuance request|issuance=] [=digital
+      credential/issuance protocols|protocols=] and credential formats. However, to
       promote interoperability this document includes a
       [[[#protocol-registry]]].
     </p>
@@ -79,10 +81,11 @@
       The API is designed to support the following goals:
     </p>
     <ul>
-      <li>Keep the acts of requesting and issuance separate from the specific [=digital
-      credential/exchange protocol=] and [=digital credential/issuance protocol=] 
-      respectively. thereby enabling the extensibility of such protocols and 
-      credential formats.
+      <li>Keep the acts of [=digital credential/presentation requests|requesting=] 
+      and [=digital credential/issuance requests|issuing=] separate from 
+      the specific [=digital credential/exchange protocol=] and 
+      [=digital credential/issuance protocol=] respectively. thereby enabling 
+      the extensibility of such protocols and credential formats.
       </li>
       <li>Require [=digital credential/presentation requests=] and 
       [=digital credential/issuance requests=] to be unencrypted, enabling
@@ -155,7 +158,7 @@
       </dd>
       <dt>
         <dfn data-dfn-for="digital credential" data-local-lt=
-        "presentation requests">Presentation request</dfn>
+        "presentation">Presentation request</dfn>
       </dt>
       <dd>
         A presentation request is a request for a [=digital credential=]
