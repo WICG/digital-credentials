@@ -49,7 +49,7 @@
     <section id="abstract">
       <p>
         This document specifies an API to enable [=user agents=] to mediate
-        access to, presentation of, and issuance of digital credentials such 
+        presentation and issuance of digital credentials such 
         as a driver's license, government-issued identification card, 
         and/or [=credential type examples|other types of digital credential=]. 
         The API builds on [[[credential-management-1]]] as a means by which to 
@@ -66,7 +66,7 @@
     </h2>
     <p>
       This document defines an API enabling a website to request presentation 
-      or issuance of a [=digital credential=].
+      and issuance of a [=digital credential=].
     </p>
     <p>
       The API design is agnostic to both credential presentation and issuance [=digital
@@ -99,8 +99,7 @@
       </li>
       <li>Enable platform-provided credential selection UX when multiple wallet
       applications have credentials that match a [=digital
-      credential/presentation request=] or [=digital
-      credential/issuance request=].
+      credential/presentation request=].
       </li>
       <li>Enable platform-provided wallet selection UX when multiple wallet
         applications support an [=digital credential/issuance request=].
@@ -183,7 +182,7 @@
       </dt>
       <dd>
         An issuance request is a request to issue a [=digital credential=]
-        composed of an [=digital credential/credential offer=] and a [=digital
+        composed of a [=digital credential/credential offer=] and an [=digital
         credential/exchange protocol=].
       </dd>
       <dt>
@@ -229,7 +228,7 @@
       anything about a given [=request=] unless the [=holder=] explicitly
       consents to use that software.
       </li>
-      <li>Issuance process for establishing a [=digital credential=].
+      <li>Requesting issuance of a [=digital credential=].
       </li>
     </ul>
     <p>
