@@ -69,8 +69,9 @@
       and issuance of a [=digital credential=].
     </p>
     <p>
-      The API design is agnostic to both credential presentation and issuance [=digital
-      credential/exchange protocols=] and credential formats. However, to
+      The API design is agnostic to both credential presentation [=digital
+      credential/exchange protocols=], credential [=digital
+      credential/issuance protocols=] and credential formats. However, to
       promote interoperability this document includes a
       [[[#protocol-registry]]].
     </p>
@@ -79,8 +80,9 @@
     </p>
     <ul>
       <li>Keep the acts of requesting and issuance separate from the specific [=digital
-      credential/protocol=], thereby enabling the extensibility of the
-      [=digital credential/protocol=] and credential formats.
+      credential/exchange protocol=] and [=digital credential/issuance protocol=] 
+      respectively. thereby enabling the extensibility of such protocols and 
+      credential formats.
       </li>
       <li>Require [=digital credential/presentation requests=] and 
       [=digital credential/issuance requests=] to be unencrypted, enabling
@@ -189,8 +191,8 @@
         <dfn data-dfn-for="digital credential">credential offer</dfn>
       </dt>
       <dd>
-        A data structure that [=issuer=] or [=user agent=] software uses, via an
-        [=digital credential/exchange protocol=], to offer issuance of a [=digital
+        A data structure that an [=issuer=] or a [=user agent=] software uses, via an
+        [=digital credential/issuance protocol=], to offer the issuance of a [=digital
         credential=] by an [=issuer=].
       </dd>
       <dt>
@@ -198,16 +200,25 @@
       </dt>
       <dd>
         A format that [=holder=] software, such as a digital wallet,
-        uses, via an [=digital credential/exchange protocol=], to respond to a
+        uses, via an [=digital credential/issuance protocol=], to respond to a
         [=digital credential/credential offer=] by an [=issuer=].
       </dd>
       <dt>
         <dfn data-dfn-for="digital credential" data-local-lt=
-        "protocol">Exchange protocol</dfn>
+        "exchange protocol">Exchange protocol</dfn>
       </dt>
       <dd>
         A protocol used for exchanging a [=digital credential=] between a
         [=holder=] and a [=verifier=]. See section [[[#protocol-registry]]].
+      </dd>
+      <dt>
+        <dfn data-dfn-for="digital credential" data-local-lt=
+        "issuance protocol">Issuance protocol</dfn>
+      </dt>
+      <dd>
+        A protocol used for communication between an [=issuer=] and a [=holder=] 
+        during the issuance of a [=digital credential=]. 
+        See section [[[#protocol-registry]]].
       </dd>
     </dl>
     <h2>
@@ -220,6 +231,8 @@
       <li>Requesting a [=digital credential=], including mechanisms for secure
       presentation.
       </li>
+      <li>Requesting issuance of a [=digital credential=].
+      </li>
       <li>Ensuring that when an API call is made, the website does not learn
       anything about the a holder's [=digital credentials=] or their software
       unless the [=user agent=] has previously received user consent.
@@ -227,8 +240,6 @@
       <li>Ensuring that any installed application software will not learn
       anything about a given [=request=] unless the [=holder=] explicitly
       consents to use that software.
-      </li>
-      <li>Requesting issuance of a [=digital credential=].
       </li>
     </ul>
     <p>
@@ -273,14 +284,50 @@
       holder's software, such as a digital wallet.
     </p>
     <h2>
+      Extensions to `CredentialCreationOptions` dictionary
+    </h2>
+    <pre class="idl">
+    partial dictionary CredentialCreationOptions {
+      DigitalCredentialCreationOptions digital;
+    };
+    </pre>
+    <h3>
+      The `digital` member
+    </h3>
+    <p>
+      The <dfn data-dfn-for="CredentialCreationOptions">digital</dfn> member
+      allows for options to configure the issuance of a [=digital credential=].
+    </p>
+    <h2>
+      The `DigitalCredentialCreationOptions` dictionary
+    </h2>
+    <pre class="idl">
+    dictionary DigitalCredentialCreationOptions {
+      sequence&lt;DigitalCredentialRequest&gt; requests;
+    };
+    </pre>
+    <h3>
+      The `requests` member
+    </h3>
+    <p>
+      The <dfn data-dfn-for="DigitalCredentialCreationOptions">requests</dfn>
+      specify an [=digital credential/issuance protocol=] and [=digital
+      credential/request data=], which the user agent MAY forward to a [=holder=] 
+      software, such as a digital wallet.
+    </p>
+    <h2>
       The `DigitalCredentialRequest` dictionary
     </h2>
     <p>
       The {{DigitalCredentialRequest}} dictionary represents a [=digital
-      credential/presentation request=]. It is used to specify an [=digital
+      credential/presentation request=] or an [=digital credential/issuance request=]. 
+      During presentation, it is used to specify an [=digital
       credential/exchange protocol=] and a [=digital credential/request data=],
       which the user agent MAY match against software used by a holder, such as
       a digital wallet.
+      During issuance, it is used to specify an [=digital
+      credential/issuance protocol=] and a [=digital credential/request data=],
+      to communicate the issuance request between the issuer and the holder.
     </p>
     <pre class="idl">
     dictionary DigitalCredentialRequest {
@@ -293,8 +340,9 @@
     </h3>
     <p>
       The <dfn data-dfn-for="DigitalCredentialRequest">protocol</dfn> member
-      denotes the [=digital credential/exchange protocol=] when requesting an
-      identify credential.
+      denotes the [=digital credential/exchange protocol=] when requesting a
+      digital credential, and the [=digital credential/issuance protocol=] 
+      when issuing a digital credential.
     </p>
     <p>
       The {{DigitalCredentialRequest/protocol}} member's value is be one of the
@@ -343,7 +391,8 @@
     <p>
       The <dfn data-dfn-for="DigitalCredential">protocol</dfn> member is the
       [=digital credential/exchange protocol=] that was used to request the
-      [=digital credential=].
+      [=digital credential=], or the [=digital credential/issuance protocol=] 
+      that was used to issue the [=digital credential=].
     </p>
     <h3>
       The `data` member
@@ -352,58 +401,6 @@
       The <dfn data-dfn-for="DigitalCredential">data</dfn> member is the
       credential's response data. It contains the subset of JSON-parseable
       object types.
-    </p>
-    <h2>
-      Extensions to `CredentialCreationOptions` dictionary
-    </h2>
-    <pre class="idl">
-    partial dictionary CredentialCreationOptions {
-      DigitalCredentialCreationOptions digital;
-    };
-    </pre>
-    <h3>
-      The `digital` member
-    </h3>
-    <p>
-      The <dfn data-dfn-for="CredentialCreationOptions">digital</dfn> member
-      allows for options to configure the issuance of a [=digital credential=].
-    </p>
-    <h2>
-      The `DigitalCredentialCreationOptions` dictionary
-    </h2>
-    <p>
-      The {{DigitalCredentialRequest}} dictionary represents an [=digital
-      credential/issuance request=]. It is used to specify an [=digital
-      credential/exchange protocol=] and a [=digital credential/credential offer=],
-      which the user agent MAY forward to [=holder=] software, such as
-      a digital wallet.
-    </p>
-    <pre class="idl">
-    dictionary DigitalCredentialCreationOptions {
-      required DOMString protocol;
-      required object data;
-    };
-    </pre>
-    <h3>
-      The `protocol` member
-    </h3>
-    <p>
-      The <dfn data-dfn-for="DigitalCredentialCreationOptions">protocol</dfn> member
-      denotes the [=digital credential/exchange protocol=] when issuing a
-      digital credential.
-    </p>
-    <p>
-      The {{DigitalCredentialCreationOptions/protocol}} member's value is a
-      well-defined key as defined in [[[#protocol-registry]]] or a custom
-      key as defined by an implementation or deployment.
-    </p>
-    <h3>
-      The `data` member
-    </h3>
-    <p>
-      The <dfn data-dfn-for="DigitalCredentialCreationOptions">data</dfn> member is a
-      [=digital credential/credential offer=] to be handled by [=holder=]
-      software, such as a digital wallet, that conforms to some standard in the [[[#protocol-registry]]].
     </p>
     <h2>
       Integration with Credential Management API
@@ -481,19 +478,21 @@
       </li>
       <li>[=Consume user activation=] of |window|.
       </li>
-      <li>Let |data| be |options|'s {{CredentialCreationOptions/digital}}'s
-      {{DigitalCredentialCreationOptions/data}} member.
-      </li>
-      <li>If |requests| is empty, [=exception/throw=] a {{TypeError}}.
-      </li>
-      <li>
-        <aside class="issue">
-          Details of how to actually issue the [=digital credential=] are
-          forthcoming.
-        </aside>
-      </li>
-      <li>Return a {{DigitalCredential}}. {{DigitalCredential/protocol}} is the protocol that was used to issue this credential. {{DigitalCredential/data}} is a response defined by the protocol.
-      </li>
+      <li>Let |requests| be |options|'s {{CredentialCreationOptions/digital}}'s
+        {{DigitalCredentialCreationOptions/requests}} member.
+        </li>
+        <li>If |requests| is empty, [=exception/throw=] a {{TypeError}}.
+        </li>
+        <li>
+          <aside class="issue">
+            Details of how to actually issue the [=digital credential=] are
+            forthcoming.
+          </aside>
+        </li>
+        <li>Return a {{DigitalCredential}}. {{DigitalCredential/protocol}} is the 
+          protocol that was used to issue this credential. {{DigitalCredential/data}} is 
+          a response defined by the protocol.
+        </li>
     </ol>
     <h3>
       [[\type]] internal slot
@@ -538,7 +537,8 @@
     </h2>
     <p>
       The following is the registry of [=digital credential/exchange
-      protocols=] that are supported by this specification.
+      protocols=] and [=digital credential/issuance protocols=] 
+      that are supported by this specification.
     </p>
     <p class="note" title="Official Registry" data-cite="w3c-process">
       It is expected that this registry will be become a [=W3C registry=] in
