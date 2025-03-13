@@ -99,7 +99,7 @@
       <li>Require [=transient activation=] to perform [=digital
       credential/presentation requests=] or [=digital
       credential/issuance requests=], ensuring that sites cannot silently query for
-      nor offer digital credentials, nor communicate with wallet providers, without
+      nor issue digital credentials, nor communicate with wallet providers, without
       the user's active participation and confirmation of each action.
       </li>
       <li>Enable platform-provided credential selection UX when multiple wallet
@@ -187,11 +187,11 @@
       </dt>
       <dd>
         An issuance request is a request to issue a [=digital credential=]
-        composed of a [=digital credential/credential offer=] and an [=digital
-        credential/exchange protocol=].
+        composed of a [=digital credential/issuance request data=] and an [=digital
+        credential/issuance protocol=].
       </dd>
       <dt>
-        <dfn data-dfn-for="digital credential">credential offer</dfn>
+        <dfn data-dfn-for="digital credential">issuance request data</dfn>
       </dt>
       <dd>
         A data structure that an [=issuer=] or a [=user agent=], via an
@@ -202,9 +202,8 @@
         <dfn data-dfn-for="digital credential">Issuance response</dfn>
       </dt>
       <dd>
-        A format that [=holder=] software, such as a digital wallet,
-        uses, via an [=digital credential/issuance protocol=], to respond to a
-        [=digital credential/credential offer=] by an [=issuer=].
+        A format that [=holder=] uses, via an [=digital credential/issuance protocol=], to respond to an
+        [=digital credential/issuance request=] by an [=issuer=].
       </dd>
       <dt>
         <dfn data-dfn-for="digital credential" data-local-lt=
