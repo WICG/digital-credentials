@@ -84,7 +84,7 @@
       <li>Keep the acts of [=digital credential/presentation requests|requesting=] 
       and [=digital credential/issuance requests|issuing=] separate from 
       the specific [=digital credential/exchange protocol=] and 
-      [=digital credential/issuance protocol=] respectively. thereby enabling 
+      [=digital credential/issuance protocol=] respectively; thereby enabling 
       the extensibility of such protocols and credential formats.
       </li>
       <li>Require [=digital credential/presentation requests=] and 
@@ -194,8 +194,8 @@
         <dfn data-dfn-for="digital credential">credential offer</dfn>
       </dt>
       <dd>
-        A data structure that an [=issuer=] or a [=user agent=] software uses, via an
-        [=digital credential/issuance protocol=], to offer the issuance of a [=digital
+        A data structure that an [=issuer=] or a [=user agent=], via an
+        [=digital credential/issuance protocol=], to request the issuance of a [=digital
         credential=] by an [=issuer=].
       </dd>
       <dt>
@@ -315,8 +315,7 @@
     <p>
       The <dfn data-dfn-for="DigitalCredentialCreationOptions">requests</dfn>
       specify an [=digital credential/issuance protocol=] and [=digital
-      credential/request data=], which the user agent MAY forward to a [=holder=] 
-      software, such as a digital wallet.
+      credential/request data=], which the user agent MAY forward to a [=holder=].
     </p>
     <h2>
       The `DigitalCredentialRequest` dictionary
@@ -462,10 +461,10 @@
     <p>
       When invoked, the <dfn class="export" data-dfn-for=
       "DigitalCredential">[[\Create]](origin, options,
-      sameOriginWithAncestors)</dfn> internal method MUST, if the user agent doesn't 
+      sameOriginWithAncestors)</dfn> internal method, if the user agent doesn't 
       support issuance, call the default implementation of {{Credential}}'s 
       {{Credential/[[Create]](origin,options, sameOriginWithAncestors)}} 
-      internal method with the same arguments. Otherwise, it MUST:
+      internal method with the same arguments. Otherwise:
     </p>
     <ol class="algorithm">
       <li>Let |global| be [=this=]'s [=relevant global object=].
@@ -494,7 +493,7 @@
         </li>
         <li>Return a newly constructed {{DigitalCredential}} with {{DigitalCredential/protocol}}
           initialized to the protocol that was used to issue this credential, and 
-          {{DigitalCredential/data}} initialized to a response defined by that protocol.
+          {{DigitalCredential/data}} initialized to an [=digital credential/issuance response=] defined by that [=digital credential/issuance protocol=].
         </li>
     </ol>
     <h3>
