@@ -2144,12 +2144,12 @@
       <p>
         The [[[#DC-API|Digital Credentials API]]] is only exposed in [=secure
         contexts=], but a secure context does not, by itself, prevent untrusted
-        script from running on a [=verifier=]'s page. An attacker who can
-        execute script in the [=verifier=]'s origin (for example, through a
+        script from running on a [=verifier's=] page. An attacker who can
+        execute script in the [=verifier's=] origin (for example, through a
         cross-site scripting flaw, a compromised third-party dependency, or a
         tampered script) can read [=digital credential/credential responses=]
         that the [=verifier=] has decrypted and reflected back to client-side
-        JavaScript, and can invoke the API from the [=verifier=]'s origin to
+        JavaScript, and can invoke the API from the [=verifier's=] origin to
         initiate its own credential requests.
       </p>
       <p>
@@ -2163,17 +2163,16 @@
       </p>
       <p>
         [=Verifiers=] are encouraged to harden their pages against script
-        injection as defense-in-depth. A strong Content Security Policy
-        [[CSP3]], for example a nonce- or hash-based policy that avoids
+        injection as defense-in-depth. A strong [[CSP3|Content Security
+        Policy]], for example a nonce- or hash-based policy that avoids
         `'unsafe-inline'` and constrains the origins from which script can
         load, reduces the likelihood that injected or unauthorized script runs
-        in the page. Trusted Types [[trusted-types]] further reduces the risk
-        of DOM-based injection, and Subresource Integrity [[SRI]] guards
-        against tampered or compromised third-party scripts. These measures
-        reduce, but do not eliminate, the risk: malicious browser extensions, a
-        [=verifier=] that misuses the data it receives, and injection vectors
-        outside the page's script-execution model remain beyond what these
-        mechanisms address.
+        in the page. [[[trusted-types]]] further reduces the risk of DOM-based
+        injection, and [[[SRI]]] guards against tampered or compromised
+        third-party scripts. These measures reduce, but do not eliminate, the
+        risk: malicious browser extensions, a [=verifier=] that misuses the
+        data it receives, and injection vectors outside the page's
+        script-execution model remain beyond what these mechanisms address.
       </p>
       <p class="issue" data-number="133"></p>
       <section>

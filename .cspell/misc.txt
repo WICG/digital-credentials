@@ -11,4 +11,3 @@ birthdates
 reidentify
 multisigned
 sandboxed
-subresource
