@@ -2172,7 +2172,7 @@
         third-party scripts. These measures reduce, but do not eliminate, the
         risk: malicious browser extensions, a [=verifier=] that misuses the
         data it receives, and injection vectors outside the page's
-        script-execution model remain beyond what these mechanisms can address.
+        script-execution model remain beyond what these mechanisms can address. To prevent injected scripts or extensions from altering outgoing credential requests or replacing response encryption keys, [=verifiers=] can employ signed requests (see [[[#signing-presentation-requests]]]).
       </p>
       <section>
         <!--
