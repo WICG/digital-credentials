@@ -2423,6 +2423,40 @@
           normatively enforce support for any particular unlinkability
           features?
         </p>
+        <h5 id="issuer-identity-disclosure">
+          Issuer identity disclosure and inferred information
+        </h5>
+        <p>
+          Selective disclosure of credential claims does not, by itself,
+          prevent a presentation from identifying the [=issuer=]. An issuer
+          identifier, certificate, verification key, or other
+          trust-establishment information can identify the issuer even when the
+          [=verifier=] receives only the requested claims. The issuer's identity
+          can itself reveal, or allow the [=verifier=] to infer, information
+          about the [=holder=], such as an affiliation or approximate location.
+        </p>
+        <p>
+          The disclosure of the issuer's identity is different from
+          verifier-verifier linkability and verifier-issuer linkability. Even
+          if a presentation can avoid exposing a stable identifier for the
+          [=holder=], or prevent separate presentations from being linked, it
+          can still disclose information about the issuer. This depends on the
+          credential format, proof mechanism, presentation protocol, and trust
+          model. Selective disclosure, including a presentation that uses a
+          zero-knowledge proof, does not by itself guarantee that the issuer is
+          hidden.
+        </p>
+        <p>
+          The Digital Credentials API does not define a protocol-independent
+          signal indicating whether the presentation selected by a [=credential
+          manager=] will reveal its issuer. Credential response data is
+          protocol-specific, and the API does not define how a [=user agent=]
+          can determine issuer disclosure from that data. If the presentation
+          protocol or credential manager provides reliable information before
+          the presentation is released, the user agent can use it in its
+          permission experience. Otherwise, selective disclosure alone does
+          not establish that the issuer is hidden.
+        </p>
         <h5>
           "Phone home" mechanisms
         </h5>
@@ -2711,10 +2745,13 @@
           likelihood of information leakage, and provide better context to
           users in permission and consent flows.
           </li>
-          <li>Support for protocols that allow unlinkability mechanisms such as
-          [[[vc-data-model#zero-knowledge-proofs|Zero-Knowledge Proofs]]] can
-          prevent [=verifier=]-based surveillance and potential discrimination,
-          by hiding the [=issuer=].
+          <li>If a protocol supports issuer-hiding presentations, it can reduce
+          [=verifier=]-based surveillance and potential discrimination. The use
+          of
+          [[[vc-data-model#zero-knowledge-proofs|zero-knowledge proofs]]] alone
+          does not guarantee this property; it depends on whether the
+          credential format, proof mechanism, and trust model are designed not
+          to identify a single [=issuer=].
           </li>
           <li>Offering useful context and a clearly understandable permission
           flow will help users make better decisions on whether or not to
@@ -2857,15 +2894,17 @@
           Leaking incidental data with credential presentations
         </h4>
         <p>
-          To ensure authenticity of a credential, its presentation to
-          [=verifiers=] generally includes more information than the content
-          the [=verifier=] is requesting access to. It will usually contain at
-          least a signature of the [=issuer=] and the [=credential manager=],
-          and potentially other metadata.
+          The presentation of a credential to [=verifiers=] generally includes
+          more information than the [=verifier=] requested. This can include
+          issuer-identifying material, signatures, verification keys, and other
+          metadata. The privacy implications of revealing issuer-identifying
+          material are described in
+          [[[#issuer-identity-disclosure|Issuer identity disclosure and inferred
+          information]]].
         </p>
         <p>
-          This additional information could be used to reidentify and
-          fingerprint users, which is especially relevant when an otherwise
+          This additional information could be used to reidentify or
+          fingerprint users. This remains relevant even when an otherwise
           unlinkable presentation is made.
         </p>
         <p>
