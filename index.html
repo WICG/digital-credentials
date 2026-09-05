@@ -1635,19 +1635,13 @@
     </p>
     <p>
       The {{DigitalCredential}} interface mandates [=user mediation=] for all
-      operations to ensure user control and consent.
-    </p>
-    <p>
-      To simplify the developer experience of {{CredentialsContainer/get()}}
-      calls involving a {{DigitalCredential}}, [=user agents=] MUST NOT throw
-      an error if the {{CredentialRequestOptions/mediation}} member is absent
-      or has a value other than {{CredentialMediationRequirement/"required"}}.
-      Similarly, in {{CredentialsContainer/create()}} calls involving a
-      {{DigitalCredential}}, [=user agents=] MUST NOT throw an error if the
-      {{CredentialCreationOptions/mediation}} member is absent or has a value
-      other than {{CredentialMediationRequirement/"required"}}. This makes
-      {{CredentialMediationRequirement/"required"}} mediation an implicit and
-      non-overridable behavior of the [[[#DC-API|API]]].
+      operations to ensure user control and consent. The {{DigitalCredential}}
+      [=interface object=] sets the {{Credential/[[implicitMediation]]}}
+      internal slot to {{CredentialMediationRequirement/"required"}}. This
+      means the credential type always behaves as if
+      {{CredentialMediationRequirement/"required"}} was passed, regardless of
+      the actual value of the {{CredentialRequestOptions/mediation}} and
+      {{CredentialCreationOptions/mediation}} members.
     </p>
     <pre class="idl">
     typedef (DigitalCredentialPresentationProtocol or DigitalCredentialIssuanceProtocol) DigitalCredentialProtocol;
