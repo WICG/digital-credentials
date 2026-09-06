@@ -793,7 +793,7 @@
       agent initializes as `null`. Through this {{Promise}}, the
       [=coordinator=] reflects the state of the asynchronous [=digital
       credential/credential request=] workflow to script and either
-      [=resolves=] with a [=digital credential/credential response=] when the
+      [=resolves=] with a [=sequence=] of {{DigitalCredential}} instances when the
       interaction completes successfully, or [=rejects=] when processing fails,
       when the user cancels the request via the UI, or when script aborts the
       operation via an {{AbortSignal}}.
@@ -1333,22 +1333,16 @@
               </li>
             </ol>
           </li>
-          <li>If a [=digital credential=] was selected by the user:
+          <li>If one or more [=digital credentials=] were selected by the user:
             <ol>
-              <li>Let |protocol| be the [=digital credential/protocol
-              identifier=] returned by the [=digital credential chooser=] for
-              this exchange.
+              <li>Let |responses| be a [=sequence=] of items returned by the [=digital credential chooser=], where each item consists of a [=digital credential/protocol identifier=] |protocol| and a [=string=] |responseData| representing a [=digital credential/presentation response=] or [=digital credential/issuance response=] returned by the [=holder=].
                 <p class="note" title="Protocol is determined by the platform">
                   The [=digital credential chooser=] or underlying platform
-                  determines which item in |validatedRequests| to forward to a
+                  determines which items in |validatedRequests| to forward to a
                   [=holder=] and returns the [=digital credential/protocol
-                  identifier=] for that exchange. The user agent does not
-                  necessarily know which specific item was selected.
+                  identifier=] for each exchange. The user agent does not
+                  necessarily know which specific items were selected.
                 </p>
-              </li>
-              <li>Let |responseData| be a [=string=] [=digital
-              credential/presentation response=] or [=string=] [=digital
-              credential/issuance response=] returned by the [=holder=].
                 <aside class="note" title="Why the response is a string">
                   The response is a string because the user agent is
                   responsible for parsing it into a JavaScript object in the
@@ -1364,9 +1358,6 @@
                   <li>If the [=credential request coordinator=]'s [=credential
                   request coordinator/active promise=] is not |promise|, then
                   return.
-                  </li>
-                  <li>Let |parsedResponseDataOrError| be the result of [=parse
-                  a JSON string to a JavaScript value=] given |responseData|.
                   </li>
                   <li>Let |abortSignal| be the [=credential request
                   coordinator=]'s [=credential request coordinator/abort
@@ -1386,31 +1377,48 @@
                   <li>Set the [=credential request coordinator=]'s [=credential
                   request coordinator/abort algorithm=] to `null`.
                   </li>
-                  <li>If |parsedResponseDataOrError| is an [=exception=]:
+                  <li>Let |credentials| be a new [=list=].
+                  </li>
+                  <li>For each |response| in |responses|:
                     <ol>
-                      <li>[=Reject=] |promise| with
-                      |parsedResponseDataOrError|.
+                      <li>Let |parsedResponseDataOrError| be the result of [=parse
+                      a JSON string to a JavaScript value=] given |response|'s |responseData|.
+                      </li>
+                      <li>If |parsedResponseDataOrError| is an [=exception=]:
+                        <ol>
+                          <li>[=Reject=] |promise| with
+                          |parsedResponseDataOrError|.
+                          </li>
+                          <li>Return.
+                          </li>
+                        </ol>
+                      </li>
+                      <li>Otherwise, if |parsedResponseDataOrError| is not an
+                      [=object=]:
+                        <ol>
+                          <li>[=Reject=] |promise| with a newly created
+                          {{TypeError}}.
+                          </li>
+                          <li>Return.
+                          </li>
+                        </ol>
+                      </li>
+                      <li>Otherwise:
+                        <ol>
+                          <li>Let |credential| be a newly created
+                          {{DigitalCredential}} instance with its
+                          {{DigitalCredential/data}} initialized to
+                          |parsedResponseDataOrError| and its
+                          {{DigitalCredential/protocol}} initialized to |response|'s |protocol|.
+                          </li>
+                          <li>[=list/Append=] |credential| to |credentials|.
+                          </li>
+                        </ol>
                       </li>
                     </ol>
                   </li>
-                  <li>Otherwise, if |parsedResponseDataOrError| is not an
-                  [=object=]:
-                    <ol>
-                      <li>[=Reject=] |promise| with a newly created
-                      {{TypeError}}.
-                      </li>
-                    </ol>
+                  <li>[=Resolve=] |promise| with |credentials|.
                   </li>
-                  <li>Otherwise:
-                    <ol>
-                      <li>Let |credential| be a newly created
-                      {{DigitalCredential}} instance with its
-                      {{DigitalCredential/data}} initialized to
-                      |parsedResponseDataOrError| and its
-                      {{DigitalCredential/protocol}} initialized to |protocol|.
-                      </li>
-                      <li>[=Resolve=] |promise| with |credential|.
-                      </li>
                     </ol>
                   </li>
                   <li>Set the [=credential request coordinator=]'s [=credential
@@ -3497,7 +3505,7 @@
             object|.
             </li>
             <li>[=Queue a global task=] on the [=DOM manipulation task source=]
-            given |global| to [=resolve=] |promise| with |credential|.
+            given |global| to [=resolve=] |promise| with a [=list=] containing |credential|.
             </li>
             <li>Return `true`.
             </li>
