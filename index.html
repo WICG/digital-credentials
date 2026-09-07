@@ -1967,12 +1967,14 @@
       </p>
       <dl>
         <dt>
-          <dfn data-local-lt="tampering">Request Tampering</dfn>
+          <dfn>Network Tampering</dfn>
         </dt>
         <dd>
           A network attacker that can inject or modify page content in an
           insecure context attempts to alter a {{DigitalCredentialGetRequest}}
-          or {{DigitalCredentialCreateRequest}} before processing.
+          or {{DigitalCredentialCreateRequest}} before processing. Threats that
+          arise from a protocol or credential format are described separately
+          as [=protocol and format vulnerabilities=].
         </dd>
         <dt>
           <dfn>API Flooding</dfn>
@@ -2046,8 +2048,9 @@
           Weaknesses in the specific [=digital credential/presentation
           protocol=], [=digital credential/issuance protocol=], or credential
           format being used (e.g., cryptographic flaws, unsafe algorithms, lack
-          of replay protection, or missing request authentication) could allow
-          attackers to intercept, forge, or tamper with credentials in transit.
+          of replay protection, missing request authentication, or missing
+          message integrity protection) could allow attackers to intercept,
+          forge, or modify protocol requests, responses, or credentials.
           Mitigation occurs primarily at the protocol, format, and transport
           layers (e.g., mandating response encryption, request signing, and
           TLS). While the API does not define format-specific cryptography or
@@ -2067,7 +2070,7 @@
       </p>
       <p>
         WebIDL [=interfaces=] of the Digital Credential API are only exposed in
-        [=secure contexts=], reducing the risk of [=tampering=] through
+        [=secure contexts=], reducing the risk of [=network tampering=] through
         [=secure contexts|insecure contexts=] (e.g., a malicious script being
         injected through the network). Please refer to the
         [[[secure-contexts#security-considerations]]] section of the
