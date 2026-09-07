@@ -772,6 +772,83 @@
         </dl>
       </li>
     </ol><!--
+    // MARK: Validate ISO18013-7 Annex C request data
+    -->
+    <h3>
+      Validate ISO18013-7 Annex C request data
+    </h3>
+    <p>
+      To <dfn>validate ISO18013-7 Annex C request data</dfn> given a JavaScript
+      value |data|:
+    </p>
+    <ol class="algorithm">
+      <li>If |data| is not an [=object=], return failure.
+      </li>
+      <li>If |data| does not have an own property "`encryptionInfo`", return
+      failure.
+      </li>
+      <li>Return success.
+      </li>
+    </ol>
+    <aside class="note" title="Why only encryptionInfo">
+      <p>
+        [[[ISO18013-7]]] Annex C requires "`encryptionInfo`" in every request
+        and defines only one response structure, an encrypted one. A request
+        carrying "`encryptionInfo`" therefore compels an encrypted [=digital
+        credential/presentation response=], which is all this algorithm
+        establishes. Whether the rest of the request conforms to Annex C is for
+        the [=holder=] to decide, not the [=user agent=].
+      </p>
+    </aside><!--
+      // MARK: Validate OpenID4VP request data
+    -->
+    <h3>
+      Validate OpenID4VP request data
+    </h3>
+    <p>
+      To <dfn>validate OpenID4VP request data</dfn> given a [=digital
+      credential/protocol identifier=] |protocol| and a JavaScript value
+      |data|:
+    </p>
+    <ol class="algorithm">
+      <li>If |data| is not an [=object=], return failure.
+      </li>
+      <li>Let |authorizationRequest| be the result of processing |data| as an
+      OpenID4VP Authorization Request according to |protocol|'s request type.
+      </li>
+      <li>If |authorizationRequest| is failure, return failure.
+      </li>
+      <li>If |authorizationRequest|'s `response_mode` value is not
+      "`dc_api.jwt`", return failure.
+      </li>
+      <li>Return success.
+      </li>
+    </ol>
+    <aside class="note" title="Reading response_mode from a signed request">
+      <p>
+        For {{DigitalCredentialPresentationProtocol/"openid4vp-v1-unsigned"}},
+        `response_mode` is a member of |data| itself. For
+        {{DigitalCredentialPresentationProtocol/"openid4vp-v1-signed"}} and
+        {{DigitalCredentialPresentationProtocol/"openid4vp-v1-multisigned"}} it
+        sits inside the signed payload, so the [=user agent=] decodes that
+        payload to read it. The [=user agent=] does not verify the signature:
+        it cannot, having no trust framework, and [[[OPENID4VP]]] leaves that
+        verification to the [=holder=].
+      </p>
+    </aside>
+    <aside class="note" title="Why the encryption keys are not checked here">
+      <p>
+        [[[OPENID4VP]]] Section 8.3 lets the [=holder=] obtain the requesting
+        party's public key from the `client_metadata` request parameter "or
+        other mechanisms as allowed by the given Client Identifier Prefix". A
+        [=user agent=] cannot follow those other mechanisms, so it cannot tell
+        a request that names its keys elsewhere from one that supplies none.
+        Requiring keys in the request would reject the former. A request that
+        genuinely supplies no usable key still cannot produce an unencrypted
+        response, because "`dc_api.jwt`" leaves the [=holder=] no unencrypted
+        response to fall back to.
+      </p>
+    </aside><!--
     // MARK: Credential Request Coordinator
     -->
     <h2>
@@ -1058,95 +1135,226 @@
           <li>If serialization results in an [=exception=], [=exception/throw=]
           that [=exception=].
           </li>
-          <li>Validate |request|'s [=digital credential/presentation request
-          data=] or [=digital credential/issuance request data=] according to
-          |request|'s [=digital credential/presentation protocol=] or [=digital
-          credential/issuance protocol=] or other criteria.
+          <li>Let |protocol| be the result of running [=convert request
+          protocol=] given |request|.
+            <p class="note" title="Protocol is already known to be allowed">
+              [=credential request coordinator/Filter credential requests=] has
+              already discarded every |request| whose protocol this [=user
+              agent=] does not allow, so |protocol| is not failure here.
+            </p>
+          </li>
+          <li>Let |validation| be the result of running [=credential request
+          coordinator/validate request data=] given |protocol| and |data|.
             <p>
-              In addition to protocol-defined requirements, a [=user agent=]
-              might apply validation criteria based on local policy,
+              A [=user agent=] can also reject |request| on grounds this
+              specification does not define, such as local policy,
               configuration, or the user's choices. For example, a [=user
               agent=] might reject a request that seeks particular credential
               attributes.
             </p>
-            <p>
-              What constitutes a validation failure is protocol-specific, but
-              how such a failure is classified into an exception type is
-              defined below:
-            </p>
-            <aside class="note" title="Protocol-specific validation details">
-              <p>
-                Validation includes verifying |request|'s [=digital
-                credential/presentation request data=] or [=digital
-                credential/issuance request data=] conforms to the requirements
-                of the specified [=digital credential/presentation protocol=]
-                or [=digital credential/issuance protocol=]. Please refer to
-                the specification of the specific [=digital
-                credential/presentation protocol=] or [=digital
-                credential/issuance protocol=] for details, including potential
-                reasons for validation failure, and any security and privacy
-                considerations that need to be considered by implementers
-                during validation.
-              </p>
-            </aside>
+          </li>
+          <li>If |validation| is failure, or the [=user agent=] rejects
+          |request| on any other grounds:
             <ol>
-              <li>If validation fails:
-                <ol>
-                  <li>Let |error| be determined as follows:
-                    <dl class="switch">
-                      <dt>
-                        The [=user agent=] does not permit the request based on
-                        local policy, configuration, or the user's choices:
-                      </dt>
-                      <dd>
-                        A [=exception/create|created=] {{"NotAllowedError"}}
-                        {{DOMException}}.
-                        <p class="note">
-                          {{"NotAllowedError"}} is deliberately
-                          indistinguishable from the error returned when the
-                          user cancels the operation, so that a website cannot
-                          determine whether a request was refused by the user
-                          or by the [=user agent=], nor infer anything about
-                          the user's configuration or credentials.
-                        </p>
-                      </dd>
-                      <dt>
-                        The request is not permitted for security reasons
-                        unrelated to the user, such as the context or
-                        transport:
-                      </dt>
-                      <dd>
-                        A [=exception/create|created=] {{"SecurityError"}}
-                        {{DOMException}}.
-                      </dd>
-                      <dt>
-                        The request data is malformed or invalid:
-                      </dt>
-                      <dd>
-                        A [=exception/create|created=] {{TypeError}}.
-                      </dd>
-                      <dt>
-                        Otherwise:
-                      </dt>
-                      <dd>
-                        A [=exception/create|created=] {{"OperationError"}}
-                        {{DOMException}}.
-                      </dd>
-                    </dl>
-                  </li>
-                  <li>[=exception/Throw=] |error|.
-                  </li>
-                </ol>
+              <li>Let |error| be determined as follows:
+                <dl class="switch">
+                  <dt>
+                    The [=user agent=] does not permit the request based on
+                    local policy, configuration, or the user's choices:
+                  </dt>
+                  <dd>
+                    A [=exception/create|created=] {{"NotAllowedError"}}
+                    {{DOMException}}.
+                    <p class="note">
+                      {{"NotAllowedError"}} is deliberately indistinguishable
+                      from the error returned when the user cancels the
+                      operation, so that a website cannot determine whether a
+                      request was refused by the user or by the [=user agent=],
+                      nor infer anything about the user's configuration or
+                      credentials.
+                    </p>
+                  </dd>
+                  <dt>
+                    The request is not permitted for security reasons unrelated
+                    to the user, such as the context or transport:
+                  </dt>
+                  <dd>
+                    A [=exception/create|created=] {{"SecurityError"}}
+                    {{DOMException}}.
+                  </dd>
+                  <dt>
+                    The request data is malformed or invalid:
+                  </dt>
+                  <dd>
+                    A [=exception/create|created=] {{TypeError}}.
+                  </dd>
+                  <dt>
+                    Otherwise:
+                  </dt>
+                  <dd>
+                    A [=exception/create|created=] {{"OperationError"}}
+                    {{DOMException}}.
+                  </dd>
+                </dl>
               </li>
-              <li>Otherwise, [=list/append=] |request| to |validatedRequests|.
+              <li>[=exception/Throw=] |error|.
               </li>
             </ol>
+          </li>
+          <li>[=list/Append=] |request| to |validatedRequests|.
           </li>
         </ol>
       </li>
       <li>Return |validatedRequests|.
       </li>
     </ol><!--
+    // MARK: Validate request data
+    -->
+    <h3>
+      Validate request data
+    </h3>
+    <p>
+      To <dfn data-dfn-for="credential request coordinator">validate request
+      data</dfn> given a {{DigitalCredentialProtocol}}
+      |protocol:DigitalCredentialProtocol| and a JavaScript value |data|:
+    </p>
+    <ol class="algorithm">
+      <li>If |protocol| is:
+        <dl class="switch">
+          <dt>
+            {{DigitalCredentialPresentationProtocol/"org-iso-mdoc"}}:
+          </dt>
+          <dd>
+            Return the result of [=validate ISO18013-7 Annex C request data=]
+            given |data|.
+          </dd>
+          <dt>
+            {{DigitalCredentialPresentationProtocol/"openid4vp-v1-unsigned"}}:
+          </dt>
+          <dt>
+            {{DigitalCredentialPresentationProtocol/"openid4vp-v1-signed"}}:
+          </dt>
+          <dt>
+            {{DigitalCredentialPresentationProtocol/"openid4vp-v1-multisigned"}}:
+          </dt>
+          <dd>
+            Return the result of [=validate OpenID4VP request data=] given
+            |protocol| and |data|.
+          </dd>
+          <dt>
+            Otherwise:
+          </dt>
+          <dd>
+            Return success.
+          </dd>
+        </dl>
+      </li>
+    </ol>
+    <aside class="note" title="Only presentation protocols are checked here">
+      <p>
+        A [=digital credential/issuance protocol=] reaches the "Otherwise"
+        case. Issuance sends a credential to the [=holder=] rather than
+        returning credential data to the requesting party, so there is nothing
+        here for encryption to protect. A [=holder=] still validates the
+        request it receives.
+      </p>
+    </aside>
+    <p>
+      A [=digital credential/presentation response=] is always encrypted for
+      the requesting party. [=credential request coordinator/Validate request
+      data=] establishes this, per [=digital credential/presentation
+      protocol=], by rejecting a request that does not compel an encrypted
+      response. [=credential request coordinator/Validate response data=] then
+      rejects a response that is plainly unencrypted, which catches a
+      [=holder=] that ignored the request rather than one that set out to leak.
+    </p>
+    <aside class="note" title="Encryption applies per operating mode">
+      <p>
+        Because
+        {{DigitalCredentialPresentationProtocol/"openid4vp-v1-unsigned"}},
+        {{DigitalCredentialPresentationProtocol/"openid4vp-v1-signed"}}, and
+        {{DigitalCredentialPresentationProtocol/"openid4vp-v1-multisigned"}}
+        are distinct [=digital credential/presentation protocols=], this is
+        enforced for each individually (i.e., per operating mode). For
+        OpenID4VP the `response_mode` is "`dc_api.jwt`"; for the ISO mdoc
+        protocol, `encryptionInfo` is present.
+      </p>
+    </aside><!--
+    // MARK: Validate response data
+    -->
+    <h3>
+      Validate response data
+    </h3>
+    <p>
+      To <dfn data-dfn-for="credential request coordinator">validate response
+      data</dfn> given a {{DigitalCredentialProtocol}}
+      |protocol:DigitalCredentialProtocol| and a JavaScript [=object=] |data|:
+    </p>
+    <ol class="algorithm">
+      <li>If |protocol| is:
+        <dl class="switch">
+          <dt>
+            {{DigitalCredentialPresentationProtocol/"org-iso-mdoc"}}:
+          </dt>
+          <dd>
+            If |data| does not have an own property "`response`", return
+            failure.
+          </dd>
+          <dt>
+            {{DigitalCredentialPresentationProtocol/"openid4vp-v1-unsigned"}}:
+          </dt>
+          <dt>
+            {{DigitalCredentialPresentationProtocol/"openid4vp-v1-signed"}}:
+          </dt>
+          <dt>
+            {{DigitalCredentialPresentationProtocol/"openid4vp-v1-multisigned"}}:
+          </dt>
+          <dd>
+            If |data| has an own property "`vp_token`", return failure. If
+            |data| has neither an own property "`response`" nor an own property
+            "`error`", return failure.
+          </dd>
+          <dt>
+            Otherwise:
+          </dt>
+          <dd>
+            Return success.
+          </dd>
+        </dl>
+      </li>
+      <li>Return success.
+      </li>
+    </ol>
+    <aside class="note" title="Why each protocol is checked differently">
+      <p>
+        Each branch requires a response shape its protocol actually defines.
+        [[[ISO18013-7]]] Annex C defines one, so a response without
+        "`response`" is not an Annex C response. [[[OPENID4VP]]] defines two:
+        an encrypted Authorization Response in "`response`", and the error
+        object in [[[OPENID4VP]]] Appendix A.4, which carries a single
+        "`error`" member and is a successful outcome for this API. Requiring
+        "`response`" for [[[OPENID4VP]]] would reject that error object.
+      </p>
+      <p>
+        The [[[OPENID4VP]]] branch also rejects "`vp_token`" by name, because
+        that is where an unencrypted Authorization Response carries credential
+        data. Rejecting unknown shapes alone would not catch a [=holder=] that
+        returns "`vp_token`" alongside "`response`".
+      </p>
+    </aside>
+    <aside class="note" title="What the outbound check does and does not do">
+      <p>
+        This check catches an [=digital credential/presentation response=] that
+        an otherwise-honest [=holder=] returns in the clear, having ignored the
+        encrypted response the request asked for. It does nothing against a
+        [=holder=] that sets out to leak the response, because such a
+        [=holder=] can encode cleartext to look like ciphertext and the [=user
+        agent=] holds no key to tell the difference. The protection that does
+        not depend on the [=holder=] behaving is [=credential request
+        coordinator/validate request data=], which rejects a request that does
+        not compel an encrypted [=digital credential/presentation response=].
+      </p>
+    </aside><!--
     // MARK: Abort and reject algorithms
     -->
     <h3>
@@ -1398,6 +1606,15 @@
                     <ol>
                       <li>[=Reject=] |promise| with a newly created
                       {{TypeError}}.
+                      </li>
+                    </ol>
+                  </li>
+                  <li>Otherwise, if [=credential request coordinator/validate
+                  response data=] given |protocol| and
+                  |parsedResponseDataOrError| returns failure:
+                    <ol>
+                      <li>[=Reject=] |promise| with a newly created
+                      {{"SecurityError"}} {{DOMException}}.
                       </li>
                     </ol>
                   </li>
