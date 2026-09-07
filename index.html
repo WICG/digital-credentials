@@ -811,13 +811,34 @@
       <li>If |authorizationRequest|'s `response_mode` value is not
       "`dc_api.jwt`", return failure.
       </li>
-      <li>If |authorizationRequest| does not contain the parameters necessary
-      for the [=holder=] to encrypt the Authorization Response according to
-      [[[OPENID4VP]]], return failure.
-      </li>
       <li>Return success.
       </li>
-    </ol><!--
+    </ol>
+    <aside class="note" title="Reading response_mode from a signed request">
+      <p>
+        For {{DigitalCredentialPresentationProtocol/"openid4vp-v1-unsigned"}},
+        `response_mode` is a member of |data| itself. For
+        {{DigitalCredentialPresentationProtocol/"openid4vp-v1-signed"}} and
+        {{DigitalCredentialPresentationProtocol/"openid4vp-v1-multisigned"}} it
+        sits inside the signed payload, so the [=user agent=] decodes that
+        payload to read it. The [=user agent=] does not verify the signature:
+        it cannot, having no trust framework, and [[[OPENID4VP]]] leaves that
+        verification to the [=holder=].
+      </p>
+    </aside>
+    <aside class="note" title="Why the encryption keys are not checked here">
+      <p>
+        [[[OPENID4VP]]] Section 8.3 lets the [=holder=] obtain the requesting
+        party's public key from the `client_metadata` request parameter "or
+        other mechanisms as allowed by the given Client Identifier Prefix". A
+        [=user agent=] cannot follow those other mechanisms, so it cannot tell
+        a request that names its keys elsewhere from one that supplies none.
+        Requiring keys in the request would reject the former. A request that
+        genuinely supplies no usable key still cannot produce an unencrypted
+        response, because "`dc_api.jwt`" leaves the [=holder=] no unencrypted
+        response to fall back to.
+      </p>
+    </aside><!--
     // MARK: Credential Request Coordinator
     -->
     <h2>
@@ -1233,12 +1254,12 @@
     </aside>
     <p>
       A [=digital credential/presentation response=] is always encrypted for
-      the requesting party. This is enforced, per [=digital
-      credential/presentation protocol=], by [=credential request
-      coordinator/validate request data=], which requires the request to
-      mandate an encrypted response, and by [=credential request
-      coordinator/validate response data=], which rejects a response that is
-      not encrypted.
+      the requesting party. [=credential request coordinator/Validate request
+      data=] establishes this, per [=digital credential/presentation
+      protocol=], by rejecting a request that does not compel an encrypted
+      response. [=credential request coordinator/Validate response data=] then
+      rejects a response that is plainly unencrypted, which catches a
+      [=holder=] that ignored the request rather than one that set out to leak.
     </p>
     <aside class="note" title="Encryption applies per operating mode">
       <p>
@@ -1269,9 +1290,8 @@
             {{DigitalCredentialPresentationProtocol/"org-iso-mdoc"}}:
           </dt>
           <dd>
-            If |data| does not have an own property "`response`" whose value is
-            a `Base64EncryptedResponse` as defined in [[[ISO18013-7]]] Annex C,
-            return failure.
+            If |data| does not have an own property "`response`", return
+            failure.
           </dd>
           <dt>
             {{DigitalCredentialPresentationProtocol/"openid4vp-v1-unsigned"}}:
@@ -1283,35 +1303,49 @@
             {{DigitalCredentialPresentationProtocol/"openid4vp-v1-multisigned"}}:
           </dt>
           <dd>
-            If |data| does not have an own property "`response`" whose value is
-            a [=string=] consisting of five segments separated by four U+002E
-            (.) code points (an encrypted Authorization Response in JWE Compact
-            Serialization, as required by [[[OPENID4VP]]] Section 8.3), return
-            failure. If |data| has an own property "`vp_token`", return
-            failure.
+            If |data| has an own property "`vp_token`", return failure. If
+            |data| has neither an own property "`response`" nor an own property
+            "`error`", return failure.
           </dd>
           <dt>
-            {{DigitalCredentialIssuanceProtocol/"openid4vci-v1"}}:
+            Otherwise:
           </dt>
           <dd>
-            Return success. An [=digital credential/issuance response=] does
-            not carry credential data to the requesting party, so there is
-            nothing here to check for encryption.
+            Return success.
           </dd>
         </dl>
       </li>
       <li>Return success.
       </li>
     </ol>
-    <aside class="note" title="The outbound check is a safety net">
+    <aside class="note" title="Why each protocol is checked differently">
       <p>
-        This check guards primarily against implementation errors in
-        otherwise-honest [=holders=] that might return credential data in the
-        clear. It cannot detect a malicious [=holder=] that encodes cleartext
-        to resemble ciphertext; the primary protection against an unencrypted
-        response is [=credential request coordinator/validate request data=],
-        which requires the request to mandate an encrypted [=digital
-        credential/credential response=].
+        Each branch requires a response shape its protocol actually defines.
+        [[[ISO18013-7]]] Annex C defines one, so a response without
+        "`response`" is not an Annex C response. [[[OPENID4VP]]] defines two:
+        an encrypted Authorization Response in "`response`", and the error
+        object in [[[OPENID4VP]]] Appendix A.4, which carries a single
+        "`error`" member and is a successful outcome for this API. Requiring
+        "`response`" for [[[OPENID4VP]]] would reject that error object.
+      </p>
+      <p>
+        The [[[OPENID4VP]]] branch also rejects "`vp_token`" by name, because
+        that is where an unencrypted Authorization Response carries credential
+        data. Rejecting unknown shapes alone would not catch a [=holder=] that
+        returns "`vp_token`" alongside "`response`".
+      </p>
+    </aside>
+    <aside class="note" title="What the outbound check does and does not do">
+      <p>
+        This check catches an [=digital credential/presentation response=] that
+        an otherwise-honest [=holder=] returns in the clear, having ignored the
+        encrypted response the request asked for. It does nothing against a
+        [=holder=] that sets out to leak the response, because such a
+        [=holder=] can encode cleartext to look like ciphertext and the [=user
+        agent=] holds no key to tell the difference. The protection that does
+        not depend on the [=holder=] behaving is [=credential request
+        coordinator/validate request data=], which rejects a request that does
+        not compel an encrypted [=digital credential/presentation response=].
       </p>
     </aside><!--
     // MARK: Abort and reject algorithms
