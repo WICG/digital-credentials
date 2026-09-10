@@ -324,7 +324,8 @@
         Similarly, when a site needs to [=digital credential/issuance|issue=] a
         digital credential, the [[[#DC-API|Digital Credentials API]]] mediates
         the issuance of a digital credential between the site, the user agent,
-        and the [=holder=].
+        and the [=holder=]'s [=credential manager=], via a [=credential manager
+        chooser=].
       </p>
       <h3>
         Issuing a digital credential
@@ -593,6 +594,15 @@
           broader [=credential chooser=], or as a separate platform-provided
           user interface. The exact relationship is implementation-defined.
         </aside>
+      </dd>
+      <dt>
+        <dfn>Credential manager chooser</dfn>
+      </dt>
+      <dd>
+        A platform-provided user interface that presents one or more
+        [=credential managers=] to the user, allowing them to choose a
+        credential manager to handle the [=digital credential/issuance
+        request=], or cancel the operation.
       </dd>
     </dl><!--
     // MARK: Protocols
@@ -887,9 +897,6 @@
     <ol class="algorithm">
       <li>Let |realm| be |global|'s [=relevant realm=].
       </li>
-      <li>If |origin| is an [=opaque origin=], return [=a promise rejected
-      with=] a {{"SecurityError"}} {{DOMException}} in |realm|.
-      </li>
       <li>Let |document| be |global|'s [=associated `Document`=].
       </li>
       <li>If |document| is not [=Document/fully active=], return [=a promise
@@ -1171,7 +1178,8 @@
           coordinator/interaction state=] to "[=credential request
           coordinator/aborting=]".
           </li>
-          <li>Dismiss the [=digital credential chooser=].
+          <li>Dismiss the [=digital credential chooser=] or [=credential
+          manager chooser=].
             <p class="note">
               Dismissal can fail (e.g., if the [=digital credential chooser=]
               was destroyed due to memory pressure), but the [=coordinator=]
@@ -1491,15 +1499,23 @@
     </p>
     <p>
       Additionally, the API also allows [=digital credential/Issuance
-      request|requesting issuance=] of a [=digital credential=], which
-      initiates a mediated issuance flow between the user agent and/or a
-      [=holder=]. This is done by calling the
+      request|requesting issuance=] of a [=digital credential=], which in turn
+      presents a [=credential manager chooser=] to the user, allowing them to
+      select a [=credential manager=] to save the [=digital credential=]. This
+      is done by calling the
       `navigator.credentials.`{{CredentialsContainer/create()}} method, which
       runs the [=create a credential=] algorithm of
       [[[credential-management]]]. That algorithm then calls back into this
       specification's {{DigitalCredential}} interface's
       {{Credential/[[Create]](origin,options, sameOriginWithAncestors)}}
       internal method.
+    </p>
+    <p>
+      [=digital credential/Issuance request|Digital credential issuance=] via
+      this API differs slightly from digital credential presentation. The
+      response data contains the protocol-specific response from the holder's
+      [=credential manager=], as defined by the issuance protocol, and does not
+      represent the actual issued digital credential itself.
     </p>
     <p>
       Please see [[[#credential-management-integration|Credential Management
@@ -1690,6 +1706,9 @@
       static boolean userAgentAllowsProtocol(DOMString protocol);
     };
     </pre>
+    <p>
+      {{DigitalCredential}} instances are [=Credential/origin bound=].
+    </p>
     <h4>
       The `protocol` member
     </h4>
@@ -2036,6 +2055,14 @@
           explicit permission from the embedding site, potentially enabling
           credential harvesting or unauthorized access to sensitive user data.
         </dd>
+        <dt>
+          <dfn>Malicious Payloads to the Underlying Platform</dfn>
+        </dt>
+        <dd>
+          A malicious website attempts to exploit vulnerabilities in the
+          underlying operating system or [=credential manager=] by passing
+          carefully crafted or malformed protocol requests through the API.
+        </dd>
       </dl>
       <h4>
         Out of Scope Threats
@@ -2047,21 +2074,51 @@
         end-to-end security of credential presentation and issuance. The
         following defines the [=out-of-scope threats=] for this specification:
       </p>
-      <ul>
-        <li>
-          <strong>Broken cryptography:</strong> a [=digital
-          credential/presentation protocol=] or [=digital credential/issuance
-          protocol=] can allow an algorithm, parameter, or certificate format
-          that is later found to be unsafe. Noticing that and moving away from
-          it is up to the protocol and to [=credential managers=], since they
-          are the ones that check the cryptography and decide who to trust.
-          This specification does not ask a [=user agent=] to look inside
-          [=digital credential/presentation request data=] or [=digital
-          credential/issuance request data=] to find it. So a [=verifier=] and
-          a [=credential manager=] can keep using something unsafe until the
-          protocol changes and implementations are updated.
-        </li>
-      </ul>
+      <dl>
+        <dt>
+          <dfn>OS or Device Compromise</dfn>
+        </dt>
+        <dd>
+          An attacker who gains control over the user's operating system or
+          device hardware could bypass [=user agent=] protections, extract
+          sensitive credential data directly from storage, or manipulate the
+          API calls. This threat is addressed by OS platform security and
+          hardware-backed keystores.
+        </dd>
+        <dt>
+          <dfn>Malicious Credential Managers</dfn>
+        </dt>
+        <dd>
+          A user might install, or be coerced by institutional mandate or
+          essential services to use, a [=credential manager=] that
+          intentionally leaks data, fails to securely encrypt credentials, or
+          ignores user consent. While the API protects users prior to wallet
+          selection through explicit user permission (see
+          [[[#user-permission-and-transparency]]]), it cannot govern the
+          internal behavior of a [=credential manager=] once the user
+          authorizes it to handle a request. Mitigating this risk relies on OS
+          platform security, app store vetting, and legal/regulatory frameworks
+          governing wallet providers.
+        </dd>
+        <dt>
+          <dfn>Protocol and Format Vulnerabilities</dfn>
+        </dt>
+        <dd>
+          Weaknesses in the specific [=digital credential/presentation
+          protocol=], [=digital credential/issuance protocol=], or credential
+          format being used (e.g., cryptographic flaws, unsafe algorithms, lack
+          of replay protection, or missing request authentication) could allow
+          attackers to intercept, forge, or tamper with credentials in transit.
+          Mitigation occurs primarily at the protocol, format, and transport
+          layers (e.g., mandating response encryption, request signing, and
+          TLS). While the API does not define format-specific cryptography or
+          inspect protocol payloads for cryptographic safety, it enforces
+          baseline security criteria on supported protocols (such as requiring
+          [[[#encrypting-credential-responses|response encryption]]] and
+          encouraging [[[#signing-presentation-requests|signed requests]]]) to
+          steer requests through the most secure path.
+        </dd>
+      </dl>
       <h3>
         Mitigations
       </h3>
@@ -2078,13 +2135,13 @@
         [[[secure-contexts]]] specification for more information.
       </p>
       <p>
-        Additionally, requests from an [=opaque origin=] are rejected. Calls to
-        {{DigitalCredential/[[DiscoverFromExternalSource]](origin, options,
-        sameOriginWithAncestors)}} and {{DigitalCredential/[[Create]](origin,
-        options, sameOriginWithAncestors)}} from an [=opaque origin=] (for
-        example, a `data:` document, or a document sandboxed without
-        `allow-same-origin`) are [=reject|rejected=], reducing the risk of
-        malicious extraction or spoofing from untrusted environments.
+        To mitigate the risk of [=malicious payloads to the underlying
+        platform=], [=user agents=] pass request parameters to the [=credential
+        manager=] using [=serialize a JavaScript value to a JSON string|JSON
+        serialization=] (see [=credential request coordinator/validate
+        credential requests=]). The underlying platform and [=credential
+        managers=] are responsible for robustly parsing and validating these
+        protocol-specific JSON payloads before acting on them.
       </p>
       <p>
         The Digital Credentials API reduces [=API flooding=] through two
@@ -2155,6 +2212,57 @@
         [[[permissions-policy]]] specification for additional security
         properties provided by this integration.
       </p>
+      <p>
+        Additionally, requests from an [=opaque origin=] are rejected. Because
+        {{DigitalCredential}} instances are [=Credential/origin bound=], calls
+        to request or create digital credentials from an [=opaque origin=] (for
+        example, a `data:` document, or a document sandboxed without
+        `allow-same-origin`) are rejected by [[[credential-management]]],
+        reducing the risk of malicious extraction or spoofing from untrusted
+        environments.
+      </p>
+      <section>
+        <!--
+        // MARK: Signing presentation requests
+        -->
+        <h3>
+          Signing presentation requests
+        </h3>
+        <p>
+          Where a [=digital credential/presentation protocol=] offers a way to
+          sign a request, a [=verifier=] is strongly encouraged to use it.
+        </p>
+        <p>
+          An unsigned request can be altered by a script running in the
+          verifier's own page, such as one injected by a malicious browser
+          extension. That script can change what is being asked for, turning a
+          narrow request into a demand for much more, and it can replace the
+          parameters used to [[[#encrypting-credential-responses|encrypt the
+          response]]] so that the response is encrypted to the attacker rather
+          than to the verifier. Requiring the API to be used in a [=secure
+          context=] does not prevent this, because the attacker is already
+          inside one. With an unsigned request, the [=credential manager=] has
+          to trust that the verifier has kept its own page free of such
+          scripts. A signed request, on the other hand, gives the [=credential
+          manager=] something to check, so the change can be detected instead
+          of passing unnoticed.
+        </p>
+        <p>
+          Even at that, signing only helps if the [=credential manager=] can
+          tell that the signature belongs to the verifier making the request. A
+          script inside the page can re-sign an altered request with a key of
+          its own, so a signature offers no protection against this attacker
+          unless it can be checked against a signing key that is already
+          recognized as the verifier's. Which signing keys to accept, and how
+          they are established, is decided by the ecosystem a credential
+          belongs to rather than by this specification, and the protection a
+          signed request actually offers depends on that decision. Beyond
+          protecting against same-device in-page tampering, request signing
+          also provides critical defense-in-depth when presenting credentials
+          across multiple devices (see
+          [[[#cross-device-security-and-proximity]]]).
+        </p>
+      </section>
       <section>
         <!--
         // MARK: Cross-Device Security and Proximity
@@ -2278,7 +2386,8 @@
         <p>
           The Digital Credentials API offers the [=user agent=] the ability to
           intermediate on behalf of the user (e.g. in the form of a [=digital
-          credential chooser=]) to contextualize requests and
+          credential chooser=] or a [=credential manager chooser=]) to
+          contextualize requests and
           [[[#permission-prior-to-credential-manager-selection|prevent
           immediate exposure to holder applications]]]. It also enforces
           certain minimum requirements on supported protocols, such as
@@ -2881,6 +2990,18 @@
           credentials from the user in order to access services, excluding
           individuals who are unwilling to present credentials.
         </p>
+        <p>
+          To ensure this protection is robust, errors returned by the API do
+          not leak information about the user's available credentials through
+          observable differences, such as distinct error types or timing
+          attacks. For example, rejecting a request because the user has no
+          matching credentials returns the same generic error as rejecting a
+          request because the user cancelled the prompt. Furthermore, to
+          prevent timing attacks without relying on artificial delays, [=user
+          agents=] present a user-facing dialog (such as an empty chooser or
+          notification) when no matching credentials are found, so that prompt
+          dismissal latency is indistinguishable from user cancellation.
+        </p>
       </section>
       <section id="user-permission-and-transparency">
         <!--
@@ -3012,6 +3133,24 @@
           improve the user permission experience as well.
         </p>
       </section>
+      <section>
+        <!--
+        // MARK: Data Clearing and Persistent State
+        -->
+        <h3>
+          Data Clearing and Persistent State
+        </h3>
+        <p>
+          The Digital Credentials API itself does not introduce new
+          browser-managed persistent state or local storage mechanisms. The
+          credentials requested through this API are stored and managed by
+          external [=credential managers=] or the operating system.
+          Consequently, when a user clears their browsing data (e.g., cookies
+          or local storage) for a given origin or globally, it generally does
+          not clear or affect the credentials held within those external
+          managers.
+        </p>
+      </section>
     </section>
     <section>
       <!--
@@ -3026,9 +3165,10 @@
         scope of this specification; however, the accessibility of that
         experience is within scope (see [[[#scope]]]). The following guidance
         applies to [=user agents=] and platforms implementing the [=digital
-        credential chooser=] and the flows around it, and references the
-        relevant success criteria of [[WCAG22]]. Where the chooser is a non-web
-        user interface, those criteria apply as described in [[WCAG2ICT-22]].
+        credential chooser=], [=credential manager chooser=] and the flows
+        around them, and references the relevant success criteria of
+        [[WCAG22]]. Where either chooser is a non-web user interface, those
+        criteria apply as described in [[WCAG2ICT-22]].
       </p>
       <p>
         The content of modal dialogs presented during [=digital
@@ -3063,11 +3203,12 @@
         NOT require a multipoint or path-based gesture (see
         [[[WCAG22#pointer-gestures]]]) or device motion (see
         [[[WCAG22#motion-actuation]]]) as the only means of operation. The
-        [=digital credential chooser=] SHOULD present its controls in a
-        meaningful focus order (see [[[WCAG22#focus-order]]]), move focus into
-        the chooser when it is opened; keep focus within it while it is shown;
-        and restore focus to the previously focused element, or another
-        appropriate location, when it is closed.
+        [=digital credential chooser=] and [=credential manager chooser=]
+        SHOULD present their controls in a meaningful focus order (see
+        [[[WCAG22#focus-order]]]), move focus into the chooser when it is
+        opened; keep focus within it while it is shown; and restore focus to
+        the previously focused element, or another appropriate location, when
+        it is closed.
       </p>
       <p>
         Where releasing a [=digital credential=] requires the [=holder=] to
@@ -3178,10 +3319,11 @@
         <li>Any other text presented to the user during a credential
         interaction is rendered either by the website (using HTML, which
         provides language and direction support through the host language), or
-        by the platform's [=digital credential chooser=]. The chooser is out of
-        scope for this specification; where it displays credential content, the
-        language and direction of that content, as provided by the credential
-        format and protocol, govern its presentation.
+        by the platform's [=digital credential chooser=] and [=credential
+        manager chooser=]. The choosers are out of scope for this
+        specification; where they display credential content, the language and
+        direction of that content, as provided by the credential format and
+        protocol, govern its presentation.
         </li>
       </ul>
       <p>
