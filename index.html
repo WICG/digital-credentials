@@ -826,6 +826,13 @@
       </li>
     </ul>
     <p>
+      A [=user agent=] MUST use its own determination of the [=request
+      context/document origin=] and the [=request context/top-level origin=],
+      and MUST NOT rely on an [=origin=] supplied by the content whose request
+      is being mediated, in determining whether to validate or form the request
+      or to present the [=digital credential chooser=].
+    </p>
+    <p>
       A user agent MAY delegate some or all coordinator responsibilities to
       external [=credential managers=], platform components, or other trusted
       entities according to user or platform policy.
@@ -989,7 +996,7 @@
       <li>If |handled| is `true`, return |promise|.
       </li>
       <li>[=credential request coordinator/Initiate the credential request=]
-      with |document|, |validatedRequests|, |promise|, and |signal|.
+      with |origin|, |document|, |validatedRequests|, |promise|, and |signal|.
       </li>
       <li>Return |promise|.
       </li>
@@ -1240,18 +1247,22 @@
     </h3>
     <p>
       To <dfn data-dfn-for="credential request coordinator">initiate the
-      credential request</dfn> given a [=Document=] |document|, a [=list=] of
-      validated credential requests |validatedRequests|, a {{Promise}}
-      |promise:Promise|, and an optional {{AbortSignal}} |signal|:
+      credential request</dfn> given an [=origin=] |documentOrigin|, a
+      [=Document=] |document|, a [=list=] of validated credential requests
+      |validatedRequests|, a {{Promise}} |promise:Promise|, and an optional
+      {{AbortSignal}} |signal|:
     </p>
     <ol class="algorithm">
-      <li>Let |topLevelOrigin| be |document|'s [=top-level traversable=]'s
-      [=navigable/active document=]'s [=relevant settings object=]'s
-      [=environment settings object/origin=].
+      <li>Let |topLevelDocument| be the [=navigable/active document=] of the
+      [=navigable/top-level traversable=] of |document|'s [=node navigable=].
+      </li>
+      <li>Let |topLevelOrigin| be |topLevelDocument|'s [=relevant settings
+      object's=] [=environment settings object/origin=].
       </li>
       <li>Let |requestData| be a new [=request context=] whose [=request
-      context/requests=] is |validatedRequests| and [=request context/top-level
-      origin=] is |topLevelOrigin|.
+      context/requests=] is |validatedRequests|, [=request context/document
+      origin=] is |documentOrigin|, and [=request context/top-level origin=] is
+      |topLevelOrigin|.
       </li>
       <li>[=In parallel=]:
         <ol>
@@ -1271,6 +1282,41 @@
               located on a different device, it is RECOMMENDED that the [=user
               agent=] use [[[FIDO-CLIENT-TO-AUTHENTICATOR-PROTOCOL-V2.3]]].
             </p>
+            <p>
+              The origins presented to the user are determined as follows:
+            </p>
+            <dl class="switch">
+              <dt>
+                |requestData|'s [=request context/document origin=] and its
+                [=request context/top-level origin=] are [=same site=]:
+              </dt>
+              <dd>
+                The [=request context/top-level origin=] is presented to the
+                user.
+              </dd>
+              <dt>
+                Otherwise:
+              </dt>
+              <dd>
+                Both the [=request context/top-level origin=] and the [=request
+                context/document origin=] are presented to the user, conveying
+                that the [=request context/document origin=] is embedded within
+                the page at the [=request context/top-level origin=] and would
+                receive the requested [=digital credential=].
+              </dd>
+            </dl>
+            <p class="note">
+              Presenting only the [=request context/document origin=] can
+              prevent the user from associating the request with the site they
+              are visiting, as that origin is typically not reflected in the
+              [=user agent=]'s address bar. Presenting only the [=request
+              context/top-level origin=] can mislead the user about which party
+              would receive the [=digital credential=]. Where the [=digital
+              credential chooser=] is provided by the underlying platform, the
+              [=user agent=] makes both origins available to it so that they
+              can be presented to the user.
+            </p>
+            <aside class="issue" data-number="456"></aside>
           </li>
           <li>If |signal| is not null and |signal| is [=AbortSignal/aborted=]:
             <ol>
@@ -1744,11 +1790,26 @@
         A [=list=] of validated [=digital credential/credential requests=].
       </dd>
       <dt>
+        <dfn data-dfn-for="request context">document origin</dfn>
+      </dt>
+      <dd>
+        An [=origin=]; the [=origin=] in which the request was made, that is,
+        the [=current settings object=]'s [=environment settings
+        object/origin=] as provided to the internal methods in
+        [[[#credential-management-integration]]]. When the request is made from
+        a [=Document=] embedded in a cross-origin context, this is the embedded
+        [=Document=]'s [=origin=] and not the [=request context/top-level
+        origin=].
+      </dd>
+      <dt>
         <dfn data-dfn-for="request context">top-level origin</dfn>
       </dt>
       <dd>
-        An [=environment settings object=]'s [=environment settings
-        object/origin=].
+        An [=origin=]; the [=origin=] of the [=navigable/top-level
+        traversable=] in which the request was made, as determined by
+        [=credential request coordinator/initiate the credential request=]. It
+        is used only when presenting the request to the user; it is not used to
+        validate or form the request.
       </dd>
     </dl>
     <h4>
@@ -2104,6 +2165,28 @@
           operation.
         </li>
       </ul>
+      <p>
+        The [=request context/document origin=] and [=request context/top-level
+        origin=] are determined by the [=user agent=]: the [=request
+        context/document origin=] is the [=origin=] passed to
+        {{DigitalCredential/[[DiscoverFromExternalSource]](origin, options,
+        sameOriginWithAncestors)}} and {{DigitalCredential/[[Create]](origin,
+        options, sameOriginWithAncestors)}} by the
+        [[[#credential-management-integration]]]; the [=request
+        context/top-level origin=] is that of the [=navigable/active document=]
+        of the [=navigable/top-level traversable=] in which the request was
+        made. [[[#credential-request-coordinator]]] requires the [=user agent=]
+        to use its own determination of both, and to not rely on an [=origin=]
+        supplied by the content whose request is being mediated, in determining
+        whether to validate or form the request or to present the [=digital
+        credential chooser=].
+      </p>
+      <p>
+        This mitigates [=Unauthorized Cross-Origin Access=]: the party that is
+        shown to the user, and that would receive the [=digital credential=],
+        reflects the [=user agent=]'s own determination of who is asking,
+        rather than a value the requesting content can choose.
+      </p>
       <p>
         For additional guidance on preventing abuse of credential requests,
         please refer to the section
